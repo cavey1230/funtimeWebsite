@@ -1,0 +1,42 @@
+.publicFadeIn {
+  animation: 1s publicFadeIn ease-in-out forwards;
+}
+
+.publicFadeIn-500ms {
+  animation: 0.5s publicFadeIn ease-in-out forwards;
+}
+
+.publicTopFadeIn {
+  animation: 1s publicTopFadeIn cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes publicFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes publicFadeInAndScale {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes publicTopFadeIn {
+  from {
+    top: -100%;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
