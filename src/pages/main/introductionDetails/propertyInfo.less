@@ -1,0 +1,49 @@
+.basic-info-container > .property-info-group{
+  width: 30%;
+  display: flex;
+  color: var(--bg-color);
+  background-color: var(--font-color);
+  box-sizing: border-box;
+  z-index: 2;
+  float: left;
+}
+
+.property-info-group {
+  padding: 2rem;
+  flex-direction: column;
+  position: relative;
+
+  .property-info-field{
+    border-radius: 1rem;
+    border: 0.2rem solid var(--bg-color);
+  }
+
+  .property-info-item {
+    display: flex;
+    margin-bottom: 1rem;
+    width: 100%;
+
+    .label {
+      width: 30%;
+    }
+
+    .content {
+      width: 70%;
+      display: flex;
+      align-items: center;
+
+      .property-info-content-fill-item {
+        background-color: transparent;
+        margin: 0 0.5rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 1rem;
+        border: 0.2rem solid var(--bg-color);
+      }
+
+      .fill-item-selected {
+        background-color: var(--bg-color);
+      }
+    }
+  }
+}

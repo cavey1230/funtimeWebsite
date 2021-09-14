@@ -1,0 +1,47 @@
+.verification-out-container {
+  position: relative;
+  margin: 1rem 0;
+  overflow: hidden;
+  z-index: 100;
+  user-select: none;
+  border-radius: 2rem;
+
+  .verification-bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 101;
+    transition: all 1s;
+  }
+
+  .verification-text {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    font-size: 1rem;
+    z-index: 102;
+    transition: all 1s;
+  }
+
+  .verification-btn {
+    width: 4rem;
+    border-radius: 2rem;
+    box-sizing: border-box;
+    background-color: white;
+    display: grid;
+    font-weight: 600;
+    place-items: center;
+    position: absolute;
+    border: 0.2rem inset black;
+    z-index: 103;
+    user-select: none;
+    cursor: pointer;
+
+    img {
+      user-select: none;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}

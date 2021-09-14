@@ -1,0 +1,28 @@
+.reply-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  //padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  align-items: flex-end;
+
+  .reply-container-item, .reply-pagination-pad {
+    width: calc(75% - 1.5rem);
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  .reply-pagination-pad {
+    margin: 1rem 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .reply-container {
+
+    .reply-container-item, .reply-pagination-pad {
+      width: 99%;
+    }
+  }
+}

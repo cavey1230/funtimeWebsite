@@ -5,9 +5,14 @@ body, html {
     width: 100%;
     font-size: 62.5%;
     box-sizing: border-box;
-    background-color: #fdfdfd;
-    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
-    /*overflow-x: hidden;*/
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "Microsoft Yahei",
+    "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+    overflow-x: hidden;
+}
+
+textarea{
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "Microsoft Yahei",
+    "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
 }
 
 #root {

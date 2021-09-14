@@ -1,0 +1,115 @@
+.user-info-out-container {
+  margin-left: 1rem;
+}
+
+.user-info-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  img {
+    width: 3rem;
+    border-radius: 3rem;
+  }
+
+  span {
+    padding-left: 1rem;
+    user-select: none;
+  }
+}
+
+.user-info-navbar-container {
+  height: 100%;
+  background-color: var(--switch-slider-color);
+  color: var(--switch-bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+
+  .big-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 6rem;
+      border-radius: 3rem;
+    }
+
+    > div {
+      width: 100%;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1.6rem;
+    }
+
+    .small-font-size {
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
+
+  .navigate {
+    text-align: center;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .navigate-router {
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      background-color: var(--font-color);
+      color: var(--bg-color);
+    }
+  }
+}
+
+.login-and-register-button {
+  background-color: var(--switch-bg-color);
+  color: var(--switch-slider-color);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  position: relative;
+
+  .rods {
+    margin: 0 0.5rem;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .user-info-out-container {
+    margin-left: 0 !important;
+  }
+
+  .user-info-container {
+    width: 100%;
+    margin: 1rem 0 1rem 0 !important;
+    padding: 0;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-direction: column !important;
+
+    span {
+      width: 100%;
+      text-align: center;
+      margin: 1rem 0 !important;
+      padding: 0;
+    }
+  }
+
+  .login-and-register-button {
+    margin: 1rem 0 0 0 !important;
+  }
+}

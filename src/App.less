@@ -1,76 +1,31 @@
-.app-pad {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.skin-white {
+  --bg-color: rgba(255, 255, 255, 0.8);
+  --font-color: rgba(0, 0, 0, 0.8);
+  --selected-color: rgba(0, 0, 0, 0.9);
+
+  //导航栏开关主题颜色设置
+  --switch-bg-color: rgba(0, 0, 0, 1);
+  --switch-slider-color: rgba(255, 255, 255, 1);
+
+
 }
 
-.scroll-pad {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  overflow-x: hidden;
-  position: relative;
+.skin-black {
+  --bg-color: rgba(0, 0, 0, 0.8);
+  --font-color: rgba(255, 255, 255, 0.7);
+  --selected-color: rgba(255, 255, 255, 0.9);
 
-  &::-webkit-scrollbar {
-    width: 0.2rem;
-  }
+  //导航栏开关主题颜色设置
+  --switch-bg-color: rgba(255, 255, 255, 1);
+  --switch-slider-color: rgba(0, 0, 0, 1);
 
-  &::-webkit-scrollbar-thumb {
-    border-radius: 1rem;
-    background-color: #fabe00;
-  }
-}
-
-.home-pad {
-  padding-top: 7rem;
-  min-width: 800px;
-  display: flex;
-  margin: 0 auto;
-}
-
-.inner-pad {
-  width: 100%;
-  height: 100%;
-}
-
-.navbar-pad {
-  min-width: 800px;
-  width: 100%;
-}
-
-@media screen and (max-width: 960px) {
-  .home-pad {
-    width: 800px;
+  //所有svg变白色背景
+  svg path {
+    fill: rgba(255, 255, 255, 0.5);
   }
 }
 
-@media screen and (min-width: 960px) and (max-width: 1200px) {
-  .home-pad {
-    width: 960px;
-  }
-}
-
-@media screen and (min-width: 1200px) and (max-width: 1440px) {
-  .home-pad {
-    width: 1200px;
-  }
-}
-
-@media screen and (min-width: 1440px) and (max-width: 1920px) {
-  .home-pad {
-    width: 1400px;
-  }
-}
-
-@media screen and (min-width: 1920px)  and (max-width: 2560px) {
-  .home-pad {
-    width: 1920px;
-  }
-}
-
-@media screen and (min-width: 2560px) and (max-width: 3440px) {
-  .home-pad {
-    width: 2560px;
-  }
+.skin-black, .skin-white {
+  --font-size: 1.4rem;
+  --border-color: rgba(0, 0, 0, 0.05);
 }

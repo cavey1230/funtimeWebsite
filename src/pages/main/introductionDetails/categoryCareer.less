@@ -1,0 +1,32 @@
+.basic-info-container > .career-info-item {
+  width: 30%;
+  display: flex;
+  color: var(--bg-color);
+  background-color: var(--font-color);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.career-info-item {
+  position: relative;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem;
+
+  .career-first-category {
+    margin: 1rem;
+    display: flex;
+
+    .career-details-item {
+      opacity: 0.3;
+
+      img {
+        width: 3rem;
+      }
+    }
+
+    .selected {
+      opacity: 1;
+    }
+  }
+}

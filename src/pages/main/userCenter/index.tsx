@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Home = () => {
+const Index = () => {
     return (
         <div>
-            1111
+             13123
         </div>
     );
 };
 
-export default Home;
+export default Index;

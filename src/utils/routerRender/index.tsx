@@ -59,7 +59,7 @@ let level = 1
 
 export const RouterRender: React.FC<Props> = ({type = "children", list = routers}) => {
     // 定义错误合集
-    const errorMsgArray = ["render,redirect只能同时存在一个", "只能选用root，或children路由模式"]
+    const errorMsgArray = ["render,redirect只能同时存在一个", "只能选用root,或children路由模式"]
     // 集中处理错误方法
     const showErrorMsg = (errorMsg: string) => {
         console.error(errorMsg)
@@ -120,7 +120,7 @@ export const RouterRender: React.FC<Props> = ({type = "children", list = routers
     }
 }
 
-const init = () => {
+export const init = () => {
     level = 1
     finalDrawOutArray = getPathArray(routers)
 }
@@ -144,7 +144,9 @@ export const SLink = (props: Slink) => {
     return <Link
         to={!fill_address ? to : getHashPathName}
         replace={!!fill_address}
-        onClick={() => init()}>
+        onClick={() => {
+            init()
+        }}>
         {children}
     </Link>
 }

@@ -1,0 +1,126 @@
+.reply-container-item {
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: 0.5s publicFadeIn ease-in-out forwards;
+  flex-direction: column;
+
+  .info-pad {
+    font-weight: 600;
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .reply-more-action-pad {
+      position: relative;
+      top: -2rem;
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .user-pad {
+      display: flex;
+      align-items: center;
+
+      .fill-string {
+        margin: 0 1rem;
+        color: var(--font-color);
+        word-break: keep-all;
+      }
+    }
+  }
+
+  .reply-content-pad {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    .reply-content-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .time-pad {
+        font-weight: 400;
+        margin: 1rem 0;
+      }
+
+      .content {
+        min-height: 3rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+
+        .reply-img {
+          width: 100%;
+          margin-top: 1rem;
+
+          img {
+            max-width: 50%;
+            object-fit: contain;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .reply-action-group {
+      position: relative;
+      font-weight: 600;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+
+      div {
+        user-select: none;
+        font-size: 1.4rem;
+        margin: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: flex-end;
+
+        img, svg {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .reply-more-action-pad {
+    top: 0 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+
+    svg {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+  }
+
+  .reply-content-pad {
+    .reply-content-group {
+      .content {
+        min-height: 3rem;
+        font-size: 1.4rem !important;
+        font-weight: 400 !important;
+      }
+    }
+
+    .reply-action-group {
+      font-weight: 400 !important;
+
+      div {
+        font-size: 1.2rem !important;
+
+        img, svg {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
+}

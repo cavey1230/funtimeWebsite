@@ -1,0 +1,112 @@
+.content-container-item {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  break-inside: avoid;
+  padding: 1rem;
+  box-shadow: 0 0.2rem 1rem 0.1rem rgba(0, 0, 0, 0.1);
+  color: var(--font-color);
+  box-sizing: border-box;
+
+  .img-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+    margin-top: 1rem;
+    border-radius: 2rem;
+    overflow: hidden;
+
+    .img-group-item {
+      width: 100%;
+      position: relative;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .content {
+    padding: 1rem 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    word-break: break-all;
+    cursor: pointer;
+  }
+
+  .like-num, .look-num, .message-num {
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .action-group {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+
+    .like-num, .look-num, .message-num {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img, svg {
+        margin-right: 1rem;
+        min-width: 2rem;
+        max-width: 3rem;
+        min-height: 2rem;
+        max-height: 3rem;
+        width: 50%;
+      }
+    }
+
+    .like-num {
+      cursor: pointer;
+    }
+  }
+
+  .time-and-more-action-container {
+    margin-top: 2rem;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .content-container-item {
+
+    .content {
+      padding: 1rem 0 !important;
+      font-size: var(--font-size) !important;
+      font-weight: 400 !important;
+    }
+
+    .like-num, .look-num, .message-num {
+      font-size: var(--font-size) !important;
+      font-weight: 400 !important;
+    }
+
+    .action-group {
+      .like-num, .look-num, .message-num {
+        img, svg {
+          margin-right: 0.5rem !important;
+        }
+      }
+    }
+
+    .time-container {
+      margin-top: 0.5rem !important;
+      font-size: var(--font-size) !important;
+      font-weight: 400 !important;
+    }
+  }
+}

@@ -57,17 +57,31 @@ Http.prototype.initConfig = function (moreConfig = {}) {
     }
 }
 
+Http.prototype.setIntercept = function (callBack,interceptCodeArray) {
+    this.interceptFunc = callBack
+    this.interceptCodeArray = interceptCodeArray
+}
+
 Http.prototype.baseApi = function (url, moreConfig = {}) {
     const haveToken = localStorage.getItem("token")
+    const haveToken2 = sessionStorage.getItem("token")
+    !haveToken && haveToken2 && (haveToken2 !== this.token) && this.setToken(haveToken2)
     haveToken && (haveToken !== this.token) && this.setToken(haveToken)
     return new Promise((resolve, reject) => {
         fetch(url, this.initConfig(moreConfig)).then(async response => {
             const result = await response.json()
-            result["status"] !== 200 &&
-            Object.keys(this.errorCodeTable).map(item => {
-                result["status"] === Number(item) &&
-                showToast(this.errorCodeTable[item], "error")
-            });
+            if (result["status"] !== 200) {
+                const errorCode = Object.keys(this.errorCodeTable).find(item =>
+                    result["status"] === Number(item)
+                );
+                const interceptCode = this.interceptCodeArray.find(item =>
+                    result["status"] === Number(item)
+                );
+                this.interceptFunc(errorCode)
+                if(!interceptCode){
+                    showToast(this.errorCodeTable[errorCode], "error")
+                }
+            }
             resolve(result)
         }).catch(err => {
             console.warn(err)
@@ -113,6 +127,8 @@ Http.prototype.DELETE = function (address) {
 
 Http.prototype.UPLOAD = function (address, data) {
     const haveToken = localStorage.getItem("token")
+    const haveToken2 = sessionStorage.getItem("token")
+    !haveToken && haveToken2 && (haveToken2 !== this.token) && this.setToken(haveToken2)
     haveToken && (haveToken !== this.token) && this.setToken(haveToken)
     const config = {
         method: "POST",
@@ -140,22 +156,3 @@ Http.prototype.UPLOAD = function (address, data) {
         })
     })
 }
-
-const devAddress = "http://localhost:5000/api/v1"
-const productionAddress = "http://121.4.169.10:4699/api/v1"
-
-export const GoblogApiV1 = new Http(devAddress, {
-    //CODE = 1000...用户模块的错误
-    "200": "OK",
-    "500": "FAIL",
-    "1001": "用户名已存在",
-    "1002": "密码错误",
-    "1003": "用户不存在",
-    "1004": "TOKEN不存在，请登录",
-    "1005": "TOKEN过期",
-    "1006": "认证过期请重新登录",
-    "1007": "TOKEN格式错误",
-    "1008": "暂无用户数据",
-    "1009": "角色状态异常",
-    //CODE = 2000...动态模块的错误
-})

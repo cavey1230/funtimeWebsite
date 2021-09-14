@@ -1,0 +1,39 @@
+.button-basic-style {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  position: relative;
+  &:active{
+    top: 0.1rem;
+    box-shadow: 0 0.1rem 0.5rem 0.1rem #989898;
+  }
+}
+
+.button-primary-style {
+  background-color: var(--font-color);
+  color: var(--bg-color);
+  border: none;
+}
+
+.button-warn-style {
+  background-color: rgb(232, 130, 11);
+  color: #000000;
+  border: none;
+}
+
+.button-dangerous-style {
+  background-color: rgb(234, 9, 9);
+  color: #ffffff;
+  border: none;
+}
+
+.button-disable-style {
+  background-color: rgba(0, 0, 0,0.1);
+  color: #000000;
+  cursor: not-allowed;
+  border: 0.1rem dashed black;
+}

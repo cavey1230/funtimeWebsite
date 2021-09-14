@@ -1,0 +1,1 @@
+export const tuple: <T extends string[]>(...arg: T) => T = (...arg) => arg

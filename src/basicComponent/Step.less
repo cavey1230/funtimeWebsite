@@ -1,0 +1,131 @@
+.step-out-container {
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .step-label-group {
+    display: flex;
+    justify-content: space-between;
+
+    .step-label-item-container {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      overflow-x: hidden;
+      padding-left: 1rem;
+
+      &:first-child {
+        padding: 0;
+      }
+
+      &:last-child {
+        flex: none;
+
+        .step-label-item {
+          &::after {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .step-label-item {
+      border-radius: 50%;
+      background-color: var(--bg-color);
+      color: var(--font-color);
+      border: 0.2rem solid var(--font-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      //cursor: pointer;
+      position: relative;
+      user-select: none;
+
+      &::after {
+        margin-left: 1rem;
+        left: 100%;
+        top: 50%;
+        position: absolute;
+        content: "";
+        width: 9999px;
+        border-bottom: 0.2rem solid var(--font-color);
+      }
+
+      > div {
+        &:nth-child(1) {
+          font-size: 2.5rem;
+          font-weight: 600;
+        }
+
+        &:nth-child(2), &:nth-child(3) {
+          display: flex;
+          justify-content: center;
+        }
+
+        &:nth-child(2) {
+          flex-wrap: wrap;
+          word-break: break-word;
+        }
+      }
+
+      .finish {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        > div {
+          position: absolute;
+          border-bottom: 0.2rem solid var(--font-color);
+
+          &:nth-child(1) {
+            width: 1.5rem;
+            top: 62%;
+            left: 24%;
+            transform: rotate(35deg);
+          }
+
+          &:nth-child(2) {
+            width: 3rem;
+            top: 50%;
+            left: 40%;
+            transform: rotate(-35deg);
+          }
+        }
+      }
+    }
+
+    .selected {
+      background-color: var(--font-color);
+      color: var(--bg-color);
+    }
+  }
+
+  .step-content-container {
+    padding-top: 3rem;
+    box-sizing: border-box;
+    height: calc(100% - 1rem);
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    > div {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .step-label-item {
+    transform: scale(0.8);
+  }
+
+  .step-content-container {
+    padding-top: 0 !important;
+  }
+}

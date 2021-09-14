@@ -40,6 +40,8 @@ module.exports = {
                             //第二次构建时，会读取之前的缓存
                             cacheDirectory: true,
                             "plugins": [
+                                //组件 keepalive
+                                "react-activation/babel",
                                 //按需加载antd
                                 ["import", {"libraryName": "antd", "libraryDirectory": "es", "style": true}, "ant"],
                                 ["import", {

@@ -1,0 +1,134 @@
+.loading-pad {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 998;
+  animation: 0.5s loading-container-scale ease-in-out;
+
+  .loading-container-pad {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .loading-container-pad-item {
+      width: 1.5rem;
+      background-color: black;
+      display: inline-block;
+      margin: 0 1rem;
+      border-radius: 1rem;
+    }
+
+    .loading-container-pad-item:nth-child(1) {
+      animation: 1s loading-item-expand infinite,
+      0.5s loading-item-color 1s both;
+    }
+
+    .loading-container-pad-item:nth-child(2) {
+      animation: 1s loading-item-expand2 infinite,
+      0.5s loading-item-color 2s both;
+    }
+
+    .loading-container-pad-item:nth-child(3) {
+      animation: 1s loading-item-expand3 infinite,
+      0.5s loading-item-color 3s both;
+    }
+
+    .loading-container-pad-item:nth-child(4) {
+      animation: 1s loading-item-expand4 infinite,
+      0.5s loading-item-color 4s both;
+    }
+
+    .loading-container-pad-item:nth-child(5) {
+      animation: 1s loading-item-expand3 infinite,
+      0.5s loading-item-color 5s both;
+    }
+
+    .loading-container-pad-item:nth-child(6) {
+      animation: 1s loading-item-expand2 infinite,
+      0.5s loading-item-color 6s both;
+    }
+
+    .loading-container-pad-item:nth-child(7) {
+      animation: 1s loading-item-expand infinite,
+      0.5s loading-item-color 7s both;
+    }
+  }
+}
+
+@keyframes loading-container-scale {
+  from {
+    opacity: 0;
+    //transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    //transform: scale(1);
+  }
+}
+
+
+@keyframes loading-item-color {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: black;
+  }
+}
+
+@keyframes loading-item-expand {
+  0% {
+    height: 3rem;
+  }
+  50% {
+    height: 6rem;
+  }
+  100% {
+    height: 3rem;
+  }
+}
+
+@keyframes loading-item-expand2 {
+  0% {
+    height: 4rem;
+  }
+  50% {
+    height: 8rem;
+  }
+  100% {
+    height: 4rem;
+  }
+}
+
+
+@keyframes loading-item-expand3 {
+  0% {
+    height: 5rem;
+  }
+  50% {
+    height: 10rem;
+  }
+  100% {
+    height: 5rem;
+  }
+}
+
+@keyframes loading-item-expand4 {
+  0% {
+    height: 6rem;
+  }
+  50% {
+    height: 12rem;
+  }
+  100% {
+    height: 6rem;
+  }
+}

@@ -1,10 +1,13 @@
 import {combineReducers} from "redux";
 
-import {shoeListReducer} from "@/redux/shoeListReducer";
-
+import {skinChangeReducer} from "@/redux/skinChangeReducer";
+import {windowResizeReducer} from "@/redux/windowResizeReducer";
+import {noReadMessageReducer} from "@/redux/noReadMessageReducer";
 
 export const com = combineReducers({
-    shoeListReducer
+    skinChangeReducer,
+    windowResizeReducer,
+    noReadMessageReducer,
 })
 
 export type ReduxRootType = ReturnType<typeof com>

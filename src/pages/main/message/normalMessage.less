@@ -1,0 +1,123 @@
+.normal-message-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-bottom: 0.2rem solid rgba(0, 0, 0, 0.05);
+  font-size: 1.4rem;
+
+  .normal-message-type, .time {
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 600;
+    align-items: center;
+    margin-left: 1rem;
+
+    img, svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    span:nth-child(3) {
+      margin: 0 1rem;
+      text-decoration: underline;
+    }
+  }
+
+  .time > span:first-child {
+    font-size: 1.6rem;
+    margin-right: 1rem;
+  }
+
+  .time {
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-left: 0;
+  }
+
+  .info-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+
+    .avatar-group {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .avatar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-weight: 600;
+      }
+    }
+
+    .info-content-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+
+      .community-content, .reply-content, .comment-content {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+
+        span {
+          margin-left: 1rem;
+          text-decoration: underline;
+          color: var(--font-color);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .content-group {
+    div:nth-child(2) {
+      cursor: pointer;
+      margin-top: 1rem;
+      border-radius: 1rem;
+      background-color: rgba(0, 0, 0, 0.1);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+      font-weight: 600;
+    }
+  }
+
+  .action-group {
+    margin-top: 0.5rem;
+    user-select: none;
+    justify-content: flex-end;
+    display: flex;
+
+    > div {
+      margin-left: 1rem;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    img, svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    span {
+      cursor: pointer;
+
+      &:hover {
+        color: #fabe00;
+      }
+    }
+  }
+}

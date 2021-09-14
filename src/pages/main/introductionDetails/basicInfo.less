@@ -1,0 +1,66 @@
+.basic-info-container > .basic-info-item {
+  width: 30%;
+  display: flex;
+  color: var(--bg-color);
+  background-color: var(--font-color);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.basic-info-item {
+  padding: 2rem;
+  position: relative;
+  flex-direction: column;
+
+  > div {
+    margin-bottom: 1rem;
+  }
+
+  .user-details-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .game-role-name {
+      font-size: 3rem;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 6rem;
+      }
+    }
+  }
+
+
+  .info-item-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+
+    div {
+      margin: 2rem 0;
+      word-break: keep-all;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-right: 0.5rem;
+      }
+    }
+
+    svg, img {
+      width: 3rem;
+    }
+  }
+
+  .self-introduction {
+    width: 100%;
+    border: 0.2rem solid var(--bg-color);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+}

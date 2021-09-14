@@ -1,0 +1,41 @@
+.introduction-details-content {
+  width: 100%;
+  height: calc(100vh - 7rem);
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  //overflow: hidden;
+
+  .basic-info-container {
+    width: 100%;
+    position: relative;
+  }
+
+  .main-img {
+    position: absolute;
+    left: 30%;
+    width: 70%;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px){
+  .basic-info-container > .Introduction-details-action-group,
+  .basic-info-container > .career-info-item,
+  .basic-info-container > .property-info-group,
+  .basic-info-container > .thumbnail-container,
+  .basic-info-container > .basic-info-item {
+    width: 100% !important;
+  }
+
+  .main-img {
+    position: absolute;
+    left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+

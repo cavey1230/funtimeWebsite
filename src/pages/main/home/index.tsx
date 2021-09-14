@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Page404 = () => {
+const Index = () => {
     return (
         <div>
-            404
+           1111
         </div>
     );
 };
 
-export default Page404;
+export default Index;

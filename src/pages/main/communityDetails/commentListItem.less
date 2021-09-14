@@ -1,0 +1,129 @@
+.comment-container-item {
+  width: 100%;
+  margin: 1rem 0;
+  display: flex;
+  border-bottom: 0.2rem solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  justify-content: space-between;
+
+  &:last-child {
+    border: none;
+  }
+
+  .comment-user-group {
+    width: 20%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    font-size: 1.6rem;
+    font-weight: 600;
+
+    span {
+      margin: 1rem 0;
+    }
+
+    span:nth-child(3) {
+      font-weight: 400;
+      font-size: 1.4rem;
+    }
+  }
+
+  .comment-avatar-pad {
+    margin: 0 0 1rem 0;
+    width: 75%;
+    font-size: 2rem;
+    text-align: left;
+    font-weight: 600;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-sizing: border-box;
+
+    .comment-more-action-pad {
+      position: absolute;
+      top: -2rem;
+      left: calc(100% - 3rem);
+      display: flex;
+      align-items: center;
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .comment-avatar-content-content {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .comment-avatar-content-img {
+      width: 100%;
+      margin: 1rem 0;
+
+      img {
+        max-width: 50%;
+        object-fit: contain;
+        cursor: pointer;
+      }
+    }
+
+    .comment-action-group {
+      top: 2.4rem;
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+
+      div {
+        user-select: none;
+        font-size: 1.4rem;
+        margin: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: flex-end;
+
+        img, svg {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .comment-user-group {
+    font-size: 1.4rem !important;
+    font-weight: 600;
+
+    span:nth-child(3) {
+      font-size: 1.2rem !important;
+    }
+  }
+
+  .comment-avatar-pad {
+    font-size: 1.4rem !important;
+    font-weight: 500 !important;
+    padding: 1rem 0 !important;
+
+    .comment-more-action-pad {
+      top: 0 !important;
+      width: 2rem !important;
+      height: 2rem !important;
+
+      svg {
+        width: 2rem !important;
+        height: 2rem !important;
+      }
+    }
+
+    .comment-action-group {
+      div {
+        font-size: 1.2rem !important;
+
+        img, svg {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ const TerserPlugin = require("terser-webpack-plugin")
 const {CleanWebpackPlugin} = require("clean-webpack-plugin")
 const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer")
 
-process.env.NODE_ENV = "production"
+process.env.NODE_ENV = "trader"
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -90,6 +90,7 @@ module.exports = {
                             //第二次构建时，会读取之前的缓存
                             cacheDirectory: true,
                             "plugins": [
+                                "react-activation/babel",
                                 //按需加载antd
                                 // ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true}, "ant"],
                                 // // ["import", { "libraryName": "antd", "style": true}, "ant"],
