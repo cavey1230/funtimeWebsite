@@ -13,6 +13,7 @@ import {useAliveController} from "react-activation";
 import FansAndFocus from "@/pages/main/publicComponent/fansAndFocus";
 
 import "./userAcitonBar.less";
+import {GoblogApiV1} from "@/config/fetchConfig";
 
 const UserActionBar: React.FC = () => {
 
@@ -133,7 +134,12 @@ const UserActionBar: React.FC = () => {
                             </div>
                         </div>
                         <FansAndFocus userCountParams={userCount} userId={userId}/>
-                        <div className="navigate navigate-router">
+                        <div className="navigate navigate-router" onClick={() => {
+                            history.push("/main/userCenter")
+                            setTimeout(() => {
+                                setExpand(false)
+                            }, 0)
+                        }}>
                             个人中心
                         </div>
                         <div className="navigate navigate-router" onClick={() => {
@@ -162,6 +168,7 @@ const UserActionBar: React.FC = () => {
                                      onClick: () => {
                                          clearLocalStorage()
                                          history.push("/login")
+                                         GoblogApiV1.setToken("")
                                          setTimeout(() => {
                                              clear()
                                          }, 500)

@@ -9,9 +9,10 @@ import {ReduxRootType} from "@/config/reducers";
 
 import whiteLogo from "@/assets/img/logo-white.png";
 import blackLogo from "@/assets/img/logo-black.png";
+import classnames from "@/utils/classnames";
+import {navigateLabelArray} from "@/config/navigateConfig";
 
 import "./index.less";
-import classnames from "@/utils/classnames";
 
 interface Props {
     skinStatus: boolean
@@ -20,34 +21,12 @@ interface Props {
 
 const Navbar: React.FC<Props> = ({setSkinStatus, skinStatus}) => {
 
-    const labelArray = [{
-        name: "首页",
-        id: 0,
-        address: "/main/home"
-    }, {
-        name: "鱼塘",
-        id: 1,
-        address: "/main/introduction"
-    }, {
-        name: "广场",
-        id: 2,
-        address: "/main/community"
-    }, {
-        name: "活动",
-        id: 3,
-        address: "/main/home"
-    }, {
-        name: "RP",
-        id: 4,
-        address: "/main/home"
-    }]
-
     const navbarRef = useRef(null)
 
     const history = useHistory()
 
     const [current, setCurrent] = useState(() => {
-        const matchRoute = labelArray.find(item => {
+        const matchRoute = navigateLabelArray.find(item => {
             return item.address === history.location.pathname
         })
         return matchRoute ? matchRoute.id : null
@@ -81,7 +60,7 @@ const Navbar: React.FC<Props> = ({setSkinStatus, skinStatus}) => {
         }
     }, [])
 
-    const renderNavbarItem = (array: typeof labelArray) => {
+    const renderNavbarItem = (array: typeof navigateLabelArray) => {
         return array.map((item) => {
             const {name, id, address} = item
             return (<div
@@ -117,7 +96,7 @@ const Navbar: React.FC<Props> = ({setSkinStatus, skinStatus}) => {
                 </div>
                 <div className="navbar-out-group-container">
                     <div className="navbar-group-container">
-                        {renderNavbarItem(labelArray)}
+                        {renderNavbarItem(navigateLabelArray)}
                     </div>
                 </div>
                 <div className="action-bar">

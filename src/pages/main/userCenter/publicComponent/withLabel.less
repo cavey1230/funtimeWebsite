@@ -1,0 +1,34 @@
+.with-label-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 1rem 2rem;
+  border-bottom: 0.2rem solid var(--border-color);
+  margin: 1rem 0;
+
+  > div {
+    width: 100%;
+    margin-right: 0.5rem;
+  }
+
+  > div:first-child {
+    font-weight: 600;
+    width: initial;
+    word-break: keep-all;
+    min-width: 6rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .with-label-container {
+    margin: 0;
+    padding: 1rem 0.5rem;
+
+    > div:first-child {
+      font-weight: 400;
+      min-width: 5rem;
+    }
+  }
+}

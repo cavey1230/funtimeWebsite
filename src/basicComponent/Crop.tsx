@@ -1,7 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback, useImperativeHandle} from 'react';
 
 import {blobToFile, dataURLtoBlob} from '@/utils/fileChanger';
-import Button from './Button';
 
 import "./Crop.less";
 

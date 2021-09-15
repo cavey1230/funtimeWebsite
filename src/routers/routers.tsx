@@ -13,6 +13,7 @@ import Home from "@/pages/main/home"; //首页
 // import Message from "@/pages/main/message"; //消息页
 // import Introduction from "@/pages/main/introduction";//鱼塘
 // import IntroductionDetails from "@/pages/main/introductionDetails";//个人情报
+// import UserCenter from "@/pages/main/userCenter";//个人情报
 
 //懒加载
 const Community = React.lazy(() => import('@/pages/main/community'));
@@ -20,6 +21,7 @@ const CommunityDetails = React.lazy(() => import('@/pages/main/communityDetails'
 const Message = React.lazy(() => import('@/pages/main/message'));
 const Introduction = React.lazy(() => import('@/pages/main/introduction'));
 const IntroductionDetails = React.lazy(() => import('@/pages/main/introductionDetails'));
+const UserCenter = React.lazy(() => import('@/pages/main/userCenter'));
 
 //404页面
 import Page404 from "@/pages/page404";
@@ -147,6 +149,13 @@ export const routers: listItem[] = [
             render: () => changePageTitle(Introduction, "鱼塘", {
                 keepalive: true,
                 keepaliveName: "鱼塘"
+            })
+        },{
+            path: "/main/userCenter",
+            exact:true,
+            render: () => changePageTitle(UserCenter, "个人中心", {
+                keepalive: true,
+                keepaliveName: "个人中心"
             })
         }, {
             redirect: "/404"

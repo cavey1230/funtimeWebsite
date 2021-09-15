@@ -37,7 +37,7 @@ const Input: React.FC<Props> = forwardRef((props, ref) => {
     useEffect(() => {
         let timeOutId: NodeJS.Timer
         timeOutId = setTimeout(() => {
-            onChange(value)
+            onChange && onChange(value)
         }, 100)
         return () => {
             clearTimeout(timeOutId)
