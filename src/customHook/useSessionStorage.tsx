@@ -2,27 +2,21 @@ import React from 'react';
 import {tuple} from "@/utils/typescriptUtils";
 
 const sessionStorageParam = tuple(
-    "noReadNormalMessageNum",
-    "noReadImportantMessageNum",
-    "noReadNormalMessageDetails",
-    "noReadImportantMessageDetails",
+    "verificationWaitTime",
+    "socialWaitTime"
 );
 
-type GetSessionStorage = (type: typeof sessionStorageParam[number]) => any
+export type sessionType = typeof sessionStorageParam[number]
+
+type GetSessionStorage = (type: sessionType) => any
 
 const useSessionStorage = () => {
     const getSessionStorage: GetSessionStorage = (type) => {
         if (
-            type === "noReadNormalMessageDetails" ||
-            type === "noReadImportantMessageDetails"
+            type === "verificationWaitTime" ||
+            type === "socialWaitTime"
         ) {
-            return JSON.parse(localStorage.getItem(type))
-        }
-        if (
-            type === "noReadNormalMessageNum" ||
-            type === "noReadImportantMessageNum"
-        ) {
-            return Number(localStorage.getItem(type))
+            return Number(sessionStorage.getItem(type)) as number
         }
     }
 

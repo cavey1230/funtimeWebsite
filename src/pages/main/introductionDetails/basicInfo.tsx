@@ -1,5 +1,5 @@
 import React from 'react';
-import {roleImgAddress} from "@/assets/img/returnImgByNam";
+import {roleImgAddress} from "@/assets/img/returnImgByName";
 import {getNameById} from "@/pages/main/introduction/introductionList";
 import PublicAvatar from "@/pages/main/publicComponent/publicAvatar";
 import {getCareerImg} from "@/pages/main/introductionDetails/categoryCareer";

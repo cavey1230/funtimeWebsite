@@ -4,17 +4,6 @@
   flex-direction: column;
 }
 
-.with-label-content-item {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.edit-button-item{
-  align-items: flex-end;
-}
-
 .avatar-item {
   img {
     width: 10rem;
@@ -27,5 +16,14 @@
   .nickname {
     font-size: 2rem;
     font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 576px){
+  .avatar-item {
+    img {
+      width: 6rem;
+      height: 6rem;
+    }
   }
 }

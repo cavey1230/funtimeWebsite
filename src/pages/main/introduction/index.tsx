@@ -1,26 +1,21 @@
 import React, {useEffect, useState} from 'react';
 
 import {SearchPad} from "@/pages/main/introduction/searchPad";
-import useGetIndexedDbData from "@/customHook/useGetIndexedDBData";
 import {getIntroductionData} from "@/api/v1/introduction";
-import {ConditionParams} from "@/utils/indexedDb";
 import usePagination from "@/customHook/usePagination";
 import useLocalStorage from "@/customHook/useLocalStorage";
 import {IntroductionList} from "@/pages/main/introduction/introductionList";
 import Screening from "@/basicComponent/Screening";
 import {useKeepaliveNameControl} from "@/customHook/useKeepaliveNameControl";
 import Loading from '@/basicComponent/Loading';
+import useGetNameList from "@/customHook/useGetNameList";
+import Dropdown from "@/basicComponent/Dropdown";
+import {HelpIcon} from '@/assets/icon/iconComponent';
 
 import "./index.less";
 
 const Index = () => {
-    const [nameList, setNameList] = useState({
-        server: [],
-        area: [],
-        role: [],
-        race: [],
-        career: []
-    })
+    const nameList = useGetNameList()
 
     const [dataList, setDataList] = useState([])
 
@@ -31,6 +26,8 @@ const Index = () => {
     const [introductionTotal, setIntroductionTotal] = useState(0)
 
     const [loadingVisible, setLoadingVisible] = useState(false)
+
+    const [helpVisible, setHelpVisible] = useState(false)
 
     const [pagination, setPagination] = usePagination(
         1, //初始页码
@@ -44,14 +41,6 @@ const Index = () => {
     //页面缓存控制,激活当前页面时会卸载掉name为数组内字符串的缓存
     useKeepaliveNameControl(["普通动态", "滚动动态", "消息", "个人情报"])
 
-    const publicIndexedDBCondition: ConditionParams = {model: "all", limit: "more"}
-
-    useGetIndexedDbData(Object.keys(nameList).map((item) => {
-        return {tableName: item, condition: publicIndexedDBCondition}
-    }), (result) => {
-        setNameList(result)
-    })
-
     useEffect(() => {
         pagination.pageNum === 1 ?
             getData(condition, pagination, true) :
@@ -59,6 +48,7 @@ const Index = () => {
     }, [pagination])
 
     useEffect(() => {
+        (Object.keys(condition).length > 0 || screeningCondition.length > 0) &&
         setPagination({pageNum: 1, pageSize: 12})
     }, [condition, screeningCondition])
 
@@ -103,6 +93,31 @@ const Index = () => {
                             setCondition({...value})
                         }}
                     />
+                </div>
+                <div className="introduction-help-container">
+                    <Dropdown
+                        timeDelay={200}
+                        position={"bottomCenter"}
+                        label={<div className="introduction-help-label">
+                            <HelpIcon/>
+                            <span>如何创建资料卡?</span>
+                        </div>}
+                        setExpandStatus={setHelpVisible}
+                        expandStatus={helpVisible}
+                    >
+                        <div className="introduction-help-content">
+                            <div>
+                                <ol>
+                                    <li>注册</li>
+                                    <li>验证邮箱</li>
+                                    <li>登录</li>
+                                    <li>点击个人中心</li>
+                                    <li>填写个人情报</li>
+                                    <li>提交个人情报</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </Dropdown>
                 </div>
                 <Screening
                     setCondition={(array) => {

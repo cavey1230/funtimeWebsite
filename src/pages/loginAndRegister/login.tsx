@@ -10,10 +10,10 @@ import {SLink} from '@/utils/routerRender';
 import {userLogin} from "@/api/v1/loginAndRegister";
 import LayoutContainer from "@/basicComponent/LayoutContainer";
 import Radio from "@/basicComponent/Radio";
-
-import "./login.less";
 import {confirm} from "@/basicComponent/Confirm";
 import {useAliveController} from "react-activation";
+
+import "./login.less";
 
 export const userLoginFunc = (
     account: string, password: string, isRemember: boolean,

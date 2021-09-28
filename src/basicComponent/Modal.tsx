@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import { CloseIcon } from "@/assets/icon/iconComponent";
+import {CloseIcon} from "@/assets/icon/iconComponent";
 import ReactDom from "react-dom";
 
 import "./Modal.less";
@@ -15,7 +15,7 @@ interface Props {
 
 const Modal: React.FC<Partial<Props>> = (Props) => {
 
-    const {width, height, onClose, children, visible, disableDoubleClick,style} = Props
+    const {width, height, onClose, children, visible, disableDoubleClick, style} = Props
 
     const [isMouseDown, setIsMouseDown] = useState(false)
     const [mousePositionObj, setMousePositionObj] = useState({

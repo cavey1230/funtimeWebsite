@@ -16,6 +16,7 @@ import {showToast} from "@/utils/lightToast";
 import useLocalStorage from "@/customHook/useLocalStorage";
 
 import "./importantMessage.less";
+import classnames from "@/utils/classnames";
 
 const ImportantMessage = () => {
 
@@ -74,7 +75,9 @@ const ImportantMessage = () => {
             } = item
             return <div
                 key={id}
-                className="important-message-item"
+                className={classnames("important-message-item", {
+                    "important-message-item-selected": importantMessageReadId > 0
+                })}
             >
                 <div className="important-message-item-title">
                     <span>{importantMessageReadId > 0 ? "已读" : "未读"}</span>
@@ -111,8 +114,8 @@ const ImportantMessage = () => {
                         <DeleteIcon/>
                         <span onClick={() => {
                             deleteImportantMessage({
-                                importantMessageId:id,
-                                toUserId:getLocalStorage("userId")
+                                importantMessageId: id,
+                                toUserId: getLocalStorage("userId")
                             }).then(res => {
                                 if (res.status === 200) {
                                     showToast("删除成功")
@@ -135,7 +138,7 @@ const ImportantMessage = () => {
             getData={(
                 userId, pageSize, pageNum,
                 condition, setMessageTotal, setMessageArray,
-                messageArray,reload
+                messageArray, reload, setLoadingVisible
             ) => {
                 const data: getAllImportantMessageParams = {
                     toUserId: userId,
@@ -152,6 +155,7 @@ const ImportantMessage = () => {
                         }
                         setMessageTotal(res.data.total)
                     }
+                    setLoadingVisible(false)
                 })
             }}
             dataList={renderMessageItem}

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useEffect, useMemo, useState} from 'react';
 
 import "./Screening.less";
 import {ExpandIcon, NoExpandIcon} from "@/assets/icon/iconComponent";
@@ -13,19 +13,18 @@ const Screening: React.FC<Props> = (props) => {
 
     const {setCondition: setCallBackCondition, labelArray, style} = props
 
-    const [condition, setCondition] = useState(useCallback(() => {
-        const innerObj: { [key: string]: string } = {}
-        labelArray?.forEach((item) => {
-            innerObj[item.key] = ""
-        })
-        return innerObj
+    const [condition, setCondition] = useState(useMemo(() => {
+        return labelArray?.reduce((store, item) => {
+            store[item.key] = ""
+            return store
+        }, {} as {[key: string]: string})
     }, []))
 
     type ConditionKeyParams = keyof typeof condition
 
     useEffect(() => {
         const timeOutId = setTimeout(() => {
-            Object.keys(condition).map((item: ConditionKeyParams) => {
+            Object.keys(condition).forEach((item: ConditionKeyParams) => {
                 if (condition[item]) {
                     setCallBackCondition([item as string, condition[item]])
                 }

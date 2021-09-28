@@ -1,7 +1,36 @@
-.introduction-search {
-  max-width: 1366px;
+.introduction-container {
+  .introduction-search, .introduction-list {
+    max-width: 1366px;
+  }
+
+  .introduction-help-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .introduction-help-label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+
+    .introduction-help-content {
+      width: 20rem;
+      padding: 1rem;
+      box-sizing: border-box;
+      background-color: var(--switch-slider-color);
+      color: var(--switch-bg-color);
+    }
+  }
+
+  button {
+    max-width: 20rem;
+    margin: 0 auto;
+  }
 }
 
-.introduction-list {
-  max-width: 1366px;
-}

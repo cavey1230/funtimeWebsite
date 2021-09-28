@@ -25,12 +25,3 @@ interface userLoginParams {
 export const userLogin = (data: userLoginParams) => {
     return GoblogApiV1.POST("/public/login", data)
 }
-
-interface editUserParams {
-    avatar: string
-}
-
-//修改用户头像
-export const editUser = (id: number, data: editUserParams) => {
-    return GoblogApiV1.PUT(`/user/${id}`, data)
-}

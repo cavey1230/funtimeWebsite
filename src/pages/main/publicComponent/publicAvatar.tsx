@@ -2,7 +2,7 @@ import React, {CSSProperties, useEffect, useRef, useState} from 'react';
 import Avatar from "@/basicComponent/Avatar";
 import {useSelector} from "react-redux";
 import {ReduxRootType} from "@/config/reducers";
-import FansAndFocus from "@/pages/main/publicComponent/fansAndFocus";
+import Statistics from "@/pages/main/publicComponent/statistics";
 import {getUserLevelInfo} from "@/api/v1/user";
 
 import "./publicAvatar.less";
@@ -114,7 +114,7 @@ const PublicAvatar: React.FC<Partial<Props>> = (props) => {
         >
             <div className="public-avatar-expand-container">
                 <InnerCom userId={targetUserId}/>
-                <FansAndFocus userId={targetUserId}/>
+                <Statistics userId={targetUserId}/>
             </div>
         </Avatar>
     );

@@ -27,19 +27,13 @@ const Pagination: React.FC<Props> = (props) => {
     const {left, center, right} = layoutOptions
 
     const operationPageNum = (type: "add" | "sub") => {
-        if (type === "add") {
-            setPagination({
-                ...pagination,
-                pageNum: pageNum + 1
-            })
-        }
-        if (type === "sub") {
-            setPagination({
-                ...pagination,
-                pageNum: pageNum - 1
-            })
-        }
+        setPagination({
+            ...pagination,
+            pageNum: type === "add" ? pageNum + 1 : pageNum - 1
+        })
     }
+
+    const maxPageNum = Math.ceil(total / pageSize)
 
     return (<React.Fragment>
         {total > 0 && <div style={{
@@ -49,7 +43,7 @@ const Pagination: React.FC<Props> = (props) => {
             height: height,
             justifyContent: "center"
         }}>
-            <div style={{width: left}}>
+            {total > pageSize && <div style={{width: left}}>
                 <Button
                     type={pageNum === 1 ? "disable" : "primary"}
                     onClick={() => {
@@ -58,27 +52,27 @@ const Pagination: React.FC<Props> = (props) => {
                 >
                     上一页
                 </Button>
-            </div>
+            </div>}
             <div style={{
                 width: center,
                 textAlign: "center",
                 fontWeight: 600,
                 fontSize: "1.4rem"
             }}>
-                {`${pageNum} / ${Math.ceil(total / pageSize)}`}
+                {`${pageNum} / ${maxPageNum}`}
             </div>
-            <div style={{width: right}}>
+            {total > pageSize && <div style={{width: right}}>
                 <Button
-                    type={(pageNum === Math.ceil(total / pageSize)) ? "disable" : "primary"}
+                    type={pageNum === maxPageNum ? "disable" : "primary"}
                     onClick={() => {
                         operationPageNum("add")
                     }}
                 >
                     下一页
                 </Button>
-            </div>
+            </div>}
         </div>}
     </React.Fragment>)
-};
+}
 
 export default Pagination;

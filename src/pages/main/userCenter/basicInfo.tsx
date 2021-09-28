@@ -6,6 +6,8 @@ import Button from "@/basicComponent/Button";
 import EditAvatarModal from "@/pages/main/userCenter/basicInfoCom/editAvatarModal";
 import Switch from "@/basicComponent/Switch";
 import EditNickname from "@/pages/main/userCenter/basicInfoCom/editNickname";
+import AboutAccount from "@/pages/main/userCenter/basicInfoCom/aboutAccount";
+import {useHistory} from "react-router-dom";
 
 import "./basicInfo.less";
 
@@ -16,9 +18,11 @@ const BasicInfo = () => {
 
     const [editAvatarModalVisible, setEditAvatarModalVisible] = useState(false)
 
+    const history = useHistory()
+
     const buttonStyle = {width: "30%", marginTop: "1rem", minWidth: "9rem"}
 
-    const {avatar, email, verificationStatus} = getLocalStorage("userInfo")
+    const {avatar, email, verificationStatus, id} = getLocalStorage("userInfo")
 
     useEffect(() => {
         if (!globalEditStatus) {
@@ -31,58 +35,59 @@ const BasicInfo = () => {
             <div className="user-center-basic-info-container">
                 <FieldsetContainer title={"个人资料"}>
                     <WithLabel label={"更改头像或昵称会消耗1500点经验值"}/>
-                    <WithLabel label={"修改模式"}>
-                        <div className="with-label-content-item edit-button-item">
-                            <Switch
-                                status={globalEditStatus}
-                                setStatus={() => {
-                                    setGlobalEditStatus(prevState => !prevState)
-                                }}
-                                labelArray={["是", "否"]}
-                            />
-                        </div>
+                    <WithLabel label={"修改模式"} alignItems={"flex-end"}>
+                        <Switch
+                            status={globalEditStatus}
+                            setStatus={() => {
+                                setGlobalEditStatus(prevState => !prevState)
+                            }}
+                            labelArray={["是", "否"]}
+                        />
                     </WithLabel>
-                    <WithLabel label={"头像"}>
-                        <div className="with-label-content-item avatar-item">
-                            <img src={avatar} alt="avatar"/>
-                            {globalEditStatus && <Button
-                                style={buttonStyle}
-                                onClick={() => {
-                                    setEditAvatarModalVisible(true)
-                                }}
-                            >
-                                修改头像
-                            </Button>}
-                        </div>
+                    <WithLabel label={"头像"} expandClassName={"avatar-item"}>
+                        <img src={avatar} alt="avatar"/>
+                        {globalEditStatus && <Button
+                            style={buttonStyle}
+                            onClick={() => {
+                                setEditAvatarModalVisible(true)
+                            }}
+                        >
+                            修改头像
+                        </Button>}
                     </WithLabel>
-                    <WithLabel label={"昵称"}>
-                        <div className="with-label-content-item nickname-item">
-                            <EditNickname
-                                globalEditStatus={globalEditStatus}
-                                buttonStyle={buttonStyle}
-                            />
-                        </div>
+                    <WithLabel label={"昵称"} expandClassName={"nickname-item"}>
+                        <EditNickname
+                            globalEditStatus={globalEditStatus}
+                            buttonStyle={buttonStyle}
+                        />
                     </WithLabel>
                 </FieldsetContainer>
-                <FieldsetContainer title={"账号相关"}>
+                <FieldsetContainer title={"状态相关"}>
                     <WithLabel label={"邮箱地址无法更改"}/>
-                    <WithLabel label={"邮箱"}>
-                        <div className="with-label-content-item email-item">
-                            {email}
-                        </div>
+                    <WithLabel label={"邮箱"} expandClassName={"email-item"}>
+                        {email}
                     </WithLabel>
                     <WithLabel label={"验证状态"}>
-                        <div className="with-label-content-item">
-                            {verificationStatus === 1 ? "已验证" : "未验证"}
-                        </div>
+                        {verificationStatus === 1 ? "已验证" : "未验证"}
                     </WithLabel>
-                    {verificationStatus === 0 && <WithLabel label={"重新认证"}>
-                        <div className="with-label-content-item">
-                            <Button style={buttonStyle}>
-                                再次邮件
-                            </Button>
-                        </div>
-                    </WithLabel>}
+                    <AboutAccount
+                        email={email}
+                        verificationStatus={verificationStatus}
+                        buttonStyle={buttonStyle}
+                        userId={id}
+                    />
+                </FieldsetContainer>
+                <FieldsetContainer title={"修改密码"}>
+                    <WithLabel label={"修改密码"} expandClassName={"email-item"}>
+                        <Button
+                            style={buttonStyle}
+                            onClick={() => {
+                                history.push("/resetPassword")
+                            }}
+                        >
+                            去修改
+                        </Button>
+                    </WithLabel>
                 </FieldsetContainer>
             </div>
             <EditAvatarModal

@@ -35,7 +35,7 @@ const EditNickname: React.FC<Props> = (props) => {
                     ref={inputRef}
                     width={"30%"}
                     style={{
-                        minWidth: "9rem",
+                        minWidth: "20rem",
                         width: "100%",
                         height: "6rem"
                     }}

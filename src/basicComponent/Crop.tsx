@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback, useImperativeHandle} from 'react';
 
-import {blobToFile, dataURLtoBlob} from '@/utils/fileChanger';
+import {blobToFile, dataURLtoBlob} from '@/customHook/useUploadImg';
 
 import "./Crop.less";
 

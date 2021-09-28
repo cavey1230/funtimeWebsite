@@ -5,6 +5,12 @@
   box-sizing: border-box;
   margin-bottom: 3rem;
 
+  > legend {
+    padding: 0 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
   .user-center-fieldset-content {
     display: flex;
     flex-direction: column;
@@ -13,8 +19,14 @@
   }
 }
 
-@media screen and (max-width: 576px){
-  .user-center-fieldset {
-    padding: 1rem;
+@media screen and (max-width: 576px) {
+  .user-center-fieldset-container {
+    > legend {
+      font-size: 1.4rem;
+    }
+  }
+
+  .user-center-fieldset-content {
+    padding: 1rem !important;
   }
 }

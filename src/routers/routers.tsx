@@ -35,7 +35,12 @@ import ActiveAccount from "@/pages/activeAccount";
 
 //修改密码
 import ResetPassword from "@/pages/resetPassword";
+
+//加载页
 import Loading from "@/basicComponent/Loading";
+
+//抽出测试组件
+import GenerateCard from "@/pages/main/userCenter/generateCard";
 
 type ChangePageTitleParams = (
     Com: (() => JSX.Element) | React.FC,
@@ -82,6 +87,11 @@ export const routers: listItem[] = [
         path: "/login",
         exact: true,
         render: () => changePageTitle(Login, "登录")
+    },
+    {
+        path: "/test",
+        exact: true,
+        render: () => changePageTitle(GenerateCard, "测试")
     },
     {
         path: "/register",
@@ -151,7 +161,7 @@ export const routers: listItem[] = [
                 keepaliveName: "鱼塘"
             })
         },{
-            path: "/main/userCenter",
+            path: "/main/userCenter/:id",
             exact:true,
             render: () => changePageTitle(UserCenter, "个人中心", {
                 keepalive: true,

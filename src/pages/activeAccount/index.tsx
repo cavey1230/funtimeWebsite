@@ -46,12 +46,12 @@ const Index: React.FC<Props> = ({initializeDelayTime}) => {
 
     useEffect(() => {
         if (delay === 0) {
-            navigateTo()
+            navigateTo("/login")
         }
     }, [delay])
 
-    const navigateTo = () => {
-        history.replace("/")
+    const navigateTo = (path: string) => {
+        history.replace(path)
     }
 
     const debounceFunc = () => {
@@ -74,11 +74,11 @@ const Index: React.FC<Props> = ({initializeDelayTime}) => {
         <div className="verify-container">
             <div className="center-container">
                 <div><img src={skinStatus ? whiteLogo : blackLogo} alt="logo"/></div>
-                <div>{delay}秒后跳至首页</div>
+                <div>{delay}秒后跳至登录,请重新登录</div>
                 <div>{activeStatusTips}</div>
                 <div>
                     <Button onClick={() => {
-                        navigateTo()
+                        navigateTo("/")
                     }}>
                         去首页
                     </Button>

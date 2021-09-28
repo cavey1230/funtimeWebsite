@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 
 import {showToast} from "@/utils/lightToast";
-import {createUser, editUser, userLogin} from "@/api/v1/loginAndRegister";
+import {createUser, userLogin} from "@/api/v1/loginAndRegister";
 import {checkEmail, checkUsername} from "@/api/v1/verify";
 import LayoutContainer from "@/basicComponent/LayoutContainer";
 import Step from "@/basicComponent/Step";
@@ -16,6 +16,7 @@ import AvatarForm from "@/pages/loginAndRegister/register/avatarForm";
 import OtherForm from "@/pages/loginAndRegister/register/otherForm";
 
 import "./register.less";
+import {editUserAvatar} from "@/api/v1/user";
 
 const Register = () => {
 
@@ -57,9 +58,9 @@ const Register = () => {
     const {clear} = useAliveController()
 
     //清除页面缓存
-    useEffect(()=>{
+    useEffect(() => {
         clear()
-    },[])
+    }, [])
 
     const registerAccount = async (value: any) => {
         const {warning, password, rePassword, account} = value
@@ -163,8 +164,8 @@ const Register = () => {
                     const fileResult = await upload(fileFormData)
                     if (fileResult.status === 200) {
                         const avatarAddress = fileResult.url
-                        const avatarObj = {avatar: avatarAddress}
-                        const editResult = await editUser(userId, avatarObj)
+                        const avatarObj = {userId, avatar: avatarAddress}
+                        const editResult = await editUserAvatar(avatarObj)
                         if (editResult.status === 200) {
                             const copyUserInfo = {...userInfo}
                             copyUserInfo.avatar = avatarAddress

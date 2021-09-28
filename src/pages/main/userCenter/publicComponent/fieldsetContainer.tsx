@@ -15,7 +15,7 @@ const FieldsetContainer: React.FC<Props> = (props) => {
             style={{borderWidth}}
             className="user-center-fieldset-container"
         >
-            <legend style={{padding: "0 1rem"}}>{title}</legend>
+            <legend>{title}</legend>
             <div className="user-center-fieldset-content">
                 {children}
             </div>

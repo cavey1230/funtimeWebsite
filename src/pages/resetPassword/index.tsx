@@ -5,7 +5,7 @@ import Input from '@/basicComponent/Input';
 import {Form, FormItem} from "@/basicComponent/Form";
 import Button from "@/basicComponent/Button";
 import {showToast} from "@/utils/lightToast";
-import {resetPassword, sendRestPasswordEmail} from "@/api/v1/verify";
+import {resetPassword, sendVerifyEmail} from "@/api/v1/verify";
 import {useHistory} from "react-router-dom";
 
 const Index = () => {
@@ -41,7 +41,7 @@ const Index = () => {
             showToast(messageArr[0], "error")
         } else {
             setLoadingVisible(true)
-            const result = await sendRestPasswordEmail({email})
+            const result = await sendVerifyEmail({email})
             setLoadingVisible(false)
             if (result.status === 200) {
                 if (result.userId > 0) {

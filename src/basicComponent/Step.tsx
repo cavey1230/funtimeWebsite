@@ -14,11 +14,16 @@ interface Props {
         width: string
         height: string
     }
+    allowSkipClick?: boolean
     contentStyle?: { [key: string]: string | number }
+    labelStyle?: { [key: string]: string | number }
 }
 
 const Step: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props, ref) => {
-    const {stepLabelArray, initializeSelectId, children, contentStyle, labelItemSize} = props
+    const {
+        stepLabelArray, initializeSelectId, children,
+        contentStyle, labelItemSize, allowSkipClick, labelStyle
+    } = props
 
     const [selectedId, setSelectedId] = useState(initializeSelectId)
 
@@ -39,15 +44,15 @@ const Step: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
             return <div
                 className="step-label-item-container"
                 key={id}
-                // onClick={()=>{
-                //     setSelectedId(id)
-                // }}
+                onClick={() => {
+                    allowSkipClick && setSelectedId(id)
+                }}
             >
                 <div
                     className={`step-label-item ${selectedId === id ? "selected" : ""}`}
                     style={labelItemSize}
                 >
-                    <div>
+                    <div style={labelStyle}>
                         {itemIndex}
                     </div>
                     {status === 0 || selectedId === id ? <div>

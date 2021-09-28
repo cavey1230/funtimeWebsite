@@ -5,18 +5,22 @@
   justify-content: space-between;
   box-sizing: border-box;
   padding: 1rem 2rem;
-  border-bottom: 0.2rem solid var(--border-color);
   margin: 1rem 0;
+  flex-direction: column;
 
-  > div {
+  .with-content-item {
     width: 100%;
-    margin-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   > div:first-child {
     font-weight: 600;
-    width: initial;
+    width: 100%;
+    text-align: left;
     word-break: keep-all;
+    margin-bottom: 0.5rem;
     min-width: 6rem;
   }
 }
@@ -27,8 +31,8 @@
     padding: 1rem 0.5rem;
 
     > div:first-child {
-      font-weight: 400;
       min-width: 5rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

@@ -52,8 +52,14 @@ export const userCenterNavigateArray: UserCenterNavigateArray = [
         icon: IntroductionIcon
     },
     {
-        name: "最近点赞",
+        name: "生成资料卡图片",
         id: 3,
+        isVisible: true,
+        icon: IntroductionIcon
+    },
+    {
+        name: "最近点赞",
+        id: 4,
         isVisible: true,
         icon: PraiseIcon
     }

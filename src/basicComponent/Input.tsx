@@ -35,6 +35,10 @@ const Input: React.FC<Props> = forwardRef((props, ref) => {
     }));
 
     useEffect(() => {
+        initializeValue && setValue(initializeValue)
+    }, [initializeValue])
+
+    useEffect(() => {
         let timeOutId: NodeJS.Timer
         timeOutId = setTimeout(() => {
             onChange && onChange(value)
@@ -63,7 +67,7 @@ const Input: React.FC<Props> = forwardRef((props, ref) => {
                 style={style}
                 autoComplete={autocomplete}
                 className={"textareaStyle"}
-                value={value}
+                defaultValue={value}
                 onChange={(event) => handleChange(event)}
                 onFocus={() => onFocus ? onFocus() : null}
                 onBlur={() => onBlur ? onBlur() : null}
@@ -72,7 +76,7 @@ const Input: React.FC<Props> = forwardRef((props, ref) => {
                 style={style}
                 autoComplete={autocomplete}
                 className={noFocusStyle ? "inputStyleNoFocus" : "inputStyle"}
-                value={value}
+                defaultValue={value}
                 onChange={(event) => handleChange(event)}
                 onFocus={() => onFocus ? onFocus() : null}
                 onBlur={() => onBlur ? onBlur() : null}

@@ -8,13 +8,14 @@ import {ReduxRootType} from "@/config/reducers";
 import {HollowCollectIcon, MessageIcon, DeleteIcon} from "@/assets/icon/iconComponent";
 import MessageContainer, {Props} from "@/pages/main/message/messageContainer";
 import {useHistory} from "react-router-dom";
-import {CommentActionBar} from "@/pages/main/message/commentActionBar";
+import {CommentActionBar} from "@/pages/main/communityDetails/commentActionBar";
 import useMessage from "@/customHook/useMessage";
 import PublicAvatar from "@/pages/main/publicComponent/publicAvatar";
 import useTimeChanger from '@/customHook/useTimeChanger';
 import {getMarkDownContent} from '@/utils/stringMatchingTool';
 
 import "./normalMessage.less";
+import classnames from "@/utils/classnames";
 
 const NormalMessage: React.FC = () => {
 
@@ -96,7 +97,11 @@ const NormalMessage: React.FC = () => {
             } = item
             return <div
                 key={id}
-                className="normal-message-item"
+                className={
+                    classnames("normal-message-item", {
+                        "normal-message-item-selected": haveRead === 1
+                    })
+                }
             >
                 <div className="time">
                     <span>{haveRead === 1 ? "已读" : "未读"}</span>
@@ -266,7 +271,7 @@ const NormalMessage: React.FC = () => {
             getData={(
                 userId, pageSize, pageNum,
                 condition, setMessageTotal, setMessageArray,
-                messageArray, reload
+                messageArray, reload, setLoadingVisible
             ) => {
                 const data: getAllMessageParams = {
                     toUserId: userId,
@@ -285,6 +290,7 @@ const NormalMessage: React.FC = () => {
                         }
                         setMessageTotal(res.data.total)
                     }
+                    setLoadingVisible(false)
                 })
             }}
             dataList={renderMessageItem}

@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from 'react';
+import React, {CSSProperties, useCallback, useState} from 'react';
 import Dropdown from "@/basicComponent/Dropdown";
 import {useHistory} from "react-router-dom";
 import {Props as DropdownProps} from "@/basicComponent/Dropdown";
@@ -18,8 +18,6 @@ interface Props {
     expandModel: boolean
     dropdownPosition: DropdownProps["position"]
 }
-
-
 
 const Avatar: React.FC<Partial<Props>> = (props) => {
 
@@ -51,10 +49,11 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
         navigateAddress && history.push(navigateAddress)
     }
 
-    const AvatarGroup = () => {
+    const AvatarGroup = useCallback(() => {
         return <div className="avatar-img" style={{
             flexDirection: innerFlexDirection,
-            alignItems: innerAlignItem
+            alignItems: innerAlignItem,
+            height: imgStyle.width as any
         }}>
             <div className="img-container" onClick={navigateTo}>
                 <img src={avatarAddress} alt="avatarAddress" style={imgStyle}/>
@@ -63,7 +62,7 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
                 {innerLabelString}
             </div>
         </div>
-    }
+    }, [avatarAddress,innerLabelString])
 
     return (
         <div

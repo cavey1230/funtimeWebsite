@@ -1,4 +1,5 @@
 const {resolve} = require("path")
+const webpack = require("webpack")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require("clean-webpack-plugin")
 // const tsImportPluginFactory = require('ts-import-plugin')
@@ -9,7 +10,7 @@ module.exports = {
     output: {
         //输入
         filename: "js/built.js",
-        path: resolve(__dirname, "build"),
+        path: resolve(__dirname, "build")
     },
     module: {
         rules: [
@@ -99,7 +100,7 @@ module.exports = {
                 ]
             }, {
                 test: /\.(jpg|png|gif|svg)$/,
-                //依赖两个包 url-loader file-loader
+                //依赖两个包 url-loader file-loader 5.0后变更为内置Asset
                 type: 'asset',
                 generator: {
                     filename: 'images/[hash][ext][query]'
@@ -108,9 +109,17 @@ module.exports = {
                 test: /\.html$/,
                 //处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
                 loader: "html-loader"
-            }, {
+            },{
+                test: /\.ttf|eot|woff2?$/,
+                type: 'asset/resource',
+                generator: {
+                    // 输出到 font 目录中，占位符 [name] 保留原始文件名，
+                    // [hash] 防止出现相同文件名无法区分，[ext] 拿到后缀名
+                    filename: 'font/[hash][ext][query]'
+                }
+            },{
                 //排除这些文件，打包剩下的
-                exclude: /\.(css|js|jsx|ts|tsx|html|jpg|png|gif|svg|less)/,
+                exclude: /\.(css|js|jsx|ts|tsx|html|jpg|png|gif|svg|less|ttf|eot|woff2?)/,
                 type: 'asset/resource',
                 generator: {
                     filename: 'media/[hash][ext][query]'
@@ -122,6 +131,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new friendlyErrorsWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: "./public/index.html"
         }),

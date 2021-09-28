@@ -3,12 +3,9 @@ import Input from "@/basicComponent/Input";
 import Button from '@/basicComponent/Button';
 import {showToast} from "@/utils/lightToast";
 import Loading from "@/basicComponent/Loading";
-import {upload} from "@/api/v1/public";
-import {blobToFile, dataURLtoBlob} from '@/utils/fileChanger';
 import useLocalStorage from "@/customHook/useLocalStorage";
-import { matchSpecialSymbol } from '@/utils/stringMatchingTool';
-
-import {CameraIcon} from "@/assets/icon/iconComponent";
+import Upload from "@/basicComponent/Upload";
+import useUploadImg from "@/customHook/useUploadImg";
 
 import "./commentActionBar.less";
 
@@ -39,81 +36,23 @@ export const CommentActionBar: React.FC<Props> = (props) => {
 
     const [selectImgArray, setSelectImgArray] = useState([])
 
-    const fileRef = useRef(null)
-
     const inputRef = useRef(null)
+
+    const uploadRef = useRef(null)
 
     const [getLocalStorage] = useLocalStorage()
 
+    const upLoadImg = useUploadImg()
+
     const userId = getLocalStorage("userId")
-
-    const fileChange = async () => {
-        const files = fileRef.current.files
-        const innerShowToast = () => {
-            showToast("最多只能添加1张图片", "error")
-        }
-        if (selectImgArray.length === 1) {
-            innerShowToast()
-            return
-        }
-        if (files[0] && files.length <= 1) {
-            const length = files.length
-            const innerImgUrlArray: any[] = []
-            const getImgUrlOfPromise = (id: number) => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader()
-                    reader.readAsDataURL(files[id])
-                    reader.onload = () => {
-                        const result = reader.result
-                        resolve(result)
-                    }
-                })
-            }
-            for (let i = 0; i < length; i++) {
-                const result = await getImgUrlOfPromise(i)
-                innerImgUrlArray.push(result)
-            }
-            setSelectImgArray(innerImgUrlArray)
-        } else {
-            innerShowToast()
-        }
-    }
-
-    const renderImgArray = (imgArray: typeof selectImgArray) => {
-        const innerStyle = {
-            width: "30%",
-            height: "100%"
-        }
-        const length = imgArray.length
-        if (length > 3 && length <= 6) {
-            innerStyle.height = "49%"
-        } else if (length > 6) {
-            innerStyle.height = "30%"
-        }
-        if (length === 0) {
-            return <div className="empty" children={"待添加图片..."}/>
-        }
-        return imgArray?.map((item, index) => {
-            return <img
-                style={innerStyle}
-                key={index}
-                src={item}
-                alt={`img-item-${index}`}
-                onClick={() => {
-                    const innerImgArray = selectImgArray
-                    innerImgArray.splice(index, 1)
-                    setSelectImgArray([...innerImgArray])
-                }}
-            />
-        })
-    }
 
     const init = () => {
         setSelectImgArray([])
         setInputValue("")
         setLoadingVisible(false)
         setTipsVisible(true)
-        inputRef.current.setValue("")
+        inputRef.current && inputRef.current.setValue("")
+        uploadRef.current && uploadRef.current.clear()
         flushDataFunc()
     }
 
@@ -135,22 +74,13 @@ export const CommentActionBar: React.FC<Props> = (props) => {
                 replyId: replyId || null,
                 url: ""
             })
-            if (selectImgArray.length > 0) {
-                const blob = dataURLtoBlob(selectImgArray[0])
-                const file = blobToFile(blob, `${Date.now()}.jpeg`);
-                const formData = new FormData()
-                formData.append("file", file)
-                upload(formData).then(res => {
-                    if (res.status === 200) {
-                        const url = res.url
-                        onFinish(communityId, userId, inputValue, init, haveUrl(url))
-                        return
-                    }
-                    init()
-                })
-                return
+            const onfinishWithUrl = (urlList?: string[]) => {
+                onFinish(communityId, userId, inputValue, init,
+                    urlList ? haveUrl(urlList[0] as string) : notHaveUrl())
             }
-            onFinish(communityId, userId, inputValue, init, notHaveUrl())
+            selectImgArray.length > 0 ? upLoadImg(selectImgArray, urlList => {
+                urlList.length > 0 ? onfinishWithUrl(urlList) : init()
+            }) : onfinishWithUrl()
         }, 1000)
     }
 
@@ -198,8 +128,8 @@ export const CommentActionBar: React.FC<Props> = (props) => {
                         </div>}
                         <Button
                             style={{
-                                width:"50%",
-                                minWidth:"10rem",
+                                width: "50%",
+                                minWidth: "10rem",
                             }}
                             onClick={() => {
                                 commitCommunity()
@@ -209,29 +139,14 @@ export const CommentActionBar: React.FC<Props> = (props) => {
                         </Button>
                     </div>
                 </div>
-                <div className="selected-img-group">
-                    <div
-                        className="camera-icon"
-                        onClick={() => {
-                            fileRef.current.click()
-                        }}
-                    >
-                        <CameraIcon/>
-                        <input
-                            type="file"
-                            style={{display: "none"}}
-                            ref={fileRef}
-                            onClick={() => {
-                                fileRef.current.value = ""
-                            }}
-                            onChange={() => {
-                                fileChange()
-                            }}
-                            accept={"image/png,image/jpeg"}
-                        />
-                    </div>
-                    {renderImgArray(selectImgArray)}
-                </div>
+                <Upload
+                    ref={uploadRef}
+                    onChange={(res) => {
+                        setSelectImgArray(res)
+                    }}
+                    justifyContent={"flex-start"}
+                    acceptFileType={"image/png,image/jpeg"}
+                />
             </div>
             <Loading visible={loadingVisible}/>
         </React.Fragment>

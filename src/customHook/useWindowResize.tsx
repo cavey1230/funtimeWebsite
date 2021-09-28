@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {useDispatch} from "react-redux";
 import {updateWindowResizeStatus} from "@/redux/windowResizeReducer";
-import {init} from "@/utils/routerRender";
 
 const useWindowResize = () => {
 

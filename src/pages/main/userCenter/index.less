@@ -13,11 +13,21 @@
     display: flex;
     width: 80%;
 
-    .user-center-content-container {
+    #user-center-content-container {
       width: 100%;
       margin: 1rem;
       padding: 3rem 1rem;
-      overflow-y: hidden;
+      overflow-y: auto;
+
+      //滚动条样式
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background-color: var(--border-color);
+      }
     }
   }
 }
@@ -36,6 +46,7 @@
 
       .user-center-content-container {
         padding: 1rem;
+        overflow-y: hidden;
       }
     }
   }

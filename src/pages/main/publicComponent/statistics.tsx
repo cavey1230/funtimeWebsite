@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import "./fansAndFocus.less";
+import "./statistics.less";
 import {getUserCountNumber} from "@/api/v1/user";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
     }
 }
 
-const FansAndFocus: React.FC<Props> = (props) => {
+const Statistics: React.FC<Props> = (props) => {
     const {userId, userCountParams} = props
 
     const [userCount, setUserCount] = useState(userCountParams || {
@@ -53,4 +53,4 @@ const FansAndFocus: React.FC<Props> = (props) => {
     );
 };
 
-export default FansAndFocus;
+export default Statistics;

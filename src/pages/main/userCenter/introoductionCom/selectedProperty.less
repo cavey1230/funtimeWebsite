@@ -1,0 +1,51 @@
+.user-center-property-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .user-center-property-list-item {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem;
+    box-sizing: border-box;
+
+    .user-center-property-list-item-label {
+      font-weight: 600;
+      word-break: keep-all;
+      min-width: 8rem;
+      cursor: pointer;
+    }
+
+    .user-center-property-list-item-fill-box-group {
+      display: flex;
+      align-items: center;
+
+      .fill-box {
+        width: 2rem;
+        height: 2rem;
+        border: 0.2rem solid var(--font-color);
+        background-color: var(--bg-color);
+        margin: 0.5rem;
+        border-radius: 1rem;
+        transition: background-color 0.2s ease-in-out;
+        cursor: pointer;
+      }
+
+      .fill-box-selected {
+        background-color: var(--font-color);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .user-center-property-list-item {
+    margin: 0 !important;
+
+    .user-center-property-list-item-fill-box-group {
+      .fill-box {
+        margin: 0.2rem !important;
+      }
+    }
+  }
+}

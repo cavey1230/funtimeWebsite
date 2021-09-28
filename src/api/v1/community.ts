@@ -156,6 +156,17 @@ export const createCommunityLike = (data: createCommunityLikeParams) => {
     return GoblogApiV1.POST("/community_like/add", data)
 }
 
+interface findCommunityLikeParams {
+    userId: number
+    pageSize: number
+    pageNum: number
+}
+
+//取得最近喜欢的列表
+export const findCommunityLike = (data: findCommunityLikeParams) => {
+    return GoblogApiV1.GET("/community_like/list", data)
+}
+
 interface createCommunityWatchParams {
     userId: number
     communityId: number

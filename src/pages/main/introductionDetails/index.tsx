@@ -2,42 +2,26 @@ import React, {useEffect, useState} from 'react';
 import {createIntroductionWatch, getIntroductionData} from "@/api/v1/introduction";
 import useLocalStorage from "@/customHook/useLocalStorage";
 import {useRouteMatch} from "react-router-dom";
-import {ConditionParams} from "@/utils/indexedDb";
-import useGetIndexedDbData from "@/customHook/useGetIndexedDBData";
 import Loading from "@/basicComponent/Loading";
 import {CategoryCareer} from './categoryCareer';
 import ActionGroup from "@/pages/main/introductionDetails/actionGroup";
 import BasicInfo from "@/pages/main/introductionDetails/basicInfo";
 import PropertyInfo from "@/pages/main/introductionDetails/propertyInfo";
 import ThumbnailImg from "@/pages/main/introductionDetails/thumbnailImg";
+import useGetNameList from "@/customHook/useGetNameList";
 
 import "./index.less";
 
 const Index = () => {
     const [data, setData] = useState({} as { [key: string]: any })
 
-    const [nameList, setNameList] = useState({
-        server: [],
-        area: [],
-        role: [],
-        race: [],
-        career: [],
-        property: []
-    })
+    const nameList = useGetNameList()
 
     const [getLocalStorage] = useLocalStorage()
 
     const match = useRouteMatch()
 
     const [loadingVisible, setLoadingVisible] = useState(false)
-
-    const publicIndexedDBCondition: ConditionParams = {model: "all", limit: "more"}
-
-    useGetIndexedDbData(Object.keys(nameList).map((item) => {
-        return {tableName: item, condition: publicIndexedDBCondition}
-    }), (result) => {
-        setNameList(result)
-    })
 
     useEffect(() => {
         document.body.scrollTo({
@@ -52,10 +36,11 @@ const Index = () => {
             userId: Number((params as any).userId)
         }).then(res => {
             if (!Array.isArray(res.data.result)) {
+                setLoadingVisible(false)
                 return
             }
             const data = res.data.result[0]
-            !data.hasWatched && createIntroductionWatch({
+            loginUserId && !data.hasWatched && createIntroductionWatch({
                 userId: loginUserId,
                 introductionId: data.id
             }).then(res => {
@@ -107,14 +92,14 @@ const Index = () => {
                         data={data}
                         roleList={roleList}
                     />
+                    {/*缩略图*/}
+                    <ThumbnailImg imgArray={imgArray}/>
                     {/*属性*/}
                     <PropertyInfo
                         propertyList={propertyList}
                         propertyIdArray={propertyIdArray}
                         propertyRangeArray={propertyRangeArray}
                     />
-                    {/*缩略图*/}
-                    <ThumbnailImg imgArray={imgArray}/>
                 </div>
                 <div className="main-img">
                     <img src={mainImg && mainImg} alt="mainImg"/>

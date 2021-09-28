@@ -10,10 +10,10 @@ import Loading from "@/basicComponent/Loading";
 import {useSelector} from "react-redux";
 import {ReduxRootType} from "@/config/reducers";
 import {useAliveController} from "react-activation";
-import FansAndFocus from "@/pages/main/publicComponent/fansAndFocus";
+import Statistics from "@/pages/main/publicComponent/statistics";
+import {GoblogApiV1} from "@/config/fetchConfig";
 
 import "./userAcitonBar.less";
-import {GoblogApiV1} from "@/config/fetchConfig";
 
 const UserActionBar: React.FC = () => {
 
@@ -125,6 +125,7 @@ const UserActionBar: React.FC = () => {
                                     model="column"
                                     nextExperience={nextLevelExperience}
                                     nowExperience={experience}
+                                    maxExperience={1500}
                                 />
                             </div>
                             <div className="small-font-size">
@@ -133,9 +134,9 @@ const UserActionBar: React.FC = () => {
                                 <div>{residentEpithet ? residentEpithet : epithet}</div>
                             </div>
                         </div>
-                        <FansAndFocus userCountParams={userCount} userId={userId}/>
+                        <Statistics userCountParams={userCount} userId={userId}/>
                         <div className="navigate navigate-router" onClick={() => {
-                            history.push("/main/userCenter")
+                            history.push("/main/userCenter/0")
                             setTimeout(() => {
                                 setExpand(false)
                             }, 0)
@@ -155,9 +156,6 @@ const UserActionBar: React.FC = () => {
                             >
                                 消息中心
                             </Badeg>
-                        </div>
-                        <div className="navigate navigate-router">
-                            设置
                         </div>
                         <div className="navigate navigate-router"
                              onClick={(event) => {

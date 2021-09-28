@@ -8,6 +8,7 @@ import {showToast} from "@/utils/lightToast";
 import {ReduxRootType} from "@/config/reducers";
 
 import "./messageContainer.less";
+import Loading from "@/basicComponent/Loading";
 
 export interface Props {
 
@@ -27,7 +28,8 @@ export interface Props {
         setMessageTotal: (total: number) => void,
         setMessageArray: (array: Array<any>) => void,
         messageArray: Array<any>,
-        reload: boolean
+        reload: boolean,
+        setLoadingVisible: (bool: boolean) => void
     ) => void
 
     //总数详细
@@ -37,7 +39,7 @@ export interface Props {
     dataList: (
         data: Array<any>,
         userId: number,
-        flushData: (userId: number,reload:boolean) => void
+        flushData: (userId: number, reload: boolean) => void
     ) => JSX.Element | Array<JSX.Element>
 
     //初始条数
@@ -61,6 +63,8 @@ const MessageContainer: React.FC<Props> = (props) => {
     const [messageArray, setMessageArray] = useState([])
 
     const [messageTotal, setMessageTotal] = useState(0)
+
+    const [loadingVisible, setLoadingVisible] = useState(false)
 
     const [condition, setCondition] = useState("all")
 
@@ -106,9 +110,12 @@ const MessageContainer: React.FC<Props> = (props) => {
 
     const getAllMessageData = (userId: number, reload: boolean) => {
         const {pageNum, pageSize} = pagination
+        setLoadingVisible(true)
         getData(userId, pageSize, pageNum,
             condition, setMessageTotal,
-            setMessageArray, messageArray, reload)
+            setMessageArray, messageArray,
+            reload, setLoadingVisible
+        )
     }
 
     const renderLeftConditionItem = (
@@ -149,16 +156,19 @@ const MessageContainer: React.FC<Props> = (props) => {
     }
 
     return (
-        <div className="message-out-container">
-            <div className="message-left-pad">
-                {renderLeftConditionItem(leftConditionLabel, isMobile, setCondition)}
-            </div>
-            <div className="message-right-pad">
-                <div className="message-inner-container" ref={scrollRef}>
-                    {dataList(messageArray, userIdOfState, getAllMessageData)}
+        <React.Fragment>
+            <div className="message-out-container">
+                <div className="message-left-pad">
+                    {renderLeftConditionItem(leftConditionLabel, isMobile, setCondition)}
+                </div>
+                <div className="message-right-pad">
+                    <div className="message-inner-container" ref={scrollRef}>
+                        {dataList(messageArray, userIdOfState, getAllMessageData)}
+                    </div>
                 </div>
             </div>
-        </div>
+            <Loading visible={loadingVisible}/>
+        </React.Fragment>
     );
 };
 

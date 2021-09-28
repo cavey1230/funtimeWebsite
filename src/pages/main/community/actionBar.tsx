@@ -4,15 +4,14 @@ import Button from '@/basicComponent/Button';
 import TopicModal from "./actionBarCom/topicModal";
 import {showToast} from "@/utils/lightToast";
 import Loading from "@/basicComponent/Loading";
-import {upload} from "@/api/v1/public";
-import {blobToFile, dataURLtoBlob} from '@/utils/fileChanger';
 import useLocalStorage from "@/customHook/useLocalStorage";
 import {createCommunity} from "@/api/v1/community";
-import {CameraIcon, TopicIcon} from "@/assets/icon/iconComponent";
-import {matchSpecialSymbol} from "@/utils/stringMatchingTool";
+import {TopicIcon} from "@/assets/icon/iconComponent";
 import MarkDownEditor from "@/pages/main/publicComponent/markdownEditor";
+import Upload from "@/basicComponent/Upload";
 
 import "./actionBar.less";
+import useUploadImg from "@/customHook/useUploadImg";
 
 interface Props {
     flushDataFunc: () => void
@@ -39,74 +38,15 @@ const ActionBar: React.FC<Props> = (props) => {
 
     const [selectImgArray, setSelectImgArray] = useState([])
 
-    const fileRef = useRef(null)
-
     const inputRef = useRef(null)
+
+    const uploadRef = useRef(null)
 
     const markDownRef = useRef(null)
 
     const [getLocalStorage] = useLocalStorage()
 
-    const fileChange = async () => {
-        const files = fileRef.current.files
-        const innerShowToast = () => {
-            showToast("最多只能添加9张图片", "error")
-        }
-        if (selectImgArray.length === 9) {
-            innerShowToast()
-            return
-        }
-        if (files[0] && files.length <= 9) {
-            const length = files.length
-            const innerImgUrlArray: any[] = []
-            const getImgUrlOfPromise = (id: number) => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader()
-                    reader.readAsDataURL(files[id])
-                    reader.onload = () => {
-                        const result = reader.result
-                        resolve(result)
-                    }
-                })
-            }
-            for (let i = 0; i < length; i++) {
-                const result = await getImgUrlOfPromise(i)
-                innerImgUrlArray.push(result)
-            }
-            setSelectImgArray(innerImgUrlArray)
-        } else {
-            innerShowToast()
-        }
-    }
-
-    const renderImgArray = (imgArray: typeof selectImgArray) => {
-        const innerStyle = {
-            width: "30%",
-            height: "100%"
-        }
-        const length = imgArray.length
-        if (length > 3 && length <= 6) {
-            innerStyle.height = "49%"
-        } else if (length > 6) {
-            innerStyle.height = "30%"
-        }
-        if (length === 0) {
-            return <div className="empty" children={"点击相机添加图片"}/>
-        }
-        return imgArray?.map((item, index) => {
-            return <img
-                style={innerStyle}
-                key={index}
-                src={item}
-                alt={`img-item-${index}`}
-                onClick={() => {
-                    const innerImgArray = selectImgArray
-                    innerImgArray.splice(index, 1)
-                    setSelectImgArray([...innerImgArray])
-                }}
-            />
-        })
-    }
+    const upLoadImg = useUploadImg()
 
     const init = () => {
         setSelectImgArray([])
@@ -114,6 +54,7 @@ const ActionBar: React.FC<Props> = (props) => {
         setLoadingVisible(false)
         setTipsVisible(true)
         inputRef.current && inputRef.current.setValue("")
+        uploadRef.current && uploadRef.current.clear()
         markDownRef.current && markDownRef.current.setArticleContent("")
         flushDataFunc()
     }
@@ -135,21 +76,7 @@ const ActionBar: React.FC<Props> = (props) => {
         }
         setLoadingVisible(true)
         setTimeout(() => {
-            const imgUrlArray = Promise.all(selectImgArray.map(item => {
-                return new Promise((resolve, reject) => {
-                    const file = blobToFile(dataURLtoBlob(item), `${Date.now()}.jpeg`);
-                    const formData = new FormData()
-                    formData.append("file", file)
-                    upload(formData).then(res => {
-                        if (res.status === 200) {
-                            resolve(res.url)
-                        } else {
-                            reject("发生错误")
-                        }
-                    })
-                })
-            }))
-            imgUrlArray.then(res => {
+            upLoadImg(selectImgArray,res => {
                 const {id} = selectTopic
                 const innerContent = editorModel ? markDownRef.current.articleContent : inputValue
                 const innerIsHeightOrderModel = editorModel ? 1 : 0
@@ -167,10 +94,8 @@ const ActionBar: React.FC<Props> = (props) => {
                     }
                     init()
                 })
-            }).catch(() => {
-                init()
             })
-        }, 1000)
+        }, 200)
     }
 
     return (
@@ -247,7 +172,6 @@ const ActionBar: React.FC<Props> = (props) => {
                                 wordBreak: "keep-all"
                             }}
                             onClick={() => {
-
                                 setEditorModel(prevState => !prevState)
                             }}
                         >
@@ -263,30 +187,16 @@ const ActionBar: React.FC<Props> = (props) => {
                         </Button>
                     </div>
                 </div>
-                <div className="selected-img-group">
-                    <div
-                        className="camera-icon"
-                        onClick={() => {
-                            fileRef.current.click()
-                        }}
-                    >
-                        <CameraIcon/>
-                        <input
-                            type="file"
-                            style={{display: "none"}}
-                            ref={fileRef}
-                            onClick={() => {
-                                fileRef.current.value = ""
-                            }}
-                            onChange={() => {
-                                fileChange()
-                            }}
-                            accept={"image/png,image/jpeg"}
-                            multiple={true}
-                        />
-                    </div>
-                    {renderImgArray(selectImgArray)}
-                </div>
+                <Upload
+                    ref={uploadRef}
+                    onChange={(res) => {
+                        setSelectImgArray(res)
+                    }}
+                    justifyContent={"flex-start"}
+                    multiple={true}
+                    maxFileLength={9}
+                    acceptFileType={"image/png,image/jpeg"}
+                />
             </div>
             <Loading visible={loadingVisible}/>
         </React.Fragment>

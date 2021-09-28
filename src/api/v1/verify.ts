@@ -28,13 +28,13 @@ export const checkUsername = (data: checkUsernameParams) => {
     return GoblogApiV1.GET("/public/user/check_username", data)
 }
 
-interface sendRestPasswordEmailParams {
+interface sendVerifyEmailParams {
     email: string
 }
 
-//检测用户名是否存在
-export const sendRestPasswordEmail = (data: sendRestPasswordEmailParams) => {
-    return GoblogApiV1.GET("/public/user/send_reset_password_email", data)
+//发送激活邮件
+export const sendVerifyEmail = (data: sendVerifyEmailParams) => {
+    return GoblogApiV1.GET("/public/user/send_new_verify_email", data)
 }
 
 interface resetPasswordParams {
@@ -43,7 +43,7 @@ interface resetPasswordParams {
     password: string
 }
 
-//检测用户名是否存在
+//重置密码
 export const resetPassword = (data: resetPasswordParams) => {
     return GoblogApiV1.POST("/public/user/reset_password", data)
 }

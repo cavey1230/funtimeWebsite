@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {battleImgAddress, roleImgAddress} from "@/assets/img/returnImgByNam";
+import {battleImgAddress, roleImgAddress} from "@/assets/img/returnImgByName";
 import {
     SunIcon,
     MoonIcon,

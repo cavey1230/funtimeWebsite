@@ -1,0 +1,186 @@
+.card-template2-container {
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  height: 1366px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .top-panel, .bottom-panel {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .top-panel {
+    padding: 1rem 5rem;
+
+    .name-and-logo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1rem auto;
+      border-radius: 5rem;
+      font-size: 1.8rem;
+
+      .game-role-name {
+        display: flex;
+        align-items: center;
+        font-size: 4rem;
+        letter-spacing: 0.5rem;
+        font-weight: 600;
+
+        > div {
+          margin-left: 1rem;
+        }
+
+        img {
+          width: 7rem;
+          height: 5rem;
+
+          &:first-child {
+            width: 7rem;
+            height: 6rem;
+          }
+        }
+      }
+
+      .server-and-race {
+        display: flex;
+        margin-top: 1rem;
+
+        > div {
+          margin-left: 1rem;
+
+          &:first-child {
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+
+      .logo {
+        height: 6rem;
+        width: initial;
+
+        img {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .bottom-panel {
+    border-radius: 5rem 5rem 0 0;
+    padding: 1rem 5rem 2rem 5rem;
+    font-weight: 600;
+
+    .self-introduction {
+      padding: 2rem 0 1rem 0;
+      box-sizing: border-box;
+
+      span {
+        border-bottom: 0.5rem solid rgba(255, 255, 255,1);
+        box-sizing: border-box;
+        display: flex;
+        width: 100%;
+        padding: 2rem;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+    }
+
+    .template-property-info-group {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      font-size: 1.8rem;
+
+      .property-info-item {
+        display: flex;
+        margin-bottom: 1rem;
+        justify-content: space-between;
+        width: calc(25% - 0.5rem);
+        align-items: center;
+        border-left: 0.5rem solid rgba(255, 255, 255, 0.8);
+
+        .label {
+          box-sizing: border-box;
+          padding-left: 1rem;
+          width: 70%;
+        }
+
+        .content {
+          width: 30%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
+      }
+    }
+
+    .info-item-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+
+      img {
+        width: 5rem;
+        height: 5rem;
+      }
+
+      > div {
+        display: flex;
+        flex-direction: column;
+
+        span:nth-child(2) {
+          font-size: 2.5rem;
+        }
+      }
+    }
+  }
+
+  .main-img {
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+
+    img {
+      position: absolute;
+      left: -81%;
+      height: 100%;
+    }
+  }
+
+
+  .career-info-container {
+    .career-info-item {
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+
+      .career-first-category {
+        display: flex;
+        margin: 1rem;
+
+        .career-details-item {
+          opacity: 0.3;
+
+          img {
+            width: 3.5rem;
+          }
+        }
+
+        .selected {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

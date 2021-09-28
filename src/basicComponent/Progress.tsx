@@ -5,6 +5,7 @@ import "./Progress.less";
 interface Props {
     nowExperience: number
     nextExperience: number
+    maxExperience: number
     height?: string
     width?: string
     model?: "row" | "column"
@@ -13,12 +14,16 @@ interface Props {
 
 const Progress: React.FC<Props> = (props) => {
 
-    const {nowExperience, nextExperience, height, width, model, label} = props
+    const {
+        nowExperience, nextExperience, height,
+        width, model, label, maxExperience
+    } = props
 
     const copyModel = model ? model : "column"
 
     const getPercent = (num1: number, num2: number): string => {
-        const percent = (num1 / num2 * 100).toFixed(2)
+        const innerNum = num1 > maxExperience ? maxExperience : num1
+        const percent = (innerNum / num2 * 100).toFixed(2)
         return percent + "%"
     }
 

@@ -155,6 +155,7 @@ export const SearchPad: React.FC<Props> = (props) => {
         data={conditionLabel}
         setCondition={(obj) => {
             !obj["server"] && setConditionLabelOrIdWithKey("server", 0, "id")
+            !obj["preciseOnlineTime"] && setSelectWeek([])
             setConditionLabel(obj)
         }}
         onFinish={(data) => {
