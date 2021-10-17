@@ -58,6 +58,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
+    z-index: 802;
 
     .logo {
       height: 5rem;
@@ -126,6 +127,16 @@
 @media screen and (max-width: 576px) {
   .navbar-out-container {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-user-actionbar{
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .left-control-button {

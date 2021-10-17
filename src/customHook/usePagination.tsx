@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {showToast} from "@/utils/lightToast";
 import useLocalStorage from "@/customHook/useLocalStorage";
-import {useActivate, useUnactivate} from 'react-activation'
+import {useActivate, useUnactivate} from 'react-activation';
 
 type UsePagination = (
     initializePageNum: number, initializePageSize: number,
@@ -70,9 +70,11 @@ const usePagination: UsePagination = (
             }
         }
         usePaginationObject[options.key] = true
+
         function scrollFunc() {
             usePaginationObject[options.key] && scroll()
         }
+
         document.body.addEventListener("scroll", scrollFunc)
         return () => {
             usePaginationObject[options.key] = false

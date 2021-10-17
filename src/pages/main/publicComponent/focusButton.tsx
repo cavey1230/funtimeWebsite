@@ -61,7 +61,9 @@ const FocusButton: React.FC<Props> = (props) => {
                     onCancelText: "取消"
                 })
             }}>
-                {hasFocus === 1 ? "已关注" : "已互粉"}
+                {hasFocus === 1 ?
+                    "已关注" : hasFocus === 2 ?
+                        "已互粉" : "关注"}
             </Button>
         }
     }

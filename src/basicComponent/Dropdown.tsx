@@ -123,6 +123,7 @@ const Dropdown: React.FC<Props> = (props) => {
                 `${position}`
             )}
             onClick={() => {
+                clearTimeout(DropdownPublicTimeOutId)
                 if (innerModel === "click") {
                     onClick ? onClick() : setExpandStatus(true)
                 }

@@ -23,6 +23,13 @@
       //border: 0.2rem solid black;
       border-radius: 2rem 2rem 0 0;
 
+      .system {
+        font-size: 2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+      }
+
       .avatar-info {
         width: 20%;
         height: 100%;
@@ -160,23 +167,31 @@
 }
 
 @media screen and (max-width: 576px) {
-  .community-detail-inner-container {
-    .content-group {
+  .community-detail-pad {
+    .community-detail-inner-container {
 
-      .content, .time {
-        font-weight: 400 !important;
-        font-size: 1.6rem !important;
+      .avatar-group,.content-group,.action-group,
+      .img-group,.comment-group{
+        padding: 1rem;
       }
 
-      .time {
-        font-size: 1.2rem !important;
-      }
-    }
+      .content-group {
 
-    .action-group {
-      .like-num, .look-num {
-        span {
-          font-size: 1.6rem !important;
+        .content, .time {
+          font-weight: 400;
+          font-size: 1.6rem;
+        }
+
+        .time {
+          font-size: 1.2rem;
+        }
+      }
+
+      .action-group {
+        .like-num, .look-num {
+          span {
+            font-size: 1.6rem;
+          }
         }
       }
     }

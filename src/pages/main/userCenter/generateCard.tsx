@@ -167,7 +167,7 @@ const GenerateCard = () => {
             <Button onClick={() => {
                 const dom = document.getElementById('canvas-bind-div')
                 html2canvas(dom, {
-                    allowTaint: true,
+                    allowTaint: false,
                     useCORS: true,
                     width: keyword === "poster" ? 768 : 1366,
                     height: keyword === "poster" ? 1366 : 768

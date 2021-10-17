@@ -9,6 +9,7 @@ import "./actionGroup.less";
 import {createSocialLog} from "@/api/v1/introduction";
 import {showToast} from "@/utils/lightToast";
 import useWaitTime from "@/customHook/useWaitTime";
+import {confirm} from "@/basicComponent/Confirm";
 
 interface Props {
     setData: (data: Props["data"]) => void
@@ -32,22 +33,30 @@ const ActionGroup: React.FC<Props> = (props) => {
 
     const [waitTime, setWaitTime] = useWaitTime("socialWaitTime")
 
+    const loginUserId = getLocalStorage("userId")
+
     const buttonStyle = {
         marginBottom: "1rem",
-        backgroundColor: "var(--bg-color)",
-        color: "var(--font-color)"
+        backgroundColor: "var(--introduction-font-color)",
+        color: "var(--introduction-bg-color)"
     }
 
     const clickHandle = (param: "together" | "relationship") => {
-        const loginUserId = getLocalStorage("userId")
-        setWaitTime(120)
-        createSocialLog({
-            fromId: loginUserId,
-            targetId: userId,
-            requestType: param
-        }).then(res => {
-            if (res.status === 200) {
-                showToast("已通知", "success")
+        confirm({
+            title: "确认操作",
+            content: "该操作会通过邮件和站内消息方式,通知该玩家",
+            onClickText: "确认",
+            onClick: () => {
+                setWaitTime(120)
+                createSocialLog({
+                    fromId: loginUserId,
+                    targetId: userId,
+                    requestType: param
+                }).then(res => {
+                    if (res.status === 200) {
+                        showToast("已通知", "success")
+                    }
+                })
             }
         })
     }
@@ -72,7 +81,7 @@ const ActionGroup: React.FC<Props> = (props) => {
                 <span>{likeNum}</span>
             </div>
         </div>
-        {isSocial === 1 && <div>
+        {isSocial === 1 && loginUserId !== userId && <div className="button-group">
             <Button
                 style={buttonStyle}
                 onClick={() => {
@@ -82,7 +91,8 @@ const ActionGroup: React.FC<Props> = (props) => {
                 想和他一起玩
                 {waitTime > 0 && `(${waitTime}后可发送)`}
             </Button>
-            <Button
+            {role && getNameById(roleList, role) !== "无状态" &&
+            getNameById(roleList, role) !== "角色扮演" && <Button
                 style={buttonStyle}
                 onClick={() => {
                     waitTime === 0 && clickHandle("relationship")
@@ -91,7 +101,7 @@ const ActionGroup: React.FC<Props> = (props) => {
                 捡了这只
                 {getNameById(roleList, role)}
                 {waitTime > 0 && `(${waitTime}后可发送)`}
-            </Button>
+            </Button>}
         </div>}
     </div>
 };

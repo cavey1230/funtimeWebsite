@@ -7,6 +7,7 @@ import {weekDescriberChange} from "@/pages/main/introduction/searchPad";
 import useTimeChanger from "@/customHook/useTimeChanger";
 
 import "./basicInfo.less";
+import MoreDropdown from "@/pages/main/publicComponent/moreDropdown";
 
 interface Props {
     roleList: Array<any>
@@ -24,10 +25,11 @@ const BasicInfo: React.FC<Props> = (props) => {
     } = props
 
     const {
-        role, gameRoleName, introductionAvatar,
+        role, gameRoleName, introductionAvatar, id,
         introductionNickname, userId, normalOnlineTime,
         server, area, race, updateTime, favoriteCareerId,
         preciseOnlineTime, sns, isSocial, selfIntroduction,
+        mainImg
     } = data
 
     const timeChanger = useTimeChanger()
@@ -36,19 +38,31 @@ const BasicInfo: React.FC<Props> = (props) => {
         <div className="user-details-group">
             <div className="game-role-name">
                 <img src={roleImgAddress(getNameById(roleList, role))} alt="roleIcon"/>
-                {gameRoleName}
+                <span>{gameRoleName}</span>
+                <PublicAvatar
+                    avatarAddress={introductionAvatar}
+                    labelString={introductionNickname}
+                    justifyContent={"flex-start"}
+                    alignItem={"center"}
+                    mobileImgStyle={{width: "2rem"}}
+                    pcImgStyle={{width: "3rem"}}
+                    mobileLabelStyle={{fontSize: "1.4rem", fontWeight: "400"}}
+                    pcLabelStyle={{fontSize: "1.6rem", fontWeight: "600"}}
+                    expandModel={true}
+                    targetUserId={userId}
+                />
             </div>
-            <PublicAvatar
-                avatarAddress={introductionAvatar}
-                labelString={introductionNickname}
-                justifyContent={"flex-start"}
-                alignItem={"center"}
-                mobileImgStyle={{width: "2rem"}}
-                pcImgStyle={{width: "3rem"}}
-                mobileLabelStyle={{fontSize: "1.4rem", fontWeight: "400"}}
-                pcLabelStyle={{fontSize: "1.6rem", fontWeight: "600"}}
-                expandModel={true}
-                targetUserId={userId}
+            <MoreDropdown
+                data={{
+                    id, userId,
+                    nickname: "" + getNameById(serverList, server) + "-" +
+                        getNameById(areaList, area) + "-" + gameRoleName,
+                    content: selfIntroduction,
+                    imgArray: mainImg,
+                }}
+                targetId={id}
+                contentType={"introduction"}
+                dropdownPosition={"bottomRight"}
             />
         </div>
         <div className="info-item-group">

@@ -1,0 +1,95 @@
+.activity-list-item {
+  width: calc(33.33% - 4rem);
+  margin: 2rem;
+  box-shadow: 0 0 1rem 0.1rem var(--border-color);
+  background-color: var(--bg-color);
+  padding: 2rem;
+  box-sizing: border-box;
+  border-radius: 2rem;
+  cursor: pointer;
+
+  > div {
+    margin-bottom: 1rem;
+  }
+
+  .name {
+    font-size: 1.8rem;
+    padding: 2rem 0;
+    font-weight: 600;
+  }
+
+  .banner {
+    width: 100%;
+    height: 30rem;
+    overflow: hidden;
+    border-radius: 2rem;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .expireTimer {
+    width: 100%;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+
+    > div:nth-child(2) {
+      font-weight: 600;
+    }
+  }
+
+  .target-And-participator-num {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0;
+
+    .target {
+      width: 70%;
+      display: flex;
+      flex-wrap: wrap;
+
+      .target-item {
+        margin-right: 1rem;
+        background-color: var(--font-color);
+        color: var(--bg-color);
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    .participator-num {
+      text-align: right;
+      width: 30%;
+    }
+  }
+
+  .recommend {
+    margin: 2rem 0;
+    font-size: 1.6rem;
+  }
+
+  .time {
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+@media screen  and (max-width: 576px) {
+  .activity-list-item {
+    width: 100%;
+    margin: 1rem;
+  }
+}

@@ -3,27 +3,48 @@ import Dropdown, {Props as DropdownProps} from "@/basicComponent/Dropdown";
 
 import {MoreIcon} from "@/assets/icon/iconComponent";
 import BannedModal from "@/pages/main/publicComponent/moreDropdownCom/bannedModal";
+import ShareModal from "@/pages/main/publicComponent/moreDropdownCom/shareModal";
 import {useSelector} from "react-redux";
 import {ReduxRootType} from "@/config/reducers";
 
 import "./moreDropdown.less";
 
-interface Props {
+export interface Props {
     targetId: number
     dropdownPosition: DropdownProps["position"]
-    bannedContentType: "comment" | "community" | "reply" | "userinfo" | "introduction"
+    contentType: "comment" | "community" | "reply" | "userinfo" | "introduction"
+    data: Partial<{
+        id: number
+        content: string
+        nickname: string
+        avatar: string
+        userId: number
+        imgArray: string[]
+        communityId: number
+        commentId: number
+    }>
+    keepHideScrollY?: boolean
 }
 
 const MoreDropdown: React.FC<Props> = (props) => {
-    const {dropdownPosition, bannedContentType, targetId} = props
+    const {dropdownPosition, contentType, targetId, data, keepHideScrollY} = props
 
     const [expand, setExpand] = useState(false)
 
-    const [bannedVisible, setBannedVisible] = useState(false)
+    const [visibleObj, setVisibleObj] = useState({
+        bannedVisible: false,
+        shareVisible: false
+    })
 
     const isMobile = useSelector((state: ReduxRootType) => {
         return state.windowResizeReducer.isMobile
     })
+
+    const setVisible = (key: string, bool: boolean) => {
+        setVisibleObj({
+            ...visibleObj, [key]: bool
+        })
+    }
 
     return (
         <React.Fragment>
@@ -46,19 +67,39 @@ const MoreDropdown: React.FC<Props> = (props) => {
                     <div
                         className="more-dropdown-item"
                         onClick={() => {
-                            setBannedVisible(true)
+                            setVisible("bannedVisible", true)
                         }}
                     >
                         举报
+                    </div>
+                    <div
+                        className="more-dropdown-item"
+                        onClick={() => {
+                            setVisible("shareVisible", true)
+                        }}
+                    >
+                        分享
                     </div>
                 </div>
             </Dropdown>
             {/*举报的模态框*/}
             <BannedModal
+                keepHideScrollY={keepHideScrollY}
                 targetId={targetId}
-                bannedContentType={bannedContentType}
-                visible={bannedVisible}
-                setVisible={setBannedVisible}
+                bannedContentType={contentType}
+                visible={visibleObj.bannedVisible}
+                setVisible={() => {
+                    setVisible("bannedVisible", false)
+                }}
+            />
+            <ShareModal
+                keepHideScrollY={keepHideScrollY}
+                data={data}
+                contentType={contentType}
+                visible={visibleObj.shareVisible}
+                setVisible={() => {
+                    setVisible("shareVisible", false)
+                }}
             />
         </React.Fragment>
     );

@@ -36,6 +36,8 @@ const ReplyListItem: React.FC<Props> = (props) => {
 
     const [imgVisible, setImgVisible] = useState(false)
 
+    const [selectIndex, setSelectIndex] = useState(0)
+
     const timeChanger = useTimeChanger()
 
     useEffect(() => {
@@ -72,11 +74,11 @@ const ReplyListItem: React.FC<Props> = (props) => {
                     avatarAddress={replyUserAvatar}
                     labelString={replyNickname}
                     justifyContent={"flex-start"}
-                    alignItem={"flex-end"}
-                    mobileImgStyle={{width:"3rem"}}
-                    pcImgStyle={{width:"3.5rem"}}
-                    mobileLabelStyle={{fontSize:"1.4rem",fontWeight:"400"}}
-                    pcLabelStyle={{fontSize:"1.6rem",fontWeight:"600"}}
+                    alignItem={"center"}
+                    mobileImgStyle={{width: "3rem"}}
+                    pcImgStyle={{width: "3.5rem"}}
+                    mobileLabelStyle={{fontSize: "1.4rem", fontWeight: "400"}}
+                    pcLabelStyle={{fontSize: "1.6rem", fontWeight: "600"}}
                     expandModel={true}
                     targetUserId={replyUserId}
                 />
@@ -85,19 +87,27 @@ const ReplyListItem: React.FC<Props> = (props) => {
                     avatarAddress={referUserAvatar}
                     labelString={referNickname}
                     justifyContent={"flex-start"}
-                    alignItem={"flex-end"}
-                    mobileImgStyle={{width:"3rem"}}
-                    pcImgStyle={{width:"3.5rem"}}
-                    mobileLabelStyle={{fontSize:"1.4rem",fontWeight:"400"}}
-                    pcLabelStyle={{fontSize:"1.6rem",fontWeight:"600"}}
+                    alignItem={"center"}
+                    mobileImgStyle={{width: "3rem"}}
+                    pcImgStyle={{width: "3.5rem"}}
+                    mobileLabelStyle={{fontSize: "1.4rem", fontWeight: "400"}}
+                    pcLabelStyle={{fontSize: "1.6rem", fontWeight: "600"}}
                     expandModel={true}
                     targetUserId={referUserId}
                 />}
             </div>
             <div className="reply-more-action-pad">
                 <MoreDropdown
+                    data={{
+                        id, content,
+                        nickname: replyUserAvatar,
+                        avatar: replyUserAvatar,
+                        communityId,
+                        commentId: replyToCommentId,
+                        imgArray, userId: replyUserId
+                    }}
                     targetId={id}
-                    bannedContentType={"reply"}
+                    contentType={"reply"}
                     dropdownPosition={"bottomRight"}
                 />
             </div>
@@ -109,11 +119,14 @@ const ReplyListItem: React.FC<Props> = (props) => {
                 </div>
                 <div className="content">
                     {content}
-                    {imgArray?.length > 0 && <div className="reply-img">
-                        <img onClick={() => {
-                            setImgVisible(true)
-                        }} src={imgArray} alt="imgArray"/>
-                    </div>}
+                    <div className="reply-img">
+                        {imgArray?.length > 0 && imgArray.map((item: string, index: number) => {
+                            return <img key={index} onClick={() => {
+                                setSelectIndex(index)
+                                setImgVisible(true)
+                            }} src={item} alt="imgArray"/>
+                        })}
+                    </div>
                 </div>
                 <div className="reply-action-group">
                     <div onClick={() => {
@@ -128,6 +141,7 @@ const ReplyListItem: React.FC<Props> = (props) => {
         {actionBarVisible.visible &&
         actionBarVisible.selectIndex === index &&
         <CommentActionBar
+            maxImgLength={1}
             flushDataFunc={() => {
                 flushData()
             }}
@@ -146,7 +160,7 @@ const ReplyListItem: React.FC<Props> = (props) => {
                     replierId: Number(userId),
                     referId: replyId && Number(replyId),
                     replyToCommentId: Number(commentId),
-                    imgArray: url ? [url] : null
+                    imgArray: url
                 }
                 createReply(innerObj).then(res => {
                     if (res.status === 200) {
@@ -171,7 +185,7 @@ const ReplyListItem: React.FC<Props> = (props) => {
                 setImgVisible(false)
             }}
             imgArray={imgArray}
-            initializeImgIndex={0}
+            initializeImgIndex={selectIndex}
         />}
     </div>
 };

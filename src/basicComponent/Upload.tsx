@@ -2,6 +2,7 @@ import React, {CSSProperties, forwardRef, useEffect, useImperativeHandle, useRef
 import {CameraIcon} from "@/assets/icon/iconComponent";
 
 import "./Upload.less";
+import {showToast} from "@/utils/lightToast";
 
 interface Props {
     multiple: boolean
@@ -24,9 +25,9 @@ const Upload: React.FC<Partial<Props> & React.RefAttributes<any>> = forwardRef((
 
     const [fileUrlArray, setFileUrlArray] = useState(initializeFileUrlList || [])
 
-    useEffect(()=>{
+    useEffect(() => {
         initializeFileUrlList && setFileUrlArray(initializeFileUrlList)
-    },[initializeFileUrlList])
+    }, [initializeFileUrlList])
 
     useEffect(() => {
         onChange && onChange(fileUrlArray)
@@ -38,11 +39,42 @@ const Upload: React.FC<Partial<Props> & React.RefAttributes<any>> = forwardRef((
         }
     }))
 
+    const verificationPicFile = (file: any, index: number) => {
+        const fileMaxSize = 10240;//10M
+        if (file) {
+            const fileSize = file.size;
+            const name = file.name
+            const size = fileSize / 1024;
+            if (size > fileMaxSize) {
+                showToast(
+                    `第${index}张图片,名称${name}大小不能大于10mb！`,
+                    "error",
+                    3000
+                );
+                return false;
+            } else if (size <= 0) {
+                showToast(
+                    `第${index}张图片,名称${name}大小不能为0`,
+                    "error",
+                    3000
+                );
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true
+    }
+
     const fileChange = () => {
         const files = fileRef.current.files
         const filesLength = files.length
         if (maxFileLength && (fileUrlArray.length + filesLength > maxFileLength)) return
         const fillArray = new Array(filesLength).fill("")
+        const verification = fillArray.map((item, index) => {
+            return verificationPicFile(files[index], index + 1)
+        }).filter(i => i).length === filesLength
+        if (!verification) return
         const getPromise = (item: any, index: number) => {
             return new Promise((resolve) => {
                 const reader = new FileReader()

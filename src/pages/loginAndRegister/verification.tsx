@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
 
 import "./verification.less";
+import {useSelector} from "react-redux";
+import {ReduxRootType} from "@/config/reducers";
 
 type Props = {
     width: string
@@ -20,10 +22,14 @@ const Verification: React.FC<Props> = (props) => {
     const blackBackgroundColor = {backgroundColor: "#d7d7d7"}
     const normalTextStyle = {lineHeight: height, color: "black"}
 
+    const isMobile = useSelector((store: ReduxRootType) => {
+        return store.windowResizeReducer.isMobile
+    })
+
     useEffect(() => {
         if (!status) {
             setSuccess(false)
-            btnRef.current.style.left = 0
+            btnRef.current && (btnRef.current.style.left = 0)
         }
     }, [status])
 
@@ -69,36 +75,49 @@ const Verification: React.FC<Props> = (props) => {
     }
 
     return (
-        <div
-            ref={containerRef}
-            className="verification-out-container"
-            style={outContainerStyle}
-            onMouseDown={onMouseDown}
-            onMouseLeave={onMouseUp}
-            onMouseUp={onMouseUp}
-        >
-            <div
-                className="verification-bg"
-                style={success ? blackBackgroundColor : grayBackgroundColor}
-            />
-            <div
-                className="verification-text"
-                style={normalTextStyle}
+        <React.Fragment>
+            {isMobile ? <div className="verification-button-model">
+                <div
+                    className="verification-text"
+                    style={normalTextStyle}
+                    onClick={() => {
+                        setSuccess(true)
+                        successCallBack(true)
+                    }}
+                >
+                    {success ? "验证成功" : "点击以验证"}
+                </div>
+            </div> : <div
+                ref={containerRef}
+                className="verification-out-container"
+                style={outContainerStyle}
+                onMouseDown={onMouseDown}
+                onMouseLeave={onMouseUp}
+                onMouseUp={onMouseUp}
             >
-                {success ? "验证成功" : "滑动以验证"}
-            </div>
-            <div
-                style={{height}}
-                ref={btnRef}
-                className="verification-btn"
-            >
-                {/*<img*/}
-                {/*    src={""}*/}
-                {/*    draggable={false}*/}
-                {/*    alt="rightArrow"*/}
-                {/*/>*/}
-            </div>
-        </div>
+                <div
+                    className="verification-bg"
+                    style={success ? blackBackgroundColor : grayBackgroundColor}
+                />
+                <div
+                    className="verification-text"
+                    style={normalTextStyle}
+                >
+                    {success ? "验证成功" : "滑动以验证"}
+                </div>
+                <div
+                    style={{height}}
+                    ref={btnRef}
+                    className="verification-btn"
+                >
+                    {/*<img*/}
+                    {/*    src={""}*/}
+                    {/*    draggable={false}*/}
+                    {/*    alt="rightArrow"*/}
+                    {/*/>*/}
+                </div>
+            </div>}
+        </React.Fragment>
     );
 };
 

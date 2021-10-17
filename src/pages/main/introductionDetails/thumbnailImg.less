@@ -1,22 +1,24 @@
 .basic-info-container > .thumbnail-container {
-  width: 30%;
+  width: 50%;
   display: flex;
-  color: var(--bg-color);
-  background-color: var(--font-color);
+  background-color: var(--introduction-bg-color);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
   padding: 2rem;
 
   .thumbnail-fieldset {
-    border: 0.2rem solid var(--bg-color);
+    color: var(--introduction-font-color);
     border-radius: 1rem;
     display: flex;
+    border: 0.2rem solid white;
   }
 
   img {
     cursor: pointer;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    max-height: 15rem;
   }
 }

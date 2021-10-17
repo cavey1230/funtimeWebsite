@@ -5,9 +5,11 @@ import FieldsetContainer from "@/pages/main/userCenter/publicComponent/fieldsetC
 import Button from "@/basicComponent/Button";
 import EditAvatarModal from "@/pages/main/userCenter/basicInfoCom/editAvatarModal";
 import Switch from "@/basicComponent/Switch";
-import EditNickname from "@/pages/main/userCenter/basicInfoCom/editNickname";
+import EditNicknameOrRecommend from "@/pages/main/userCenter/basicInfoCom/editNicknameOrRecommend";
 import AboutAccount from "@/pages/main/userCenter/basicInfoCom/aboutAccount";
 import {useHistory} from "react-router-dom";
+import {editUserNickname, editUserRecommend} from "@/api/v1/user";
+import {confirm} from "@/basicComponent/Confirm";
 
 import "./basicInfo.less";
 
@@ -22,7 +24,10 @@ const BasicInfo = () => {
 
     const buttonStyle = {width: "30%", marginTop: "1rem", minWidth: "9rem"}
 
-    const {avatar, email, verificationStatus, id} = getLocalStorage("userInfo")
+    const {
+        avatar, email, verificationStatus,
+        nickname, recommend, id
+    } = getLocalStorage("userInfo")
 
     useEffect(() => {
         if (!globalEditStatus) {
@@ -56,9 +61,59 @@ const BasicInfo = () => {
                         </Button>}
                     </WithLabel>
                     <WithLabel label={"昵称"} expandClassName={"nickname-item"}>
-                        <EditNickname
+                        <EditNicknameOrRecommend
                             globalEditStatus={globalEditStatus}
                             buttonStyle={buttonStyle}
+                            initializeData={nickname}
+                            onFinish={(value, close) => {
+                                confirm({
+                                    title: "提示",
+                                    content: "修改提交后需重新登录账号",
+                                    onClickText: "确认提交",
+                                    onClick: async () => {
+                                        const result = await editUserNickname({
+                                            userId: id,
+                                            nickname: value
+                                        })
+                                        if (result.status === 200) {
+                                            localStorage.setItem("userInfo", JSON.stringify({
+                                                ...getLocalStorage("userInfo"),
+                                                nickname: value
+                                            }))
+                                            close(false)
+                                            history.push("/login")
+                                        }
+                                    }
+                                })
+                            }}
+                        />
+                    </WithLabel>
+                    <WithLabel label={"个性签名"} expandClassName={"recommend-item"}>
+                        <EditNicknameOrRecommend
+                            globalEditStatus={globalEditStatus}
+                            buttonStyle={buttonStyle}
+                            initializeData={recommend}
+                            onFinish={(value, close) => {
+                                confirm({
+                                    title: "提示",
+                                    content: "修改提交后需重新登录账号",
+                                    onClickText: "确认提交",
+                                    onClick: async () => {
+                                        const result = await editUserRecommend({
+                                            userId: id,
+                                            recommend: value
+                                        })
+                                        if (result.status === 200) {
+                                            localStorage.setItem("userInfo", JSON.stringify({
+                                                ...getLocalStorage("userInfo"),
+                                                recommend: value
+                                            }))
+                                            close(false)
+                                            history.push("/login")
+                                        }
+                                    }
+                                })
+                            }}
                         />
                     </WithLabel>
                 </FieldsetContainer>

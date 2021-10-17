@@ -11,6 +11,8 @@ import {createCommunityLike} from "@/api/v1/community";
 import {showToast} from "@/utils/lightToast";
 
 import "./communityItem.less";
+import {useSelector} from "react-redux";
+import {ReduxRootType} from "@/config/reducers";
 
 interface Props {
     item: { [key: string]: any }
@@ -36,11 +38,13 @@ const imgWidthAndHeightControl = (length: number, option: Options) => {
     const {firstRowHeight, secondRowHeight, thirdRowHeight} = option
     if (length === 1) {
         innerStyle.width = "100%"
-        innerStyle.height = "20rem"
+        innerStyle.height = "25rem"
     } else if (length % 3 === 0) {
         innerStyle.width = "33.33%"
     } else if (length % 2 === 0) {
         innerStyle.width = "50%"
+    } else {
+        innerStyle.width = "33.33%"
     }
     if (length > 1 && length <= 3) {
         innerStyle.height = firstRowHeight
@@ -79,6 +83,10 @@ const CommunityItem: React.FC<Props> = (props) => {
     const sendMessage = useMessage()
 
     const itemRef = useRef(null)
+
+    const isMobile = useSelector((store:ReduxRootType)=>{
+        return store.windowResizeReducer.isMobile
+    })
 
     const renderImg = (array: Array<any>) => {
         const length = array?.length
@@ -130,8 +138,14 @@ const CommunityItem: React.FC<Props> = (props) => {
         <div className="time-and-more-action-container">
             {timeChanger(createTime)}
             <MoreDropdown
+                keepHideScrollY={isMobile}
+                data={{
+                    id, content,
+                    nickname, avatar,
+                    imgArray, userId
+                }}
                 targetId={id}
-                bannedContentType={"community"}
+                contentType={"community"}
                 dropdownPosition={"bottomRight"}
             />
         </div>
@@ -158,6 +172,7 @@ const CommunityItem: React.FC<Props> = (props) => {
             pcLabelStyle={{fontSize: "1.2rem", fontWeight: "400"}}
             expandModel={true}
             targetUserId={userId}
+            fillHeight={true}
         />
         <div className="action-group">
             <div className="look-num">

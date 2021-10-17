@@ -16,6 +16,7 @@ interface Props {
     labelString: string
     avatarAddress: string
     expandModel: boolean
+    fillHeight: boolean
     dropdownPosition: DropdownProps["position"]
 }
 
@@ -25,7 +26,8 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
         avatarAddress, flexModel, width, alignItem,
         justifyContent, labelString, labelStyle,
         children, expandModel, imgStyle,
-        navigateAddress, dropdownPosition
+        navigateAddress, dropdownPosition,
+        fillHeight
     } = props
 
     const innerFlexDirection = flexModel ? flexModel : "row"
@@ -44,8 +46,10 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
 
     const history = useHistory()
 
-    const navigateTo = () => {
+    const navigateTo = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         // console.log(navigateAddress)
+        event.preventDefault()
+        event.nativeEvent.preventDefault()
         navigateAddress && history.push(navigateAddress)
     }
 
@@ -53,7 +57,7 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
         return <div className="avatar-img" style={{
             flexDirection: innerFlexDirection,
             alignItems: innerAlignItem,
-            height: imgStyle.width as any
+            height: fillHeight && imgStyle.width as any
         }}>
             <div className="img-container" onClick={navigateTo}>
                 <img src={avatarAddress} alt="avatarAddress" style={imgStyle}/>
@@ -62,7 +66,7 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
                 {innerLabelString}
             </div>
         </div>
-    }, [avatarAddress,innerLabelString])
+    }, [avatarAddress, innerLabelString])
 
     return (
         <div
@@ -75,6 +79,7 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
             {innerExpandModel ? <Dropdown
                 // model="click"
                 expandStatus={expand}
+                timeDelay={500}
                 setExpandStatus={setExpand}
                 onClick={() => {
                     // console.log("我被点击了")
@@ -84,7 +89,7 @@ const Avatar: React.FC<Partial<Props>> = (props) => {
                 }}
                 position={dropdownPosition}
                 label={<AvatarGroup/>}>
-                {children}
+                {expand && children}
             </Dropdown> : <AvatarGroup/>}
         </div>
     );

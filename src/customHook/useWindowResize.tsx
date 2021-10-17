@@ -22,7 +22,7 @@ const useWindowResize = () => {
 
     useEffect(() => {
         resize()
-        window.addEventListener("", resize)
+        window.addEventListener("resize", resize)
         return () => {
             window.removeEventListener("resize", resize)
         }

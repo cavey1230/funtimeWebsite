@@ -37,8 +37,8 @@ const Badeg: React.FC<Props> = (props) => {
     })
 
     const initializeNumAndUnit = (fontSize: string) => {
-        const numberRegExp = /\d+(\.*)\d*/
-        const unitRegExp = /px|rem|em|%/
+        const numberRegExp = new RegExp(/\d+(\.*)\d*/)
+        const unitRegExp = new RegExp(/px|rem|em|%/)
         const num = Number(fontSize.match(numberRegExp)[0])
         const unit = fontSize.match(unitRegExp)[0]
         return {num, unit}

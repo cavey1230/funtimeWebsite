@@ -7,6 +7,7 @@ import {
     updateNoReadNormalMessageDetails,
     updateNoReadNormalMessageNum
 } from "@/redux/noReadMessageReducer";
+import {address, websocketAddress} from "@/config/fetchConfig";
 
 type Data = Array<{ messageType: string, total: number }>
 
@@ -48,7 +49,7 @@ export const useMessageWebsocket = () => {
     useEffect(() => {
         const userId = getLocalStorage("userId")
         if (!userId) return
-        const webSocket = new WebSocket(`ws://localhost:5000/api/v1/public/websocket/link?&id=${userId}`)
+        const webSocket = new WebSocket(`${websocketAddress}/public/websocket/link?&id=${userId}`)
         webSocket.onopen = function () {
             console.log("已连接消息系统,connected")
         }

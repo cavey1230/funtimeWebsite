@@ -11,6 +11,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import golang from 'highlight.js/lib/languages/go';
 // @ts-ignore
 import sql from 'highlight.js/lib/languages/sql';
+import {showToast} from "@/utils/lightToast";
 
 hljs.registerLanguage('js', javascript);
 hljs.registerLanguage('go', golang);
@@ -45,7 +46,16 @@ type CallBackData = {
     text: string
 }
 
-const MarkDownEditor = (props: any, ref: Ref<any>) => {
+interface Props {
+    initializeValue?: string
+    height?: string
+}
+
+const MarkDownEditor: React.FC<Props & React.RefAttributes<any>> = forwardRef((
+    props: any, ref: Ref<any>
+) => {
+    const {initializeValue, height} = props
+
     const [content, setContent] = useState("")
 
     useImperativeHandle(ref, () => ({
@@ -56,11 +66,14 @@ const MarkDownEditor = (props: any, ref: Ref<any>) => {
     }))
 
     useEffect(() => {
-        setContent(props.content)
-    }, [props.content])
+        initializeValue && setContent(initializeValue)
+    }, [initializeValue])
 
     const handleEditorChange = ({text}: CallBackData) => {
-        setContent(text)
+        const Regexp = new RegExp("<(a|javascript|img|link|style)?>+?<\\/(a|javascript|img|link|style)?>")
+        const result = text.match(Regexp)?.length > 0
+        result ? showToast("不支持该类型的标签", "error") :
+            setContent(text)
     }
 
     const onImageUpload = (file: File) => {
@@ -77,7 +90,7 @@ const MarkDownEditor = (props: any, ref: Ref<any>) => {
     return (
         <MdEditor
             value={content}
-            style={{height: "500px", zIndex: 991}}
+            style={{height: height ? height : "50rem", zIndex: 800}}
             canView={{menu: true, md: true, html: true, fullScreen: false, hideMenu: true, both: false}}
             renderHTML={(text) => mdParser.render(text)}
             placeholder={"tips:前50字符为标题,字体大小无影响"}
@@ -85,6 +98,6 @@ const MarkDownEditor = (props: any, ref: Ref<any>) => {
             onImageUpload={(file: File) => onImageUpload(file)}
         />
     )
-};
+})
 
-export default forwardRef(MarkDownEditor);
+export default MarkDownEditor;

@@ -56,11 +56,13 @@ const CommentListItem: React.FC<Props> = (props) => {
 
     const [imgVisible, setImgVisible] = useState(false)
 
+    const [selectIndex, setSelectIndex] = useState(0)
+
     const [total, setTotal] = useState(0)
 
     const [pagination, setPagination] = useState({
         pageNum: 1,
-        pageSize: 6
+        pageSize: 5
     })
 
     const [condition, setCondition] = useState([] as Array<string>)
@@ -99,10 +101,12 @@ const CommentListItem: React.FC<Props> = (props) => {
                 pageSize: pagination.pageSize
             }).then(res => {
                 if (res.status === 200) {
-                    setPagination({
-                        ...pagination,
-                        pageNum: res.data
-                    })
+                    setTimeout(() => {
+                        setPagination({
+                            ...pagination,
+                            pageNum: res.data
+                        })
+                    }, 500)
                 }
             })
         }
@@ -150,7 +154,7 @@ const CommentListItem: React.FC<Props> = (props) => {
             communityId: Number(communityId),
             replierId: Number(userId),
             replyToCommentId: Number(commentId),
-            imgArray: url ? [url] : null
+            imgArray: url
         }
         createReply(innerObj).then(res => {
             if (res.status === 200) {
@@ -173,7 +177,8 @@ const CommentListItem: React.FC<Props> = (props) => {
         const scroll = document.body
         const {offsetTop, clientHeight} = replyListRef.current
         scroll.scrollTo({
-            top: offsetTop + clientHeight,
+            // top: offsetTop + clientHeight,
+            top: offsetTop - 100,
             behavior: "smooth"
         })
     }
@@ -200,22 +205,32 @@ const CommentListItem: React.FC<Props> = (props) => {
                         targetUserId={commenterId}
                     />
                     <span>{timeChanger(createTime)}</span>
+                    <span>{`${((pagination.pageNum - 1) * pagination.pageSize) + index + 1}楼`}</span>
                 </div>
                 <div className="comment-avatar-pad">
                     <div className="comment-more-action-pad">
                         <MoreDropdown
+                            data={{
+                                id, content, communityId,
+                                nickname: commentNickname,
+                                avatar: commentUserAvatar,
+                            }}
                             targetId={id}
-                            bannedContentType={"comment"}
+                            contentType={"comment"}
                             dropdownPosition={"bottomRight"}
+                            keepHideScrollY={true}
                         />
                     </div>
                     <div className="comment-avatar-content-content">
                         {content}
                     </div>
                     <div className="comment-avatar-content-img">
-                        {imgArray?.length > 0 && <img onClick={() => {
-                            setImgVisible(true)
-                        }} src={imgArray[0]} alt="imgArray"/>}
+                        {imgArray?.length > 0 && imgArray.map((item, index) => {
+                            return <img key={index} onClick={() => {
+                                setSelectIndex(index)
+                                setImgVisible(true)
+                            }} src={item} alt="imgArray"/>
+                        })}
                     </div>
                     <div className="comment-action-group">
                         {total > 0 && <div onClick={() => {
@@ -239,6 +254,7 @@ const CommentListItem: React.FC<Props> = (props) => {
             {actionBarVisible.visible &&
             actionBarVisible.selectIndex === index &&
             <CommentActionBar
+                maxImgLength={1}
                 flushDataFunc={() => {
                     getReplyListData()
                 }}
@@ -253,7 +269,7 @@ const CommentListItem: React.FC<Props> = (props) => {
                             setCondition([...array])
                             setPagination({
                                 pageNum: 1,
-                                pageSize: 6
+                                pageSize: 5
                             })
                         }}
                         style={{margin: "0", width: "25%"}}
@@ -279,7 +295,7 @@ const CommentListItem: React.FC<Props> = (props) => {
                     setImgVisible(false)
                 }}
                 imgArray={imgArray}
-                initializeImgIndex={0}
+                initializeImgIndex={selectIndex}
             />}
         </React.Fragment>
     )

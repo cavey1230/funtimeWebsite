@@ -109,7 +109,7 @@ module.exports = {
                 test: /\.html$/,
                 //处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
                 loader: "html-loader"
-            },{
+            }, {
                 test: /\.ttf|eot|woff2?$/,
                 type: 'asset/resource',
                 generator: {
@@ -117,7 +117,7 @@ module.exports = {
                     // [hash] 防止出现相同文件名无法区分，[ext] 拿到后缀名
                     filename: 'font/[hash][ext][query]'
                 }
-            },{
+            }, {
                 //排除这些文件，打包剩下的
                 exclude: /\.(css|js|jsx|ts|tsx|html|jpg|png|gif|svg|less|ttf|eot|woff2?)/,
                 type: 'asset/resource',
@@ -142,8 +142,9 @@ module.exports = {
         port: 3000,
         open: true,
         hot: true,
+        host: "192.168.31.177",
         historyApiFallback: true,
-        overlay: true
+        overlay: true,
         // proxy: {
         //     "/api": {
         //         target: "http://localhost:5000",

@@ -1,11 +1,12 @@
 .more-dropdown-container {
   height: 100%;
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem;
   box-sizing: border-box;
   background-color: var(--switch-bg-color);
   color: var(--switch-slider-color);
   justify-content: center;
+  flex-direction: column;
 
   .more-dropdown-item {
     font-size: 1.4rem;
@@ -15,6 +16,8 @@
     align-items: center;
     word-break: keep-all;
     cursor: pointer;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
     border-bottom: 0.2rem solid var(--border-color);
   }
 }

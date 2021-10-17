@@ -173,7 +173,32 @@ interface createCommunityWatchParams {
     topicId?: number
 }
 
-//创建动态被喜欢数据库记录
+//创建动态被查看数据库记录
 export const createCommunityWatch = (data: createCommunityWatchParams) => {
     return GoblogApiV1.POST("/community_watch/add", data)
+}
+
+interface findHighOrderCommunityParams {
+    userId: number
+    pageSize: number
+    pageNum: number
+    content: string
+}
+
+//取得高级动态数据
+export const findHighOrderCommunity = (data: findHighOrderCommunityParams) => {
+    return GoblogApiV1.GET("/community/high_order", data)
+}
+
+interface editHighOrderCommunityParams {
+    id: number
+    userId: number
+    imgArray: string[]
+    content: string
+}
+
+//取得高级动态数据
+export const editHighOrderCommunity = (data: editHighOrderCommunityParams) => {
+    const {id, ...rest} = data
+    return GoblogApiV1.PUT(`/community/edit/${id}`, rest)
 }

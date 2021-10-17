@@ -5,6 +5,8 @@ import useSkinStatus from "@/customHook/useSkinStatus";
 import useWindowResize from "@/customHook/useWindowResize";
 import useAutoLogin from "@/customHook/useAutoLogin";
 import useInitializeIndexDb from "@/customHook/useInitializeIndexDB";
+import useShortcutKey from "@/customHook/useShortcutKey";
+import { useDisableIosScale } from "./customHook/useIosDisableScale";
 
 import "@/assets/reset.css";
 import "@/assets/publicAnimation.less";
@@ -19,6 +21,12 @@ const App: React.FC<RouteComponentProps> = () => {
 
     // 客户端类型判断 手机 PC
     useWindowResize()
+
+    // 注册快捷键
+    useShortcutKey()
+
+    // 禁止ios 缩放
+    useDisableIosScale()
 
     useEffect(() => {
         console.log("---------", skinStatusClassName, "------------------")

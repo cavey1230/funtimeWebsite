@@ -1,8 +1,10 @@
 import {Http} from "@/utils/fetchApi";
 import {confirm} from "@/basicComponent/Confirm";
 
-const address = "http://localhost:5000/api/v1"
-// const address = "http://121.4.169.10:4699/api/v1"
+// export const address = "https://localhost:5000/api/v1"
+// export const websocketAddress = "wss://localhost:5000/api/v1"
+export const address = "https://funtimebbs.com:5000/api/v1"
+export const websocketAddress = "ws://funtimebbs.com:5000/api/v1"
 
 export const GoblogApiV1 = new Http(address, {
     //CODE = 1000...用户模块的错误
@@ -24,8 +26,11 @@ export const GoblogApiV1 = new Http(address, {
     "1014": "经验不足,无法更改",
     //CODE = 2000...动态模块的错误
     "2001": "你之前看过这条动态哦",
+    //CODE = 3000...个人情报模块的错误
+    "3002": "暂无个人情报",
     //CODE = 8000...评论模块的错误
-    "8001": "这条动态还没有评论哦"
+    "8001": "这条动态还没有评论哦",
+    "10001": "超出活动时间,无法参加"
 })
 
 //拦截器错误策略集合

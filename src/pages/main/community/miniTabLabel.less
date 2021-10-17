@@ -1,0 +1,40 @@
+.community-label-pad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 0;
+
+  .community-label-pad-item {
+    height: 5rem;
+    margin: 0.5rem;
+    padding: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: transparent;
+    //border-bottom: 0.2rem solid var(--font-color);
+    color: var(--font-color);
+    user-select: none;
+
+    img,svg {
+      margin-right: 0.5rem;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  .community-selected {
+    color: var(--bg-color);
+    background-color: var(--font-color);
+    border: 0.1rem solid var(--font-color);
+    animation: 0.5s scale ease-in-out;
+    border-radius: 3rem;
+
+    img,svg {
+      filter: invert(100%);
+    }
+  }
+}

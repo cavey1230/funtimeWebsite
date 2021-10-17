@@ -99,6 +99,7 @@ const ImportantMessage = () => {
                         pcLabelStyle={{fontSize: "1.4rem", fontWeight: "600"}}
                         expandModel={true}
                         targetUserId={fromUserId}
+                        fillHeight={true}
                     />}
                 </div>
                 <div className="important-message-item-content">

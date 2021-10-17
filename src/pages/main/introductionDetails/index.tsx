@@ -11,6 +11,7 @@ import ThumbnailImg from "@/pages/main/introductionDetails/thumbnailImg";
 import useGetNameList from "@/customHook/useGetNameList";
 
 import "./index.less";
+import ImgModal from "@/pages/main/publicComponent/imgModal";
 
 const Index = () => {
     const [data, setData] = useState({} as { [key: string]: any })
@@ -23,6 +24,8 @@ const Index = () => {
 
     const [loadingVisible, setLoadingVisible] = useState(false)
 
+    const [imgVisible, setImgVisible] = useState(false)
+
     useEffect(() => {
         document.body.scrollTo({
             top: 0
@@ -33,7 +36,8 @@ const Index = () => {
         getIntroductionData({
             pageNum: 1, pageSize: 1,
             loginUserId: loginUserId,
-            userId: Number((params as any).userId)
+            userId: Number((params as any).userId),
+            visible: 1
         }).then(res => {
             if (!Array.isArray(res.data.result)) {
                 setLoadingVisible(false)
@@ -70,6 +74,11 @@ const Index = () => {
     return (
         <React.Fragment>
             <div className="introduction-details-content publicFadeIn-500ms">
+                <div className="main-img" onClick={() => {
+                    setImgVisible(true)
+                }}>
+                    <img src={imgArray && imgArray[0]} alt="mainImg"/>
+                </div>
                 <div className="basic-info-container">
                     {/*基础信息*/}
                     <BasicInfo
@@ -80,17 +89,16 @@ const Index = () => {
                         careerList={careerList}
                         data={data}
                     />
-                    {/*职业分类*/}
-                    <CategoryCareer
-                        careerList={careerList}
-                        selectedList={careerIdArray}
-                        width={"30%"}
-                    />
                     {/*操作栏*/}
                     <ActionGroup
                         setData={setData}
                         data={data}
                         roleList={roleList}
+                    />
+                    {/*职业分类*/}
+                    <CategoryCareer
+                        careerList={careerList}
+                        selectedList={careerIdArray}
                     />
                     {/*缩略图*/}
                     <ThumbnailImg imgArray={imgArray}/>
@@ -101,10 +109,15 @@ const Index = () => {
                         propertyRangeArray={propertyRangeArray}
                     />
                 </div>
-                <div className="main-img">
-                    <img src={mainImg && mainImg} alt="mainImg"/>
-                </div>
             </div>
+            <ImgModal
+                visible={imgVisible}
+                setVisible={() => {
+                    setImgVisible(false)
+                }}
+                imgArray={[mainImg]}
+                initializeImgIndex={0}
+            />
             <Loading visible={loadingVisible}/>
         </React.Fragment>
     );

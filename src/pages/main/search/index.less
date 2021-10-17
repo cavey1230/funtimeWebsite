@@ -1,0 +1,129 @@
+.global-search-group {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 2rem;
+}
+
+.global-search-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  border-bottom: 0.2rem solid var(--border-color);
+
+  .global-search-item-label {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .global-search-item-field-group {
+    display: flex;
+    flex-wrap: wrap;
+
+    .global-search-item-field {
+      background-color: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      margin: 1rem;
+      padding: 1rem;
+      box-sizing: border-box;
+      width: calc(20% - 2rem);
+      cursor: pointer;
+      position: relative;
+
+      &:after {
+        content: " ";
+        position: absolute;
+        width: 1rem;
+        height: 1rem;
+        border-top: 0.2rem solid var(--font-color);
+        border-right: 0.2rem solid var(--font-color);
+        left: calc(100% - 1rem);
+        top: -0.2rem;
+      }
+
+      .create-time {
+        > span:last-child {
+          margin-left: 1rem;
+        }
+      }
+
+      .global-search-item-match {
+        display: flex;
+        align-items: center;
+
+        > div:nth-child(2) {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.global-search-item-field {
+  .avatar {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: 0.2rem solid white;
+  }
+
+  .normal-img-container {
+    position: relative;
+    width: 100%;
+    height: 10rem;
+    overflow: hidden;
+
+    .normal-img {
+      position: absolute;
+      width: 100%;
+    }
+  }
+
+}
+
+@media screen and (max-width: 576px) {
+
+  .global-search-item {
+    border-bottom: none;
+
+    .global-search-item-label {
+      font-size: 1.4rem;
+      background-color: var(--font-color);
+      color: var(--bg-color);
+      padding: 1rem;
+    }
+
+    .global-search-item-field-group {
+      .global-search-item-field {
+        width: 100%;
+
+        &:after {
+          content: " ";
+          position: absolute;
+          width: 2rem;
+          height: 2rem;
+          border-top: 0.2rem solid var(--font-color);
+          border-right: 0.2rem solid var(--font-color);
+          left: calc(100% - 2rem);
+          top: -0.2rem;
+        }
+
+        .create-time {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+
+          p {
+            margin: 0;
+          }
+
+          > span:last-child {
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+}

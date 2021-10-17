@@ -24,6 +24,7 @@ interface Props {
     mobileLabelStyle: PropsObject
     pcImgStyle: PropsObject
     pcLabelStyle: PropsObject
+    fillHeight: boolean
 }
 
 interface InnerLevelProps {
@@ -91,7 +92,8 @@ const PublicAvatar: React.FC<Partial<Props>> = (props) => {
         avatarAddress, labelString,
         mobileImgStyle, mobileLabelStyle,
         pcImgStyle, pcLabelStyle, justifyContent,
-        alignItem, targetUserId, expandModel, flexMod
+        alignItem, targetUserId, expandModel, flexMod,
+        fillHeight
     } = props
 
     const isMobile = useSelector((state: ReduxRootType) => {
@@ -108,9 +110,10 @@ const PublicAvatar: React.FC<Partial<Props>> = (props) => {
             labelStyle={isMobile ? mobileLabelStyle : pcLabelStyle}
             justifyContent={justifyContent}
             alignItem={alignItem}
-            navigateAddress={`/404${targetUserId}`}
+            navigateAddress={`/main/personal/home/${targetUserId}`}
             dropdownPosition={"bottomLeft"}
             flexModel={flexMod}
+            fillHeight={fillHeight}
         >
             <div className="public-avatar-expand-container">
                 <InnerCom userId={targetUserId}/>

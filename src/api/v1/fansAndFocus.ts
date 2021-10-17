@@ -35,6 +35,7 @@ interface getListParams {
     pageSize: number
     pageNum: number
     toUserId: number
+    loginUserId:number
 }
 
 //取得关注列表

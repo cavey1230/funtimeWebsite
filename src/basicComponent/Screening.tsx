@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import "./Screening.less";
 import {ExpandIcon, NoExpandIcon} from "@/assets/icon/iconComponent";
@@ -6,21 +6,31 @@ import {ExpandIcon, NoExpandIcon} from "@/assets/icon/iconComponent";
 interface Props {
     setCondition: (obj: Array<string>) => void
     labelArray: Array<{ name: string, key: string }>
+    initializeData?: Array<string>
     style?: { [key: string]: any }
 }
 
 const Screening: React.FC<Props> = (props) => {
 
-    const {setCondition: setCallBackCondition, labelArray, style} = props
+    const {setCondition: setCallBackCondition, labelArray, style, initializeData} = props
 
     const [condition, setCondition] = useState(useMemo(() => {
         return labelArray?.reduce((store, item) => {
             store[item.key] = ""
             return store
-        }, {} as {[key: string]: string})
+        }, {} as { [key: string]: string })
     }, []))
 
     type ConditionKeyParams = keyof typeof condition
+
+    useEffect(() => {
+        if (initializeData && (initializeData[1] !== condition[initializeData[0]])) {
+            initializeData && initializeData.length > 0 && setCondition({
+                ...condition,
+                [initializeData[0]]: initializeData[1]
+            })
+        }
+    }, [])
 
     useEffect(() => {
         const timeOutId = setTimeout(() => {

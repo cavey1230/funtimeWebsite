@@ -81,7 +81,7 @@ const CardTemplate2: React.FC<Props> = (props) => {
                     {getNameById(propertyList, item)}
                 </div>
                 <div className="content">
-                    {(propertyRangeArray[index] > 3 && propertyRangeArray[index] < 5) ? "高" :
+                    {(propertyRangeArray[index] > 3 && propertyRangeArray[index] <= 5) ? "高" :
                         (propertyRangeArray[index] > 5) ? "极高" :
                             (propertyRangeArray[index] && propertyRangeArray[index] <= 3) && "中等"}
                 </div>

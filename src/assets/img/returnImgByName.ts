@@ -1,43 +1,45 @@
 //角色身份
-import Mentor from "@/assets/img/role/Mentor.0d79cbba.png";
-import BattleMentor from "@/assets/img/role/BattleMentor.cfe53430.png";
-import PvPMentor from "@/assets/img/role/PvPMentor.52f2afda.png";
-import TradeMentor from "@/assets/img/role/TradeMentor.1f47bea8.png";
-import Beginner from "@/assets/img/role/Beginner.ca1fdc74.png";
-import Returner from "@/assets/img/role/Returner.734f10f6.png";
+import Mentor from "@/assets/img/role/Mentor.png";
+import BattleMentor from "@/assets/img/role/BattleMentor.png";
+import PvPMentor from "@/assets/img/role/PvPMentor.png";
+import TradeMentor from "@/assets/img/role/TradeMentor.png";
+import Beginner from "@/assets/img/role/Beginner.png";
+import Returner from "@/assets/img/role/Returner.png";
+import Rper from "@/assets/img/role/Rper.png";
+import Normaler from "@/assets/img/role/Normaler.png";
 
 //战斗职业图片
-import Astrologian from "@/assets/img/battle/Astrologian.b24d46a2.png";
-import Bard from "@/assets/img/battle/Bard.7f8a0c9c.png";
-import BlackMage from "@/assets/img/battle/BlackMage.0f418ee2.png";
-import BlueMage from "@/assets/img/battle/BlueMage-Red.65cc0427.png";
-import Dancer from "@/assets/img/battle/Dancer.78cb8bba.png";
-import DarkKnight from "@/assets/img/battle/DarkKnight.a6a85d1b.png";
-import Dragoon from "@/assets/img/battle/Dragoon.4cf940e4.png";
-import Gunbreaker from "@/assets/img/battle/Gunbreaker.db8ec4c3.png";
-import Machinist from "@/assets/img/battle/Machinist.8e24d2e8.png";
-import Monk from "@/assets/img/battle/Monk.14ebc670.png";
-import Ninja from "@/assets/img/battle/Ninja.28a728bd.png";
-import Paladin from "@/assets/img/battle/Paladin.7858bd6b.png";
-import RedMage from "@/assets/img/battle/RedMage.cf44d5b3.png";
-import Samurai from "@/assets/img/battle/Samurai.119867c9.png";
-import Scholar from "@/assets/img/battle/Scholar.2e0c330a.png";
-import Summoner from "@/assets/img/battle/Summoner.87c444c5.png";
-import Warrior from "@/assets/img/battle/Warrior.a3dfb198.png";
-import WhiteMage from "@/assets/img/battle/WhiteMage.0cfe86ea.png";
+import Astrologian from "@/assets/img/battle/Astrologian.png";
+import Bard from "@/assets/img/battle/Bard.png";
+import BlackMage from "@/assets/img/battle/BlackMage.png";
+import BlueMage from "@/assets/img/battle/BlueMage.png";
+import Dancer from "@/assets/img/battle/Dancer.png";
+import DarkKnight from "@/assets/img/battle/DarkKnight.png";
+import Dragoon from "@/assets/img/battle/Dragoon.png";
+import Gunbreaker from "@/assets/img/battle/Gunbreaker.png";
+import Machinist from "@/assets/img/battle/Machinist.png";
+import Monk from "@/assets/img/battle/Monk.png";
+import Ninja from "@/assets/img/battle/Ninja.png";
+import Paladin from "@/assets/img/battle/Paladin.png";
+import RedMage from "@/assets/img/battle/RedMage.png";
+import Samurai from "@/assets/img/battle/Samurai.png";
+import Scholar from "@/assets/img/battle/Scholar.png";
+import Summoner from "@/assets/img/battle/Summoner.png";
+import Warrior from "@/assets/img/battle/Warrior.png";
+import WhiteMage from "@/assets/img/battle/WhiteMage.png";
 
 //生产采集职业
-import Alchemist from "@/assets/img/trader/Alchemist.852299bd.png";
-import Armorer from "@/assets/img/trader/Armorer.cf2d6314.png";
-import Blacksmith from "@/assets/img/trader/Blacksmith.8bdd9d1b.png";
-import Botanist from "@/assets/img/trader/Botanist.a7a9bddf.png";
-import Carpenter from "@/assets/img/trader/Carpenter.cf89f4b7.png";
-import Culinarian from "@/assets/img/trader/Culinarian.378971f7.png";
-import Fisher from "@/assets/img/trader/Fisher.987a5c5a.png";
-import Goldsmith from "@/assets/img/trader/Goldsmith.727930fd.png";
-import Leatherworker from "@/assets/img/trader/Leatherworker.f3e4ea4c.png";
-import Miner from "@/assets/img/trader/Miner.dbdddfe8.png";
-import Weaver from "@/assets/img/trader/Weaver.eddda4a2.png";
+import Alchemist from "@/assets/img/trader/Alchemist.png";
+import Armorer from "@/assets/img/trader/Armorer.png";
+import Blacksmith from "@/assets/img/trader/Blacksmith.png";
+import Botanist from "@/assets/img/trader/Botanist.png";
+import Carpenter from "@/assets/img/trader/Carpenter.png";
+import Culinarian from "@/assets/img/trader/Culinarian.png";
+import Fisher from "@/assets/img/trader/Fisher.png";
+import Goldsmith from "@/assets/img/trader/Goldsmith.png";
+import Leatherworker from "@/assets/img/trader/Leatherworker.png";
+import Miner from "@/assets/img/trader/Miner.png";
+import Weaver from "@/assets/img/trader/Weaver.png";
 
 //生产采集职业
 export const traderImgAddress = (name: string) => {
@@ -130,6 +132,10 @@ export const roleImgAddress = (name: string) => {
             return Returner
         case "豆芽":
             return Beginner
+        case "无状态":
+            return Normaler
+        case "角色扮演":
+            return Rper
         default:
             return ""
     }

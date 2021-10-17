@@ -112,7 +112,7 @@ const Crop: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
         setSizeBoxBase({
             width: Math.floor(containerHeight / 2),
             height: Math.floor(containerHeight / 2),
-            left: Math.floor(containerWidth / 2 - containerHeight / 4),
+            left: Math.floor(containerWidth / 2 - containerWidth / 4),
             top: Math.floor(containerHeight / 2 - containerHeight / 4)
         })
     }, [])
@@ -132,9 +132,20 @@ const Crop: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
         }
     }, [])
 
-    const mouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, type: "move" | "resize") => {
+    const mouseDown = (
+        event: React.MouseEvent | React.TouchEvent,
+        type: "move" | "resize" | "touchStart"
+    ) => {
         event.stopPropagation()
-        const {offsetX, offsetY} = event.nativeEvent
+        let offsetX
+        let offsetY
+        if (type !== "touchStart") {
+            offsetX = (event as React.MouseEvent).nativeEvent.offsetX
+            offsetY = (event as React.MouseEvent).nativeEvent.offsetY
+        } else {
+            offsetX = (event as React.TouchEvent).changedTouches[0].pageX
+            offsetY = (event as React.TouchEvent).changedTouches[0].pageY
+        }
         if (type === "move") {
             setInitializePosition({
                 top: offsetY,
@@ -208,7 +219,7 @@ const Crop: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
         }
     }
 
-    const mouseMoveOfResize = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const mouseMoveOfResize = (event: React.MouseEvent) => {
         event.preventDefault()
         event.stopPropagation()
         if (allowReSize) {
@@ -266,7 +277,6 @@ const Crop: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
     }
 
     const canvasOperation = () => {
-        canvas.current.getContext
         const canvasCurrent = canvas.current
         const clientWidth = canvasCurrent.clientWidth
         const clientHeight = canvasCurrent.clientHeight
@@ -278,7 +288,7 @@ const Crop: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
             img.onload = () => {
                 const {left, top, width, height} = sizeBoxBase
                 ctx.drawImage(img, left, top, width, height,
-                    0, 0, clientWidth, clientHeight)
+                    0, 0, width, height)
                 const imgData = canvasCurrent.toDataURL("image/jpeg")
                 setCropImgBase64(imgData)
             }
@@ -316,6 +326,9 @@ const Crop: React.FC<Props & React.RefAttributes<any>> = React.forwardRef((props
                 {imgBase64 && <React.Fragment>
                     <div
                         onMouseDown={(event) => {
+                            mouseDown(event, "move")
+                        }}
+                        onTouchStart={(event) => {
                             mouseDown(event, "move")
                         }}
                         onMouseMove={mouseMove}

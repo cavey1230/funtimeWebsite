@@ -1,15 +1,30 @@
 .community-pad {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
   padding-top: 1rem;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 
-  .action-bar-container {
+  .community-pad-inner-navigate {
+    display: flex;
     width: 100%;
-    min-width: 35rem;
+    justify-content: center;
+
+    .inner-navigate-button {
+      margin: 0 1rem;
+    }
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    svg path {
+      fill: var(--bg-color);
+    }
   }
 
   .content-pad {
@@ -21,6 +36,7 @@
       width: 100%;
       min-width: 35rem;
       box-sizing: border-box;
+
     }
   }
 }

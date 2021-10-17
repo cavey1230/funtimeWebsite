@@ -44,19 +44,28 @@
 
     .template-property-info-group {
       width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
 
       .property-info-item {
+        float: left;
         display: flex;
         margin-bottom: 1rem;
-        width: 46%;
+        width: 50%;
+        padding: 0 1rem;
+        box-sizing: border-box;
         justify-content: space-between;
         align-items: center;
 
+        &:nth-child(odd){
+          float: left;
+        }
+
+        &:nth-child(even){
+          float: right;
+        }
+
         .label {
           width: 40%;
+          word-break: keep-all;
         }
 
         .content {
@@ -70,11 +79,11 @@
             height: 1rem;
             border-radius: 0.4rem;
             box-sizing: border-box;
-            border: 0.1rem solid var(--bg-color);
+            border: 0.1rem solid rgba(255, 255, 255, 0.8);
           }
 
           .fill-item-selected {
-            background-color: var(--bg-color);
+            background-color: rgba(255, 255, 255, 0.8);
           }
         }
       }
@@ -136,6 +145,7 @@
 
           img {
             width: 3rem;
+            height: 3rem;
           }
         }
 

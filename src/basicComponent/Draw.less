@@ -1,0 +1,44 @@
+.draw-basic-pad {
+  background-color: white;
+  height: 100vh;
+  color: black;
+  position: fixed;
+  top: 0;
+  animation: 0.5s moveLeftIn ease-in-out;
+  transition: 0.5s left;
+  padding: 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 1rem 0.1rem rgba(0,0,0,0.3);
+}
+
+@keyframes moveLeftIn {
+  from {
+    left: 100vw;
+  }
+}
+
+.draw-container-pad {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  z-index: 991;
+}
+
+.out-of-draw-basic-pad-container {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: 0.5s opacity;
+  animation: 0.5s fadeIn ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

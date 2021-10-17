@@ -13,6 +13,8 @@ import classnames from "@/utils/classnames";
 import {navigateLabelArray} from "@/config/navigateConfig";
 
 import "./index.less";
+import Input from "@/basicComponent/Input";
+import SearchInput from "@/pages/main/navbar/searchInput";
 
 interface Props {
     skinStatus: boolean
@@ -90,6 +92,10 @@ const Navbar: React.FC<Props> = ({setSkinStatus, skinStatus}) => {
                 <div className="across"/>
                 <div className="across"/>
             </label>
+            {isMobile && <div className="mobile-user-actionbar">
+                <SearchInput/>
+                <UserActionBar/>
+            </div>}
             <div className="navbar-inner-container">
                 <div className="logo">
                     <img src={skinStatus ? whiteLogo : blackLogo} alt="logo"/>
@@ -100,6 +106,7 @@ const Navbar: React.FC<Props> = ({setSkinStatus, skinStatus}) => {
                     </div>
                 </div>
                 <div className="action-bar">
+                    {!isMobile && <SearchInput/>}
                     <Switch
                         status={skinStatus}
                         setStatus={setSkinStatus}

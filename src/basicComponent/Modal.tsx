@@ -10,12 +10,16 @@ interface Props {
     onClose: () => void
     visible: boolean
     disableDoubleClick?: boolean
+    keepHideScrollY?: boolean
     style: { [key: string]: string | number }
 }
 
 const Modal: React.FC<Partial<Props>> = (Props) => {
 
-    const {width, height, onClose, children, visible, disableDoubleClick, style} = Props
+    const {
+        width, height, onClose, children, visible,
+        disableDoubleClick, style, keepHideScrollY
+    } = Props
 
     const [isMouseDown, setIsMouseDown] = useState(false)
     const [mousePositionObj, setMousePositionObj] = useState({
@@ -31,21 +35,20 @@ const Modal: React.FC<Partial<Props>> = (Props) => {
     useEffect(() => {
         const bodyDomStyle = document.body.style
         const rootDom = document.getElementById("root")
-        const rightNavbar = document.getElementById("navbar")
         if (visible) {
             if (rootDom.clientWidth < window.innerWidth) {
                 rootDom.style.marginRight = "17px"
-                // rightNavbar.style.width = "calc(100% - 17px)"
             }
             localStorage.setItem("modalIsWheel", "false")
             bodyDomStyle.overflowY = "hidden"
         } else {
             if (rootDom.clientWidth < window.innerWidth) {
                 rootDom.style.marginRight = "0"
-                // rightNavbar.style.width = "100%"
             }
             localStorage.setItem("modalIsWheel", "true")
-            bodyDomStyle.overflowY = "auto"
+            if (!keepHideScrollY) {
+                bodyDomStyle.overflowY = "auto"
+            }
         }
     }, [visible])
 

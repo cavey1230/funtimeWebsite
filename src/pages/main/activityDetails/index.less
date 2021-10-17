@@ -1,0 +1,131 @@
+.activity-details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 1rem;
+  box-sizing: border-box;
+  margin: 0 auto;
+
+  > div {
+    margin-bottom: 1rem;
+  }
+
+
+  .recommend-and-rule {
+    display: flex;
+    position: relative;
+
+    .recommend {
+      height: 100%;
+      width: 30%;
+      padding: 1rem;
+      box-sizing: border-box;
+      background-color: var(--border-color);
+      border-left: 0.5rem solid var(--font-color);
+    }
+
+    .expand-container {
+      width: 70%;
+      box-sizing: border-box;
+
+      .expand-container-label {
+        padding-left: 1rem;
+        background-color: var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        box-sizing: border-box;
+        border-left: 0.5rem solid var(--font-color);
+
+        svg {
+          width: 3.6rem;
+          height: 3.6rem;
+        }
+      }
+
+      .expand-container-content {
+        width: 100%;
+        position: absolute;
+        transition: 0.2s height ease-in-out;
+        overflow: hidden;
+        background-color: var(--switch-slider-color);
+        color: var(--switch-bg-color);
+        left: 0;
+        z-index: 802;
+      }
+    }
+  }
+
+
+  .time-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+
+    > div {
+      margin: 0 1rem;
+    }
+  }
+
+  .main-img {
+    width: 100%;
+    margin: 0 auto;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .action {
+    width: 100%;
+
+    .address {
+      margin: 2rem 0;
+      height: initial;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        margin-left: 1rem;
+        min-width: 15rem;
+        max-width: 20rem;
+      }
+    }
+  }
+
+  .name {
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .activity-details-container {
+    .recommend-and-rule {
+      flex-direction: column;
+
+      .recommend {
+        width: 100%;
+      }
+
+      .expand-container {
+        width: 100%;
+      }
+    }
+
+    .action {
+      .address {
+        margin: 1rem auto;
+        justify-content: space-between;
+
+        button {
+          margin: 0 1rem;
+        }
+      }
+    }
+  }
+}

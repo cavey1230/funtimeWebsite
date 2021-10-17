@@ -45,6 +45,7 @@ const CommentContainer: React.FC<Props> = forwardRef((props, ref: React.Ref<unkn
     useImperativeHandle(ref, () => {
         return {
             flushData: () => {
+                setPagination({pageNum: 1, pageSize: 8})
                 getCommentListData(1, 8, true)
             }
         }
@@ -58,19 +59,32 @@ const CommentContainer: React.FC<Props> = forwardRef((props, ref: React.Ref<unkn
                 pageSize: pagination.pageSize
             }).then(res => {
                 if (res.status === 200) {
-                    setPagination({
-                        ...pagination,
-                        pageNum: res.data
-                    })
+                    setTimeout(() => {
+                        setPagination({
+                            ...pagination,
+                            pageNum: res.data
+                        })
+                        getCommentListData(res.data, 8)
+                    }, 500)
                 }
             })
         }
     }, [selectCommentId])
 
     useEffect(() => {
+        const {pageNum} = pagination
+        if (selectCommentId && pageNum === 1) return
+        setPagination({pageNum: 1, pageSize: 8})
+        getCommentListData(1, 8, true)
+    }, [condition])
+
+    useEffect(() => {
         const {pageNum, pageSize} = pagination
-        getCommentListData(pageNum, pageSize, true)
-    }, [pagination, condition])
+        if (selectCommentId && pageNum === 1) return
+        if (pageNum > 1) {
+            getCommentListData(pageNum, pageSize)
+        }
+    }, [pagination])
 
     const getCommentListData = (pageNum: number, pageSize: number, reload?: boolean) => {
         const data = condition ? {

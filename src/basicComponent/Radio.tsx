@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {CSSProperties, forwardRef, useEffect, useImperativeHandle, useState} from 'react';
 
 import "./Radio.less";
 
@@ -6,15 +6,31 @@ interface Props {
     size: "small" | "middle" | "larger"
     alignItems: string
     width: string
-    onChange: (bool: boolean) => void
+    display?:CSSProperties["display"]
+    onChange?: (bool: boolean | string) => void
 }
 
+const Radio: React.FC<Props & React.RefAttributes<any>> = forwardRef((
+    props, ref
+) => {
 
-const Radio: React.FC<Props> = (props) => {
-
-    const {alignItems, width, size, onChange, children} = props
+    const {
+        alignItems, width, size,
+        onChange, children,display
+    } = props
 
     const [selected, setSelected] = useState(false)
+
+    useImperativeHandle(ref, () => ({
+        value: selected ? "true" : "",
+        setValue: () => {
+            setSelected(false)
+        }
+    }))
+
+    useEffect(() => {
+        onChange && onChange(selected ? "true" : "")
+    }, [selected])
 
     const radioSize = (size: Props["size"]) => {
         switch (size) {
@@ -39,10 +55,9 @@ const Radio: React.FC<Props> = (props) => {
     return (
         <div
             className="radio-item-container"
-            style={{alignItems, width}}
+            style={{alignItems, width,display}}
             onClick={() => {
                 setSelected(prevState => !prevState)
-                onChange(!selected)
             }}
         >
             <div className="radio-background" style={radioSize(size)}>
@@ -53,6 +68,6 @@ const Radio: React.FC<Props> = (props) => {
             </div>
         </div>
     );
-};
+})
 
 export default Radio;

@@ -33,7 +33,7 @@ interface editUserAvatarParams {
     avatar: string
 }
 
-//未读消息条数
+//修改用户头像
 export const editUserAvatar = (data: editUserAvatarParams) => {
     const {userId, ...avatar} = data
     return GoblogApiV1.PUT(`/user/avatar/${userId}`, avatar)
@@ -44,8 +44,19 @@ interface editUserNicknameParams {
     nickname: string
 }
 
-//未读消息条数
+//修改用户昵称
 export const editUserNickname = (data: editUserNicknameParams) => {
     const {userId, ...nickname} = data
     return GoblogApiV1.PUT(`/user/nickname/${userId}`, nickname)
+}
+
+interface editUserRecommendParams {
+    userId: number
+    recommend: string
+}
+
+//修改用户个性签名
+export const editUserRecommend = (data: editUserRecommendParams) => {
+    const {userId, ...recommend} = data
+    return GoblogApiV1.PUT(`/user/recommend/${userId}`, recommend)
 }

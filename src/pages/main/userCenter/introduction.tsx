@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+
 import useGetNameList from "@/customHook/useGetNameList";
 import FieldsetContainer from "@/pages/main/userCenter/publicComponent/fieldsetContainer";
 import WithLabel from './publicComponent/withLabel';
@@ -18,6 +19,8 @@ import {showToast} from "@/utils/lightToast";
 import useUploadImg from "@/customHook/useUploadImg";
 
 import "./introduction.less";
+import CropMainImg from "@/pages/main/userCenter/introoductionCom/cropMainImg";
+import UploadAndCrop from "@/pages/main/userCenter/introoductionCom/uploadAndCrop";
 
 const Introduction = () => {
     const [data, setData] = useState({
@@ -89,8 +92,6 @@ const Introduction = () => {
             scrollTo(index)
             return
         }
-
-        console.log(innerData)
 
         const {
             career, gameRoleName, race, role,
@@ -296,10 +297,8 @@ const Introduction = () => {
                         }}
                     >
                         <WithLabel label={"人物主图"} formItemModel={true}>
-                            <Upload
-                                initializeFileUrlList={data.mainImg && [data.mainImg]}
-                                maxFileLength={1}
-                                acceptFileType={"image/png,image/jpeg"}
+                            <UploadAndCrop
+                                mainImg={data.mainImg}
                             />
                         </WithLabel>
                     </FormItem>

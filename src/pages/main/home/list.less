@@ -1,0 +1,138 @@
+.home-list-group {
+  display: flex;
+
+  .list-item {
+    flex: 1;
+    margin: 1rem 1rem 1rem 0;
+    position: relative;
+    height: 35rem;
+    border-radius: 2rem;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .img-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 2rem;
+
+      img {
+        border-radius: 2rem;
+        z-index: 1;
+        position: absolute;
+        width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .list-item-label, .list-item-introduction-label {
+      padding: 3rem 3rem;
+      box-sizing: border-box;
+      z-index: 3;
+      color: white;
+
+      > div {
+        margin-bottom: 1rem;
+      }
+
+      > div:first-child {
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      > div:nth-child(2) {
+        font-size: 1.6rem;
+      }
+    }
+
+    .list-item-introduction-label {
+      > div:nth-child(3) {
+        display: flex;
+        align-items: center;
+
+        span {
+          margin-right: 1rem;
+
+          img {
+            width: 3rem;
+            height: 3rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.list-curtain {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+@media screen and (max-width: 576px) {
+  .home-list-group {
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .list-item {
+      flex: none;
+      width: calc(50% - 0.5rem);
+      position: relative;
+      margin: 0.5rem 0;
+      height: 25rem;
+      border-radius: 0;
+
+      .img-container {
+        border-radius: 0;
+
+        img {
+          border-radius: 0;
+        }
+      }
+
+      .list-item-label, .list-item-introduction-label {
+        padding: 1rem;
+        color: white;
+
+        > div {
+          margin-bottom: 1rem;
+        }
+
+        > div:first-child {
+          font-size: 1.4rem;
+          font-weight: 600;
+        }
+
+        > div:nth-child(2) {
+          font-size: 1.4rem;
+        }
+      }
+
+      .list-item-introduction-label {
+        > div:nth-child(3) {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+
+          span {
+            margin-right: 1rem;
+
+            img {
+              width: 2rem;
+              height: 2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

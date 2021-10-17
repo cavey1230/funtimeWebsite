@@ -4,13 +4,14 @@ import {ExpandIcon, NoExpandIcon} from "@/assets/icon/iconComponent"
 
 interface Props {
     options: Array<any>
-    onChange: (value: any) => void
+    onChange?: (value: any) => void
     returnValueKey: string
     labelKey: string
     placeholder?: string
     initializeValue?: number | string
     rely?: any
     relyToastMessage?: string
+    returnString?: boolean
 }
 
 import "./Selector.less";
@@ -22,7 +23,7 @@ const Selector: React.FC<Props & React.RefAttributes<any>> = forwardRef((
     const {
         options, onChange, returnValueKey,
         placeholder, labelKey, initializeValue,
-        rely, relyToastMessage
+        rely, relyToastMessage, returnString
     } = props
 
     //取得的labelKey值
@@ -48,7 +49,9 @@ const Selector: React.FC<Props & React.RefAttributes<any>> = forwardRef((
     useEffect(() => {
         if (initializeValue) {
             const result = options.find((item) => item[returnValueKey] === initializeValue)
+            const value = result && result[returnValueKey]
             result && setSelectedValue(result[labelKey])
+            onChange && onChange(returnString ? String(value) : value)
         }
     }, [initializeValue, options])
 
@@ -77,7 +80,7 @@ const Selector: React.FC<Props & React.RefAttributes<any>> = forwardRef((
                     const result = getTypeOfValueKey === "string" ?
                         String(value) : getTypeOfValueKey === "number" ?
                             Number(value) : value
-                    onChange && onChange(result)
+                    onChange && onChange(returnString ? String(result) : result)
                 }}
             >
                 {item[labelKey]}

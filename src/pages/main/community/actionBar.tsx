@@ -7,11 +7,12 @@ import Loading from "@/basicComponent/Loading";
 import useLocalStorage from "@/customHook/useLocalStorage";
 import {createCommunity} from "@/api/v1/community";
 import {TopicIcon} from "@/assets/icon/iconComponent";
-import MarkDownEditor from "@/pages/main/publicComponent/markdownEditor";
 import Upload from "@/basicComponent/Upload";
+import useUploadImg from "@/customHook/useUploadImg";
 
 import "./actionBar.less";
-import useUploadImg from "@/customHook/useUploadImg";
+import {useSelector} from "react-redux";
+import {ReduxRootType} from "@/config/reducers";
 
 interface Props {
     flushDataFunc: () => void
@@ -27,8 +28,6 @@ const ActionBar: React.FC<Props> = (props) => {
 
     const [loadingVisible, setLoadingVisible] = useState(false)
 
-    const [editorModel, setEditorModel] = useState(false)
-
     const [selectTopic, setSelectTopic] = useState({
         title: "",
         id: 0
@@ -38,7 +37,9 @@ const ActionBar: React.FC<Props> = (props) => {
 
     const [selectImgArray, setSelectImgArray] = useState([])
 
-    const inputRef = useRef(null)
+    const isMobile = useSelector((store: ReduxRootType) => {
+        return store.windowResizeReducer.isMobile
+    })
 
     const uploadRef = useRef(null)
 
@@ -51,11 +52,10 @@ const ActionBar: React.FC<Props> = (props) => {
     const init = () => {
         setSelectImgArray([])
         setInputValue("")
-        setLoadingVisible(false)
-        setTipsVisible(true)
-        inputRef.current && inputRef.current.setValue("")
         uploadRef.current && uploadRef.current.clear()
         markDownRef.current && markDownRef.current.setArticleContent("")
+        setLoadingVisible(false)
+        setTipsVisible(true)
         flushDataFunc()
     }
 
@@ -66,20 +66,16 @@ const ActionBar: React.FC<Props> = (props) => {
             showToast("请登录", "error")
             return
         }
-        if (!editorModel && !inputValue && selectImgArray.length === 0) {
+        if (!inputValue && selectImgArray.length === 0) {
             showToast("图片和文字必须填一项", "warn")
-            return
-        }
-        if (editorModel && !markDownRef.current.articleContent) {
-            showToast("文章信息为空，无法提交", "error")
             return
         }
         setLoadingVisible(true)
         setTimeout(() => {
-            upLoadImg(selectImgArray,res => {
+            upLoadImg(selectImgArray, res => {
                 const {id} = selectTopic
-                const innerContent = editorModel ? markDownRef.current.articleContent : inputValue
-                const innerIsHeightOrderModel = editorModel ? 1 : 0
+                const innerContent = inputValue
+                const innerIsHeightOrderModel = 0
                 const innerTopicId = id > 0 ? id : 1
                 const data = {
                     userId: userId,
@@ -100,42 +96,38 @@ const ActionBar: React.FC<Props> = (props) => {
 
     return (
         <React.Fragment>
-            <div className="action-bar-pad publicFadeIn"
-                 style={{width: editorModel && "100%"}}
-            >
+            <div className="action-bar-pad publicFadeIn">
                 <div className="input-action-pad">
-                    {!editorModel ? <React.Fragment>
-                        <Input
-                            style={{
-                                border: "none",
-                                fontSize: "1.6rem",
-                                fontWeight: 600
-                            }}
-                            placeholder={""}
-                            onChange={result => {
-                                if ((result as string).length > 200) {
-                                    showToast("字符超过最大限制,超出部分会进行删减", "error")
-                                    return
-                                }
-                                setInputValue(result as string)
-                            }}
-                            noFocusStyle={true}
-                            textAreaMode={true}
-                            width={"100%"}
-                            height={"100%"}
-                            onFocus={() => {
-                                setTipsVisible(false)
-                            }}
-                            onBlur={() => {
-                                setTipsVisible(true)
-                            }}
-                            ref={inputRef}
-                        />
-                        {inputValue.length === 0 && tipsVisible &&
-                        <div className="text-area-tips">
-                            请输入待发表内容
-                        </div>}
-                    </React.Fragment> : <MarkDownEditor ref={markDownRef}/>}
+                    <Input
+                        style={{
+                            border: "none",
+                            fontSize: "1.6rem",
+                            fontWeight: 600
+                        }}
+                        placeholder={""}
+                        onChange={result => {
+                            if ((result as string).length > 200) {
+                                showToast("字符超过最大限制,超出部分会进行删减", "error")
+                                return
+                            }
+                            setInputValue(result as string)
+                        }}
+                        initializeValue={inputValue}
+                        noFocusStyle={true}
+                        textAreaMode={true}
+                        width={"100%"}
+                        height={"100%"}
+                        onFocus={() => {
+                            setTipsVisible(false)
+                        }}
+                        onBlur={() => {
+                            setTipsVisible(true)
+                        }}
+                    />
+                    {inputValue.length === 0 && tipsVisible &&
+                    <div className="text-area-tips">
+                        请输入待发表内容
+                    </div>}
                 </div>
                 <div className="topic-action-pad">
                     <div className="left-pad">
@@ -148,6 +140,7 @@ const ActionBar: React.FC<Props> = (props) => {
                             <span>{selectTopic.title ? `已选话题:${selectTopic.title}` : "选择话题"}</span>
                         </div>
                         <TopicModal
+                            keepHideScrollY={isMobile}
                             visible={topicVisible}
                             setVisible={() => {
                                 setTopicVisible(false)
@@ -166,19 +159,7 @@ const ActionBar: React.FC<Props> = (props) => {
                             {`${inputValue.length}/200`}
                         </div>}
                         <Button
-                            style={{
-                                width: "30%",
-                                marginRight: "1rem",
-                                wordBreak: "keep-all"
-                            }}
-                            onClick={() => {
-                                setEditorModel(prevState => !prevState)
-                            }}
-                        >
-                            高级
-                        </Button>
-                        <Button
-                            style={{width: "50%",}}
+                            style={{width: "50%", wordBreak: "keep-all"}}
                             onClick={() => {
                                 commitCommunity()
                             }}

@@ -122,6 +122,7 @@ const NormalMessage: React.FC = () => {
                                 pcLabelStyle={{fontSize: "1.4rem", fontWeight: "600"}}
                                 expandModel={true}
                                 targetUserId={fromUserId}
+                                fillHeight={true}
                             />
                             <div className="normal-message-type">
                                 <span>{statusWord}</span>
@@ -227,6 +228,7 @@ const NormalMessage: React.FC = () => {
                     communityId={communityId}
                     commentId={commentId}
                     replyId={messageType === "comment" ? 0 : replyId}
+                    maxImgLength={1}
                     onFinish={(
                         communityId, userId,
                         inputValue, init, argumentParams
@@ -238,7 +240,7 @@ const NormalMessage: React.FC = () => {
                             replierId: Number(userId),
                             referId: fromUserId,
                             replyToCommentId: Number(commentId),
-                            imgArray: url ? [url] : null
+                            imgArray: url ? url : []
                         }
                         createReply(innerObj).then(res => {
                             if (res.status === 200) {

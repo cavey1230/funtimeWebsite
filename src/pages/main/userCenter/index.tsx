@@ -9,6 +9,7 @@ import Introduction from "@/pages/main/userCenter/introduction";
 import RecentlyLike from "@/pages/main/userCenter/recentlyLike";
 import GenerateCard from "@/pages/main/userCenter/generateCard";
 import getDom from "@/utils/getDom";
+import PersonalHomeSetting from "@/pages/main/userCenter/personalHomeSetting";
 
 import "./index.less";
 
@@ -25,7 +26,8 @@ const Index = () => {
         FocusAndFansInfo,
         Introduction,
         GenerateCard,
-        RecentlyLike
+        RecentlyLike,
+        PersonalHomeSetting
     ]
 
     return (

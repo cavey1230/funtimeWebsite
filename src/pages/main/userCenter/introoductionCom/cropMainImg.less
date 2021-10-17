@@ -1,0 +1,63 @@
+.crop-main-img-out-container {
+  width: 100%;
+
+  .crop-main-img-container {
+    background-color: #989898;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+
+    .canvas-container {
+      top: 0;
+      left: 0;
+      position: absolute;
+      z-index: 1;
+      cursor: move;
+    }
+
+    .limit-container {
+      border: 0.2rem dashed red;
+      box-sizing: border-box;
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .tips {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      color: red;
+      pointer-events: none;
+      z-index: 2;
+    }
+  }
+
+  .scale-input {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: flex-end;
+
+    span {
+      margin-right: 1rem;
+    }
+  }
+
+  .button-group {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin-right: 1rem;
+      max-width: 9rem;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+

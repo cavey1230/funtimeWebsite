@@ -9,11 +9,12 @@ interface Props {
     visible: boolean
     setVisible: () => void
     onSelected: (name: string, id: number) => void
+    keepHideScrollY?:boolean
 }
 
 const TopicModal: React.FC<Props> = (props) => {
 
-    const {onSelected, visible, setVisible} = props
+    const {onSelected, visible, setVisible,keepHideScrollY} = props
 
     const [topicList, setTopicList] = useState([])
 
@@ -57,6 +58,7 @@ const TopicModal: React.FC<Props> = (props) => {
             visible={visible}
             disableDoubleClick={true}
             onClose={setVisible}
+            keepHideScrollY={keepHideScrollY}
             style={{
                 minWidth: "20rem",
                 maxWidth: "30rem"

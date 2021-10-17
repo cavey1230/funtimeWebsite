@@ -25,7 +25,7 @@ const RecentlyLike = () => {
 
     const initializePagination = {
         pageNum: 1,
-        pageSize: 12
+        pageSize: 8
     }
 
     const [pagination, setPagination] = useState(initializePagination)
@@ -62,7 +62,6 @@ const RecentlyLike = () => {
             findCommunityLike(data) : findIntroductionLike(data)
         innerPromise.then(res => {
             if (res.status === 200) {
-                console.log(res.data)
                 setDataList(res.data.data)
                 setTotal(res.data.total)
             }

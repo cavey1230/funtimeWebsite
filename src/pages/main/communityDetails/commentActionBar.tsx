@@ -16,17 +16,21 @@ export interface Props {
         communityId: number, userId: string, inputValue: string,
         init: () => void, argumentParams?: {
             commentId?: number,
-            url?: string,
+            url?: string[],
             replyId?: number
         }
     ) => void
     replyId?: number
     commentId?: number
+    maxImgLength: number
 }
 
 export const CommentActionBar: React.FC<Props> = (props) => {
 
-    const {flushDataFunc, communityId, onFinish, commentId, replyId} = props
+    const {
+        flushDataFunc, communityId, onFinish,
+        commentId, replyId, maxImgLength
+    } = props
 
     const [tipsVisible, setTipsVisible] = useState(true)
 
@@ -35,8 +39,6 @@ export const CommentActionBar: React.FC<Props> = (props) => {
     const [inputValue, setInputValue] = useState("")
 
     const [selectImgArray, setSelectImgArray] = useState([])
-
-    const inputRef = useRef(null)
 
     const uploadRef = useRef(null)
 
@@ -51,7 +53,6 @@ export const CommentActionBar: React.FC<Props> = (props) => {
         setInputValue("")
         setLoadingVisible(false)
         setTipsVisible(true)
-        inputRef.current && inputRef.current.setValue("")
         uploadRef.current && uploadRef.current.clear()
         flushDataFunc()
     }
@@ -64,22 +65,16 @@ export const CommentActionBar: React.FC<Props> = (props) => {
         }
         setLoadingVisible(true)
         setTimeout(() => {
-            const haveUrl = (url: string) => ({
+            const haveUrl = (url: string[]) => ({
                 commentId: commentId || null,
                 replyId: replyId || null,
-                url: url
-            })
-            const notHaveUrl = () => ({
-                commentId: commentId || null,
-                replyId: replyId || null,
-                url: ""
+                url: url?.length > 0 ? url : []
             })
             const onfinishWithUrl = (urlList?: string[]) => {
-                onFinish(communityId, userId, inputValue, init,
-                    urlList ? haveUrl(urlList[0] as string) : notHaveUrl())
+                onFinish(communityId, userId, inputValue, init, haveUrl(urlList))
             }
             selectImgArray.length > 0 ? upLoadImg(selectImgArray, urlList => {
-                urlList.length > 0 ? onfinishWithUrl(urlList) : init()
+                urlList?.length > 0 ? onfinishWithUrl(urlList) : init()
             }) : onfinishWithUrl()
         }, 1000)
     }
@@ -112,7 +107,7 @@ export const CommentActionBar: React.FC<Props> = (props) => {
                         onBlur={() => {
                             setTipsVisible(true)
                         }}
-                        ref={inputRef}
+                        initializeValue={inputValue}
                     />
                     {
                         inputValue.length === 0 && tipsVisible &&
@@ -144,6 +139,8 @@ export const CommentActionBar: React.FC<Props> = (props) => {
                     onChange={(res) => {
                         setSelectImgArray(res)
                     }}
+                    multiple={true}
+                    maxFileLength={maxImgLength}
                     justifyContent={"flex-start"}
                     acceptFileType={"image/png,image/jpeg"}
                 />

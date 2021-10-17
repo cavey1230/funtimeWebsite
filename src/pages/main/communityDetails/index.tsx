@@ -10,14 +10,14 @@ import {showToast} from "@/utils/lightToast";
 import useLocalStorage from "@/customHook/useLocalStorage";
 import useMessage from "@/customHook/useMessage";
 import FocusButton from "@/pages/main/publicComponent/focusButton";
-
-import {HollowCollectIcon, SolidCollectIcon, WatchIcon} from "@/assets/icon/iconComponent";
-
-import "./index.less";
 import useTimeChanger from '@/customHook/useTimeChanger';
 import PublicAvatar from "@/pages/main/publicComponent/publicAvatar";
 import {mdParser} from "@/utils/mdParser";
 import MoreDropdown from "@/pages/main/publicComponent/moreDropdown";
+
+import {HollowCollectIcon, SolidCollectIcon, WatchIcon} from "@/assets/icon/iconComponent";
+
+import "./index.less";
 
 type onFinish = ActionBarProps["onFinish"]
 
@@ -42,7 +42,8 @@ const Index = () => {
         hasLiked: 0,
         hasFocus: 0,
         hasWatch: 0,
-        isHeightOrderModel: 0
+        isHeightOrderModel: 0,
+        isSystem: 0
     })
 
     const [visible, setVisible] = useState(false)
@@ -67,7 +68,7 @@ const Index = () => {
         avatar, content, nickname, userId,
         createTime, imgArray, lookNum,
         likeNum, hasLiked, id, topicId, hasFocus,
-        isHeightOrderModel, hasWatch
+        isHeightOrderModel, hasWatch, isSystem
     } = communityData
 
     useEffect(() => {
@@ -126,15 +127,11 @@ const Index = () => {
         inputValue, init, argumentParams
     ) => {
         const {url, commentId} = argumentParams
-        const innerObj = url ? {
+        const innerObj = {
             content: inputValue,
             communityId: Number(communityId),
             commenterId: Number(userId),
-            imgArray: [url]
-        } : {
-            content: inputValue,
-            communityId: Number(communityId),
-            commenterId: Number(userId)
+            imgArray: url
         }
         createComment(innerObj).then(res => {
             if (res.status === 200) {
@@ -157,7 +154,7 @@ const Index = () => {
             {id > 0 && <div className="community-detail-pad publicFadeIn-500ms">
                 <div className="community-detail-inner-container">
                     <div className="avatar-group">
-                        <PublicAvatar
+                        {isSystem !== 1 ? <PublicAvatar
                             avatarAddress={avatar}
                             labelString={nickname}
                             justifyContent={"flex-start"}
@@ -168,12 +165,17 @@ const Index = () => {
                             pcLabelStyle={{fontSize: "2rem", fontWeight: "600"}}
                             expandModel={true}
                             targetUserId={userId}
-                        />
+                        /> : <div className="system">Funtime官方</div>}
                         <div className="avatar-button">
                             <div>
                                 <MoreDropdown
+                                    data={{
+                                        id, content,
+                                        nickname, avatar,
+                                        imgArray, userId
+                                    }}
                                     targetId={id}
-                                    bannedContentType={"community"}
+                                    contentType={"community"}
                                     dropdownPosition={"bottomRight"}
                                 />
                             </div>
@@ -204,7 +206,7 @@ const Index = () => {
                     <div className="img-group">
                         {renderImgItem(imgArray)}
                     </div>
-                    <div className="action-group">
+                    {isSystem !== 1 && <div className="action-group">
                         <div className="look-num">
                             <WatchIcon/>
                             <span>{lookNum}</span>
@@ -224,9 +226,10 @@ const Index = () => {
                             {hasLiked ? <SolidCollectIcon/> : <HollowCollectIcon/>}
                             <span>{likeNum}</span>
                         </div>
-                    </div>
-                    <div className="comment-group">
+                    </div>}
+                    {isSystem !== 1 && <div className="comment-group">
                         <CommentActionBar
+                            maxImgLength={3}
                             flushDataFunc={() => {
                                 commentListRef.current.flushData()
                             }}
@@ -240,7 +243,7 @@ const Index = () => {
                             selectCommentId={commentId}
                             selectReplyId={replyId}
                         />
-                    </div>
+                    </div>}
                 </div>
             </div>}
             <ImgModal

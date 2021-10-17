@@ -125,11 +125,12 @@ const AvatarForm: React.FC<Props> = (props) => {
                     style={{margin: "2rem 0"}}
                     condition={{
                         required: {value: true, tips: "此选项为必填值"},
-                        max: {value: 8, tips: "昵称最大不能超过8位数"},
+                        max: {value: 6, tips: "昵称最大不能超过6位数"},
                         min: {value: 2, tips: "昵称最小为2位数"},
                     }}
                 >
                     <Input
+                        matchAll={true}
                         noFocusStyle={true}
                         initializeValue={""}
                         placeholder={"昵称"}

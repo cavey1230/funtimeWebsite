@@ -1,8 +1,7 @@
 .basic-info-container > .property-info-group{
-  width: 30%;
+  width: 100%;
   display: flex;
-  color: var(--bg-color);
-  background-color: var(--font-color);
+  background-color: var(--introduction-bg-color);
   box-sizing: border-box;
   z-index: 2;
 }
@@ -11,25 +10,29 @@
   padding: 2rem;
   flex-direction: column;
   position: relative;
+  color: var(--introduction-font-color);
 
   .property-info-field{
+    display: flex;
+    flex-wrap: wrap;
     border-radius: 1rem;
-    border: 0.2rem solid var(--bg-color);
+    border: 0.2rem solid var(--introduction-font-color);
   }
 
   .property-info-item {
     display: flex;
     margin-bottom: 1rem;
-    width: 100%;
+    width: 33.33%;
 
     .label {
-      width: 30%;
+      width: 20%;
     }
 
     .content {
-      width: 70%;
+      width: 80%;
       display: flex;
       align-items: center;
+      justify-content: center;
 
       .property-info-content-fill-item {
         background-color: transparent;
@@ -37,12 +40,18 @@
         width: 2rem;
         height: 2rem;
         border-radius: 1rem;
-        border: 0.2rem solid var(--bg-color);
+        border: 0.2rem solid var(--introduction-font-color);
       }
 
       .fill-item-selected {
-        background-color: var(--bg-color);
+        background-color: var(--introduction-font-color);
       }
     }
+  }
+}
+
+@media screen and (max-width: 576px){
+  .property-info-item{
+    width: 100% !important;
   }
 }

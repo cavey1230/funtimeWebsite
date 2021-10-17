@@ -21,7 +21,7 @@ export const navigateLabelArray = [{
 }, {
     name: "活动",
     id: 3,
-    address: "/main/home"
+    address: "/main/activity"
 }]
 
 //个人中心左边导航
@@ -62,5 +62,11 @@ export const userCenterNavigateArray: UserCenterNavigateArray = [
         id: 4,
         isVisible: true,
         icon: PraiseIcon
+    },
+    {
+        name: "个人主页设置",
+        id: 5,
+        isVisible: true,
+        icon: IntroductionIcon
     }
 ]

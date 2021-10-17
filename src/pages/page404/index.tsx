@@ -27,7 +27,7 @@ const Index = () => {
                 <div>却快乐不起来</div>
                 <div>
                     <div onClick={() => navigateTo("/")}>去首页</div>
-                    <div>去鱼塘</div>
+                    <div onClick={() => navigateTo("/main/introduction")}>去鱼塘</div>
                 </div>
             </div>
         </div>

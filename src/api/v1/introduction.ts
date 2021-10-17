@@ -14,6 +14,7 @@ interface getIntroductionDataParams {
     area?: number,
     normalOnlineTime?: string,
     preciseOnlineTime?: string
+    visible?: number
 }
 
 export const getIntroductionData = (data: getIntroductionDataParams) => {

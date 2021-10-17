@@ -10,7 +10,7 @@
   box-sizing: border-box;
   border-radius: 2rem;
   color: var(--font-color);
-  transition:0.5s width ease-in-out;
+  transition: 0.5s width ease-in-out;
 
   .input-action-pad {
     width: 100%;
@@ -27,8 +27,9 @@
       position: absolute;
       top: 0;
       left: 0;
-      display: grid;
-      place-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 1.4rem;
       font-weight: 600;
       pointer-events: none;
@@ -50,7 +51,7 @@
       align-items: center;
       position: relative;
 
-      .topic-tips{
+      .topic-tips {
         display: flex;
         align-items: center;
         user-select: none;
@@ -76,7 +77,7 @@
       justify-content: flex-end;
       align-items: center;
 
-      .text-number-limit{
+      .text-number-limit {
         margin-right: 1rem;
         font-weight: 600;
       }
@@ -120,5 +121,13 @@
       object-fit: cover;
       cursor: pointer;
     }
+  }
+}
+
+@media screen and(max-width: 576px) {
+  .action-bar-pad {
+    margin-top: 3rem;
+    width: 100%;
+    min-width: unset;
   }
 }

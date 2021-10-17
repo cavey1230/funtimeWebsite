@@ -24,9 +24,9 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     {
-                        loader:  MiniCssExtractPlugin.loader,
+                        loader: MiniCssExtractPlugin.loader,
                         options: {
-                           publicPath:"../"
+                            publicPath: "../"
                         }
                     },
                     "css-loader",
@@ -46,9 +46,9 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     {
-                        loader:  MiniCssExtractPlugin.loader,
+                        loader: MiniCssExtractPlugin.loader,
                         options: {
-                            publicPath:"../"
+                            publicPath: "../"
                         }
                     },
                     "css-loader",
@@ -91,7 +91,7 @@ module.exports = {
                                 ['@babel/preset-env', {
                                     "useBuiltIns": "usage",
                                     "corejs": 3,
-                                    "targets": "> 1% in AU and not dead",
+                                    "targets": "> 1%,last 2 versions,not ie <= 10,ios >= 10",
                                     "shippedProposals": true
                                 }],
                                 "@babel/preset-react",
@@ -141,7 +141,7 @@ module.exports = {
                 generator: {
                     filename: 'images/[hash][ext][query]'
                 }
-            },{
+            }, {
                 test: /\.html$/,
                 //处理html文件的img图片（负责引入img，从而能被url-loader进行处理）
                 loader: "html-loader"
@@ -153,7 +153,7 @@ module.exports = {
                     // [hash] 防止出现相同文件名无法区分，[ext] 拿到后缀名
                     filename: 'font/[hash][ext][query]'
                 }
-            },{
+            }, {
                 //排除这些文件，打包剩下的
                 exclude: /\.(css|js|jsx|ts|tsx|html|jpg|png|gif|svg|less|ttf|eot|woff2?)/,
                 type: 'asset/resource',
@@ -193,7 +193,7 @@ module.exports = {
         },
         chunkIds: "named",
         usedExports: true,
-        minimize:true,
+        minimize: true,
         minimizer: [
             new CssMinimizerPlugin({}),
             new TerserPlugin({
@@ -210,7 +210,7 @@ module.exports = {
     mode: "production",
     // devtool: "source-map",
     devtool: false,
-    externals:{
+    externals: {
         //忽略CDN的打包
         // "react":"React",
         // "react-dom":"ReactDOM",

@@ -12,21 +12,22 @@ import "./bannedModal.less";
 
 interface Props {
     visible: boolean
-    setVisible: (bool: boolean) => void
+    setVisible: () => void
     bannedContentType: "comment" | "community" | "reply" | "userinfo" | "introduction"
     targetId: number
+    keepHideScrollY?: boolean
+}
+
+export const bannedContentTypeWithChinese = {
+    comment: "评论",
+    community: "动态",
+    reply: "回复",
+    userinfo: "个人信息",
+    introduction: "个人情报",
 }
 
 const BannedModal: React.FC<Props> = (props) => {
-    const {visible, setVisible, bannedContentType, targetId} = props
-
-    const bannedContentTypeWithChinese = {
-        comment: "评论",
-        community: "动态",
-        reply: "回复",
-        userinfo: "个人信息",
-        introduction: "个人情报",
-    }
+    const {visible, setVisible, bannedContentType, targetId, keepHideScrollY} = props
 
     const [bannedReasonList, setBannedReasonList] = useState([])
 
@@ -43,7 +44,7 @@ const BannedModal: React.FC<Props> = (props) => {
     useEffect(() => {
         visible && getReasonList({reportBannedType: bannedContentType}).then(res => {
             res.status === 200 && setBannedReasonList(res.data)
-            res.status !== 200 && setVisible(false)
+            res.status !== 200 && setVisible()
         })
     }, [visible])
 
@@ -116,7 +117,7 @@ const BannedModal: React.FC<Props> = (props) => {
         }).then(res => {
             if (res.status === 200) {
                 showToast("举报成功")
-                setVisible(false)
+                setVisible()
             }
         })
     }
@@ -125,7 +126,8 @@ const BannedModal: React.FC<Props> = (props) => {
         <Modal
             style={{minWidth: "20rem", maxWidth: "30rem"}}
             visible={visible}
-            onClose={() => setVisible(false)}
+            onClose={() => setVisible()}
+            keepHideScrollY={keepHideScrollY}
         >
             <div className="banned-modal-out-container">
                 <div className="banned-modal-label">

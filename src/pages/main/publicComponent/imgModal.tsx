@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Modal from "@/basicComponent/Modal";
+import {useSelector} from "react-redux";
+import {ReduxRootType} from "@/config/reducers";
 
 import "./imgModal.less";
+import Zoom from "@/pages/main/publicComponent/imgModalCom/zoom";
 
 interface Props {
     visible: boolean
@@ -28,10 +31,15 @@ const ImgModal: React.FC<Props> = (props) => {
 
     const [allowMove, setAllowMove] = useState(false)
 
+    const isMobile = useSelector((store: ReduxRootType) => {
+        return store.windowResizeReducer.isMobile
+    })
+
     useEffect(() => {
         initBigImgPosition()
         setSelectImgIndex(initializeImgIndex)
     }, [initializeImgIndex])
+
 
     const initBigImgPosition = () => {
         setBigImgPosition({
@@ -61,13 +69,19 @@ const ImgModal: React.FC<Props> = (props) => {
     }
 
     return (
-        <Modal
+        isMobile ? <Zoom
+            visible={visible}
+            onClose={() => {
+                setVisible()
+            }}
+            mainImg={imgArray[selectedImgIndex]}
+        /> : <Modal
             visible={visible}
             onClose={() => {
                 setVisible()
             }}
             width={"90vw"}
-            height={"90vh"}
+            height={isMobile ? "70vh" : "90vh"}
             disableDoubleClick={true}
         >
             <div className="detail-img-container">
@@ -136,6 +150,6 @@ const ImgModal: React.FC<Props> = (props) => {
             </div>
         </Modal>
     );
-};
+}
 
 export default ImgModal;

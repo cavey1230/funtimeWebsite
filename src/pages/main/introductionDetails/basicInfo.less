@@ -1,8 +1,8 @@
 .basic-info-container > .basic-info-item {
-  width: 30%;
+  width: 50%;
   display: flex;
-  color: var(--bg-color);
-  background-color: var(--font-color);
+  background-color: var(--introduction-bg-color);
+  color: var(--introduction-font-color);
   box-sizing: border-box;
   z-index: 2;
 }
@@ -11,6 +11,10 @@
   padding: 2rem;
   position: relative;
   flex-direction: column;
+
+  svg path {
+    fill: white;
+  }
 
   > div {
     margin-bottom: 1rem;
@@ -25,6 +29,10 @@
       font-size: 3rem;
       display: flex;
       align-items: center;
+
+      span {
+        margin-right: 2rem;
+      }
 
       img {
         width: 6rem;
@@ -41,7 +49,7 @@
     padding: 0 1rem;
 
     div {
-      margin: 2rem 0;
+      margin: 2rem 1rem;
       word-break: keep-all;
       display: flex;
       align-items: center;
@@ -58,9 +66,28 @@
 
   .self-introduction {
     width: 100%;
-    border: 0.2rem solid var(--bg-color);
+    border: 0.2rem solid var(--introduction-font-color);
     border-radius: 1rem;
     padding: 2rem;
     box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .basic-info-item {
+
+
+    .user-details-group {
+
+      .game-role-name {
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 3.5rem;
+        }
+      }
+    }
   }
 }

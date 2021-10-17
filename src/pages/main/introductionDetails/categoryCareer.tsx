@@ -5,7 +5,7 @@ import classnames from "@/utils/classnames";
 import "./categoryCareer.less";
 
 interface Props {
-    width: string
+    width?: string
     careerList: Array<any>
     selectedList: Array<any>
 }

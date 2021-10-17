@@ -4,28 +4,29 @@
   display: flex;
   position: relative;
   box-sizing: border-box;
+  flex-direction: column;
   //overflow: hidden;
 
   .basic-info-container {
     width: 100%;
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .main-img {
-    position: absolute;
-    left: 30%;
-    width: 70%;
-    height: 100%;
+    width: 100%;
+    max-height: 80vh;
 
     img {
+      cursor: pointer;
       object-fit: cover;
       width: 100%;
-      height: 100%;
     }
   }
 }
 
-@media screen and (max-width: 576px){
+@media screen and (max-width: 576px) {
   .basic-info-container > .Introduction-details-action-group,
   .basic-info-container > .career-info-item,
   .basic-info-container > .property-info-group,
@@ -34,10 +35,12 @@
     width: 100% !important;
   }
 
-  .main-img {
-    position: absolute;
-    left: 0 !important;
-    width: 100% !important;
+  .introduction-details-content {
+    .main-img {
+      position: absolute;
+      left: 0 !important;
+      width: 100% !important;
+    }
   }
 }
 

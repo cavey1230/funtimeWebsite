@@ -1,0 +1,155 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem;
+
+  .slogan-and-sign {
+    display: flex;
+    margin: 3rem 0;
+    user-select: none;
+
+    .sign-container {
+      width: 50%;
+      overflow: hidden;
+      position: relative;
+      margin-left: 3rem;
+      border-radius: 2rem;
+
+      img {
+        position: absolute;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 2rem;
+        cursor: pointer;
+      }
+    }
+
+    .slogan-container {
+      padding: 3rem;
+      width: 50%;
+      box-sizing: border-box;
+      background-color: var(--switch-bg-color);
+      color: var(--switch-slider-color);
+      border-radius: 2rem;
+
+      .slogan{
+        animation: 0.5s scale ease-in-out;
+      }
+
+      > div {
+        margin-bottom: 1rem;
+
+        &:first-child {
+          font-size: 20rem;
+          letter-spacing: 1rem;
+        }
+
+        &:nth-child(2) {
+          font-size: 2rem;
+
+          span:first-child {
+            letter-spacing: 2rem;
+          }
+
+          span:last-child {
+            margin-left: 1rem;
+            letter-spacing: 2rem;
+          }
+        }
+
+        &:nth-child(3) {
+          font-size: 1.6rem;
+        }
+
+        &:nth-child(4) {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  .home-page-label {
+    margin: 1rem 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    > div:first-child {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .click {
+      cursor: pointer;
+      text-decoration: underline;
+      box-sizing: border-box;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .notice-container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .home-container {
+    .slogan-and-sign {
+      flex-direction: column;
+      margin: 3rem 0 2rem 0;
+
+      .sign-container {
+        width: 100%;
+        height: 20rem;
+        overflow: hidden;
+        position: relative;
+        margin-left: 0;
+        margin-top: 1rem;
+        border-radius: 2rem;
+
+        img {
+          position: absolute;
+          width: 100%;
+          object-fit: cover;
+          border-radius: 2rem;
+          cursor: pointer;
+        }
+      }
+
+      .slogan-container {
+        width: 100%;
+
+        > div {
+          margin-bottom: 1rem;
+
+          &:first-child {
+            font-size: 10rem;
+            letter-spacing: 1rem;
+          }
+
+          &:nth-child(2) {
+            font-size: 1.4rem;
+            letter-spacing: 1rem;
+
+            span:last-child {
+              margin-left: 1rem;
+            }
+          }
+
+          &:nth-child(3) {
+            font-size: 1.4rem;
+          }
+
+          &:nth-child(4) {
+            font-size: 1.4rem;
+          }
+        }
+      }
+    }
+  }
+}

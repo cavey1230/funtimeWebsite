@@ -1,0 +1,30 @@
+.article-container {
+  display: flex;
+  padding: 1rem;
+  box-sizing: border-box;
+  height: calc(100vh - 9rem);
+
+  .left-pad {
+    width: 20%;
+    height: 100%;
+    margin-right: 2rem;
+  }
+
+  .right-pad {
+    flex: 1;
+    height: 100%;
+
+    .right-pad-button{
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .article-container {
+    .left-pad {
+      display: none;
+    }
+  }
+}

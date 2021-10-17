@@ -50,7 +50,12 @@ const FocusAndFansInfo = () => {
     const getDataList = (model: "fans" | "focus") => {
         const userId = getLocalStorage("userId")
         const {pageNum, pageSize} = pagination
-        const data = {pageNum, pageSize, toUserId: userId}
+        const data = {
+            pageNum,
+            pageSize,
+            toUserId: userId,
+            loginUserId: userId
+        }
         setLoadingVisible(true)
         const innerPromise = model === "fans" ?
             getFansList(data) : getFocusList(data)
@@ -66,7 +71,11 @@ const FocusAndFansInfo = () => {
 
     const renderDataList = (dataList: Array<any>) => {
         return dataList?.map(item => {
-            const {id, nickname, targetUserAvatar, userId, bothFocus,createTime} = item
+            const {
+                id, nickname, targetUserAvatar,
+                userId, focusStatus, createTime,
+                recommend
+            } = item
 
             const getHasFocusStatus = (loginUserId: number) => {
                 loginUserId && hasFocus({
@@ -85,22 +94,27 @@ const FocusAndFansInfo = () => {
                     {createTime}
                 </div>
                 <div>
-                    <PublicAvatar
-                        avatarAddress={targetUserAvatar}
-                        labelString={nickname}
-                        justifyContent={"flex-start"}
-                        alignItem={"center"}
-                        mobileImgStyle={{width: "5rem"}}
-                        pcImgStyle={{width: "5rem"}}
-                        mobileLabelStyle={{fontSize: "1.4rem", fontWeight: "400"}}
-                        pcLabelStyle={{fontSize: "1.4rem", fontWeight: "600"}}
-                        expandModel={false}
-                        targetUserId={userId}
-                    />
+                    <div>
+                        <PublicAvatar
+                            avatarAddress={targetUserAvatar}
+                            labelString={nickname}
+                            justifyContent={"flex-start"}
+                            alignItem={"center"}
+                            mobileImgStyle={{width: "5rem"}}
+                            pcImgStyle={{width: "5rem"}}
+                            mobileLabelStyle={{fontSize: "1.4rem", fontWeight: "400"}}
+                            pcLabelStyle={{fontSize: "1.4rem", fontWeight: "600"}}
+                            expandModel={false}
+                            targetUserId={userId}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <div>{recommend}</div>
                     <div className="action-group">
                         <FocusButton
                             communityUserId={Number(userId)}
-                            hasFocus={selectId === 0 && (bothFocus === 1 ? 2 : 0)}
+                            hasFocus={focusStatus}
                             flushData={(loginUserId) => {
                                 getHasFocusStatus(loginUserId)
                             }}

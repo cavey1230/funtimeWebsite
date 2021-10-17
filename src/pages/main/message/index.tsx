@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux';
 import {ReduxRootType} from "@/config/reducers";
 import NormalMessage from './normalMessage';
 import ImportantMessage from "@/pages/main/message/importantMessage";
+import {useClearKeepaliveWithoutMessage} from "@/customHook/useKeepaliveNameControl";
 
 import "./index.less";
 
@@ -26,6 +27,9 @@ const Index = () => {
         id: 1,
         icon: <MessageIcon/>
     }] as TabProps["labelArr"])
+
+    //页面缓存控制,激活当前页面时会卸载掉name为数组内字符串的缓存
+    useClearKeepaliveWithoutMessage()
 
     useEffect(() => {
         messageTypeAppendIconWithBadeg(noReadMessageNum)

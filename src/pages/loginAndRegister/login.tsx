@@ -55,10 +55,12 @@ export const Login = () => {
 
     const {clear} = useAliveController()
 
+    const regexp = new RegExp(/[A-Za-z0-9]+/)
+
     //清除页面缓存
-    useEffect(()=>{
+    useEffect(() => {
         clear()
-    },[])
+    }, [])
 
     const onFinish = (value: any) => {
         const {warning, account, password} = value
@@ -94,6 +96,8 @@ export const Login = () => {
                     }}
                 >
                     <Input
+                        regexp={new RegExp(/^[A-Za-z0-9]+$/)}
+                        matchAll={true}
                         noFocusStyle={true}
                         initializeValue={""}
                         placeholder={"账号"}
@@ -111,6 +115,8 @@ export const Login = () => {
                     }}
                 >
                     <Input
+                        regexp={new RegExp(/^[A-Za-z0-9]+$/)}
+                        matchAll={true}
                         noFocusStyle={true}
                         type="password"
                         initializeValue={""}
@@ -146,7 +152,7 @@ export const Login = () => {
                         title: "提示",
                         content: "该功能会明文存储密码至本地localStorage，不建议使用",
                         onClick: () => {
-                            setIsRemember(bool)
+                            setIsRemember(bool as boolean)
                         },
                         onCancel: () => {
                         },

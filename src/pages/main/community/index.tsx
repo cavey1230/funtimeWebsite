@@ -1,21 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import ActionBar from "./actionBar";
 import {getCommunityList, getCommunityListParams, getTopicList} from "@/api/v1/community";
-import {Tab} from "@/basicComponent/Tab";
 import {Waterfall} from "./waterfall";
 import Loading from "@/basicComponent/Loading";
-import Screening from "@/basicComponent/Screening";
 import useLocalStorage from "@/customHook/useLocalStorage";
 import usePagination from '@/customHook/usePagination';
-import {TopicIcon} from "@/assets/icon/iconComponent";
-import {useKeepaliveNameControl} from "@/customHook/useKeepaliveNameControl";
+import {useClearKeepalive, useLimitBodyScroll} from "@/customHook/useKeepaliveNameControl";
 import {useSelector} from "react-redux";
 import {ReduxRootType} from "@/config/reducers";
+import {ReleaseModal, ScreenModal, TopicModal} from "@/pages/main/community/releaseModal";
+import Button from "@/basicComponent/Button";
+import {ReleaseIcon, ScreenIcon, TopicIcon} from "@/assets/icon/iconComponent";
+import Screening from "@/basicComponent/Screening";
+import ActionBar from "@/pages/main/community/actionBar";
+import MiniTabLabel from "@/pages/main/community/miniTabLabel";
 
 import "./index.less";
 
-interface TopicListItem {
+export interface TopicListItem {
     createTime: string
     deleteTime: string
     id: number
@@ -42,6 +44,13 @@ const Index = () => {
     //控制loading显示隐藏
     const [loadingVisible, setLoadingVisible] = useState(false)
 
+    //模态框显示隐藏
+    const [modalVisible, setModalVisible] = useState({
+        release: false,
+        topic: false,
+        screen: false
+    })
+
     //下方筛选条件
     const [condition, setCondition] = useState([] as Array<string>)
 
@@ -58,11 +67,15 @@ const Index = () => {
     })
 
     //页面缓存控制,激活当前页面时会卸载掉name为数组内字符串的缓存
-    useKeepaliveNameControl(["普通动态", "滚动动态", "消息"])
+    useClearKeepalive()
 
+    //禁止滚动
+    useLimitBodyScroll()
+
+    //手机端和pc端滚动页面都会使用该方法
     const [pagination, setPagination] = usePagination(
         1, //初始页码
-        8, //初始条数
+        12, //初始条数
         communityTotal, //总条数
         {delay: 100, key: "community", tipsString: "没有更多动态啦"} //下滑延迟
     )
@@ -81,21 +94,46 @@ const Index = () => {
     }, [])
 
     useEffect(() => {
-        setPagination({
-            pageNum: 1,
-            pageSize: 8
-        })
-        getCommunityListData(selectTopicId, 1, 8, true)
-    }, [selectTopicId, condition])
-
-    useEffect(() => {
-        const {pageNum, pageSize} = pagination
-        if (pageNum > 1) {
-            getCommunityListData(selectTopicId, pageNum, pageSize)
+        if (!isMobile && pagination.pageNum > 1) {
+            const {pageSize, pageNum} = pagination
+            getCommunityListData(
+                selectTopicId, pageNum, pageSize, false
+            )
         }
     }, [pagination])
 
-    const getCommunityListData = (topicId: number, pageNum: number, pageSize: number, reload?: boolean) => {
+    useEffect(() => {
+        reloadData()
+    }, [selectTopicId, condition])
+
+    const reloadData = () => {
+        setPagination({pageNum: 1, pageSize: 12})
+        getCommunityListData(selectTopicId, 1, 12, true)
+    }
+
+    const getData = (
+        callback: () => void
+    ) => {
+        const {pageSize, pageNum} = pagination
+        const innerCallback = () => {
+            callback()
+            setPagination({pageSize, pageNum: pageNum + 1})
+        }
+        if ((pageNum * pageSize) < communityTotal) {
+            getCommunityListData(
+                selectTopicId, pageNum + 1,
+                pageSize, false, innerCallback
+            )
+        } else {
+            callback()
+        }
+    }
+
+    const getCommunityListData = (
+        topicId: number, pageNum: number,
+        pageSize: number, reload: boolean,
+        callback?: () => void
+    ) => {
         setLoadingVisible(true)
         const userId = getLocalStorage("userId")
         const data: getCommunityListParams = {
@@ -110,86 +148,135 @@ const Index = () => {
                     setCommunityData([...communityData, ...res.data.data])
                 setCommunityTotal(res.data.total)
             }
+            callback && callback()
             setLoadingVisible(false)
         })
     }
 
-    const getTopicObject = (topicList: TopicListItem[]) => {
-        return topicList?.map(item => {
-            const {name, id} = item
-            return {
-                title: name,
-                id, icon: <TopicIcon/>
-            }
-        })
+    const setModalVisibleWithKey = (key: "release" | "screen" | "topic", data: boolean) => {
+        setModalVisible({...modalVisible, [key]: data})
     }
 
     return (
         <React.Fragment>
             <div className="community-pad">
-                <div className="action-bar-container">
-                    <ActionBar flushDataFunc={() => {
-                        getCommunityListData(
-                            selectTopicId,
-                            1, pagination.pageSize, true
-                        )
-                    }}/>
-                </div>
-                <div className="content-pad">
-                    <Tab
-                        labelArr={getTopicObject(topicList)}
-                        onChange={(selectTopicId) => {
-                            setSelectTopicId(selectTopicId)
+                {isMobile ? <div className="community-pad-inner-navigate">
+                    <div className="inner-navigate-button">
+                        <Button onClick={() => {
+                            setModalVisibleWithKey("release", true)
+                        }}>
+                            <ReleaseIcon/>
+                            <span>发布动态</span>
+                        </Button>
+                    </div>
+                    <div className="inner-navigate-button">
+                        <Button onClick={() => {
+                            setModalVisibleWithKey("topic", true)
+                        }}>
+                            <TopicIcon/>
+                            <span>切换话题</span>
+                        </Button>
+                    </div>
+                    <div className="inner-navigate-button">
+                        <Button onClick={() => {
+                            setModalVisibleWithKey("screen", true)
+                        }}>
+                            <ScreenIcon/>
+                            <span>筛选</span>
+                        </Button>
+                    </div>
+                </div> : <React.Fragment>
+                    <div className="action-bar-container">
+                        <ActionBar flushDataFunc={() => {
+                            reloadData()
+                        }}/>
+                    </div>
+                    <MiniTabLabel
+                        selectTopicId={selectTopicId}
+                        setSelectTopicId={setSelectTopicId}
+                        labelArray={topicList}
+                    />
+                    <Screening
+                        setCondition={(array) => {
+                            const offsetHeight = containerRef.current.offsetHeight
+                            setFillHeight(offsetHeight)
+                            setCondition([...array])
+                            setTimeout(() => {
+                                setFillHeight("100%")
+                            }, 500)
                         }}
-                        initializeSelectId={1}
-                        blockDisplay={true}
-                        allowScroll={true}
+                        style={{width: "50%", minWidth: "35rem"}}
+                        labelArray={[{
+                            name: "时间",
+                            key: "timeControl"
+                        }, {
+                            name: "查看数",
+                            key: "watchControl"
+                        }, {
+                            name: "喜欢数",
+                            key: "likeControl"
+                        }, {
+                            name: "评论数",
+                            key: "messageControl"
+                        }]}
+                    />
+                </React.Fragment>}
+                <div className="content-pad">
+                    <div
+                        id={String(selectTopicId)}
+                        className="content-container"
+                        ref={containerRef}
+                        style={{height: fillHeight > 0 && fillHeight}}
                     >
-                        <div
-                            id={String(selectTopicId)}
-                            className="content-container"
-                            ref={containerRef}
-                            style={{height: fillHeight > 0 && fillHeight}}
-                        >
-                            <Screening
-                                setCondition={(array) => {
-                                    const offsetHeight = containerRef.current.offsetHeight
-                                    setFillHeight(offsetHeight)
-                                    setCondition([...array])
-                                    setTimeout(() => {
-                                        setFillHeight("100%")
-                                    }, 500)
-                                }}
-                                style={{width: "50%", minWidth: "35rem"}}
-                                labelArray={[{
-                                    name: "时间",
-                                    key: "timeControl"
-                                }, {
-                                    name: "查看数",
-                                    key: "watchControl"
-                                }, {
-                                    name: "喜欢数",
-                                    key: "likeControl"
-                                }, {
-                                    name: "评论数",
-                                    key: "messageControl"
-                                }]}
-                            />
-                            <Waterfall
-                                options={{
-                                    columns: getLocalStorage("isMobile") ? 2 : 4,
-                                    columns_gap: isMobile ? "5px" : "10px"
-                                }}
-                                dataArray={communityData}
-                                setData={(data) => {
-                                    setCommunityData(data)
-                                }}
-                            />
-                        </div>
-                    </Tab>
+                        <Waterfall
+                            isMobile={isMobile}
+                            haveData={(pagination.pageNum *
+                                pagination.pageSize) < communityTotal
+                            }
+                            selectTopicId={selectTopicId}
+                            condition={condition}
+                            getData={getData}
+                            options={{
+                                columns: getLocalStorage("isMobile") ? 2 : 4,
+                                columns_gap: isMobile ? "5px" : "10px"
+                            }}
+                            dataArray={communityData}
+                            setData={(data) => {
+                                setCommunityData(data)
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
             <Loading visible={loadingVisible}/>
+            {isMobile && <React.Fragment>
+                <ReleaseModal
+                    visible={modalVisible.release}
+                    setVisible={() => {
+                        setModalVisibleWithKey("release", false)
+                    }}
+                    reloadData={reloadData}
+                />
+                <TopicModal
+                    selectTopicId={selectTopicId}
+                    setSelectTopicId={setSelectTopicId}
+                    labelArray={topicList}
+                    visible={modalVisible.topic}
+                    setVisible={() => {
+                        setModalVisibleWithKey("topic", false)
+                    }}
+                />
+                <ScreenModal
+                    initializeData={condition}
+                    containerRef={containerRef}
+                    setFillHeight={setFillHeight}
+                    setCondition={setCondition}
+                    visible={modalVisible.screen}
+                    setVisible={() => {
+                        setModalVisibleWithKey("screen", false)
+                    }}
+                />
+            </React.Fragment>}
         </React.Fragment>
     );
 };

@@ -188,7 +188,7 @@ export class FormItem extends Component<Partial<FormItemProps>, FormItemState> {
             return ((value as string).length < innerValue) && {message: tips, target: "minWarnTarget"}
         },
         email: (innerValue: number, tips: string, value: string) => {
-            const regExp = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
+            const regExp =  new RegExp("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$")
             return (!((value as string).match(regExp))) && {message: tips, target: "emailWarnTarget"}
         },
         length: (innerValue: number, tips: string, value: string) => {
@@ -196,7 +196,7 @@ export class FormItem extends Component<Partial<FormItemProps>, FormItemState> {
         },
         password: (innerValue: [number, number], tips: string, value: string) => {
             const [min, max] = innerValue as [number, number]
-            const regExp = new RegExp(`(?=.*[A-Za-z])(?=.*\\d)[a-z1-9A-Z]{${min},${max}}`)
+            const regExp = new RegExp(`[a-z1-9A-Z]{${min},${max}}`)
             const matchArray = (value as string).match(regExp)
             return !matchArray && {message: tips, target: "passwordWarnTarget"}
         },
