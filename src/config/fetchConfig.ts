@@ -1,10 +1,9 @@
 import {Http} from "@/utils/fetchApi";
 import {confirm} from "@/basicComponent/Confirm";
 
-// export const address = "https://localhost:5000/api/v1"
-// export const websocketAddress = "wss://localhost:5000/api/v1"
-export const address = "https://funtimebbs.com:5000/api/v1"
-export const websocketAddress = "ws://funtimebbs.com:5000/api/v1"
+export const address = "https://localhost:5000/api/v1"
+export const websocketAddress = "wss://localhost:5000/api/v1"
+
 
 export const GoblogApiV1 = new Http(address, {
     //CODE = 1000...用户模块的错误
